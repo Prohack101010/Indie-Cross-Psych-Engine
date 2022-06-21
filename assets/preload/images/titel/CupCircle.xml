@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="CupCircle.png">
+	<SubTexture name="c 0000" x="0" y="0" width="967" height="904"/>
+</TextureAtlas>

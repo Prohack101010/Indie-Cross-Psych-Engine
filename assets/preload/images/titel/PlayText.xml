@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="PlayText.png">
+	<SubTexture name="c 0000" x="0" y="0" width="277" height="110" frameY="0" frameWidth="546" frameHeight="143"/>/>
+</TextureAtlas>
