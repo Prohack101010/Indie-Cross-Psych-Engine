@@ -55,7 +55,6 @@ class SUtil
 
 		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))  {
             if (Tools.getSDKversion() > 16 || Tools.getSDKversion() == 29) {
-		{
 			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
 				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
 
@@ -65,14 +64,13 @@ class SUtil
 				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
 				System.exit(0);
 			}
-			} else {
+		}	 else {
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
 					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
 					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
 					System.exit(0);
-				}
 			}
 		}
 
