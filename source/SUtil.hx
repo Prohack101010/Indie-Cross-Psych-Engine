@@ -44,17 +44,14 @@ class SUtil
 	public static function doTheCheck()
 	{
 #if android
-		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))             { if (Tools.getSDKversion() > 16 || Tools.getSDKversion() == 29) {
+		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE)
                 Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
-            }  
-         }
 		{
 			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
 			SUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
 		}
 
 		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))  {
-            if (Tools.getSDKversion() > 16 || Tools.getSDKversion() == 29) {
 			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
 				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
 
@@ -64,7 +61,7 @@ class SUtil
 				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
 				System.exit(0);
 			}
-		}	 else {
+			else
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
@@ -80,8 +77,6 @@ class SUtil
 					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
 					System.exit(0);
 				}
-			}
-		}
 		#end
 	}
 
