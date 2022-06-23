@@ -48,7 +48,6 @@
 	<define name="LUA_ALLOWED" if="desktop || android" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="VIDEOS_ALLOWED" if="web || windows || android" unless="32bits"/>
-	<define name="PSYCH_WATERMARKS" /> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG" /> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build --> <!-- Edit: i forgot the port is unofficial lmao -->
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
@@ -72,7 +71,7 @@
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
-		<library name="songs"         preload="false" />
+		<library name="songs"         preload="true" />
 		<library name="shared"        preload="false" />
 	</section>
 	
