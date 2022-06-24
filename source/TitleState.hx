@@ -255,7 +255,7 @@ class TitleState extends MusicBeatState
 			}
 		}
 
-		Conductor.changeBPM(titleJSON.bpm);
+		Conductor.changeBPM(117);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite();
@@ -349,8 +349,7 @@ class TitleState extends MusicBeatState
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
-				BFdance.animation.addByIndices('danceLeft', 'BF idle dance', [7, 8, 9, 10, 11, 12, 13], "", 24, false);
-				BFdance.animation.addByIndices('danceRight', 'BF idle dance', [0, 1, 2, 3, 4, 5, 6], "", 24, false);
+				BFdance.animation.addByPrefix('danc', 'BF idle dance',  24, false);
 		}
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
 		
@@ -609,14 +608,8 @@ class TitleState extends MusicBeatState
 		if(logoBl != null) 
 			logoBl.animation.play('bump', true);
 
-		if(BFdance != null) {
-			danceLeft = !danceLeft;
-			if (danceLeft)
-				BFdance.animation.play('danceRight');
-			else
-				BFdance.animation.play('danceLeft');
-		}
-
+		if(BFdance != null)
+				BFdance.animation.play('dance');
 		if(!closedState) {
 			sickBeats++;
 			switch (sickBeats)
