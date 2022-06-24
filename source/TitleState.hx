@@ -349,7 +349,7 @@ class TitleState extends MusicBeatState
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
-				BFdance.animation.addByPrefix('danc', 'BF idle dance',  24, false);
+				BFdance.animation.addByPrefix('dance', 'BF idle dance',  24, false);
 		}
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
 		
