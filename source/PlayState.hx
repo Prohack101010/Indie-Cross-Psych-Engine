@@ -3394,7 +3394,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 		#if ACHIEVEMENTS_ALLOWED
 		var achieve:String = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist',
-				'fkugenocidal', 'nmCup', 'nmSans', 'debugger']);
+				'genocide', 'nmCup', 'nmSans', 'debugger']);
 
 			if(achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
@@ -4670,11 +4670,11 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 							unlock = true;
 						} 
 					case 'pacifist':
-						if(Paths.formatToSongPath(SONG.song) == 'final-stretch' && !usedPractice) {
+						if(Paths.formatToSongPath(SONG.song) == 'final-stretch' && !usedPractice && isStoryMode) {
 							unlock = true;
 						} 
-					case 'fkugenocidal':
-						if(Paths.formatToSongPath(SONG.song) == 'burning-in-hell' && !usedPractice) {
+					case 'genocide':
+						if(Paths.formatToSongPath(SONG.song) == 'burning-in-hell' && !usedPractice && isStoryMode) {
 							unlock = true;
 						} 
 					case 'nmCup':
@@ -4685,7 +4685,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						if(Paths.formatToSongPath(SONG.song) == 'bad-time' && !usedPractice) {
 							unlock = true;
 						} 
-						case 'nmBendy':
+					case 'nmBendy':
 						if(Paths.formatToSongPath(SONG.song) == 'despair' && !usedPractice) {
 							unlock = true;
 						}
