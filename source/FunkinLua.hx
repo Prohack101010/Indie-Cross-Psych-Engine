@@ -1801,7 +1801,7 @@ class FunkinLua {
 
 			PlayState.instance.addShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
 
-		})
+		});
 				Lua_helper.add_callback(lua, "addScanlineShader", function(camera:String, lockAlpha:Bool=false) {
 
 			PlayState.instance.addShaderToCamera(camera, new ScanlineEffect(lockAlpha));
