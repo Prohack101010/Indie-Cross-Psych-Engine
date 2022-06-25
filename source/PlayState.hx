@@ -1433,7 +1433,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		#end
 	}
 
-	public function addShaderToCamera(cam:String, effect:ShaderEffect)
+	/* public function addShaderToCamera(cam:String, effect:ShaderEffect)
 	{ // STOLE FROM ANDROMEDA
 		if (ClientPrefs.flashing) { // to avoid epilepsia or smth idk
 		switch (cam.toLowerCase())
@@ -1529,7 +1529,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 				camGame.setFilters(newCamEffects);
 		}
 	}
-
+ old thing that i think its broken */
 	function startCharacterPos(char:Character, ?gfCheck:Bool = false) {
 		if(gfCheck && char.curCharacter.startsWith('gf')) { //IF DAD IS GIRLFRIEND, HE GOES TO HER POSITION
 			char.setPosition(GF_X, GF_Y);
