@@ -1856,6 +1856,10 @@ class FunkinLua {
 
 		});
 
+		Lua_helper.add_callback(lua, "removeShaders", function(camera:String) {
+			PlayState.instance.clearShaderFromCamera(camera);
+		});
+
 		call('onCreate', []);
 		#end
 	}
