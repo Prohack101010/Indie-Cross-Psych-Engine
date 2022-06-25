@@ -1507,6 +1507,11 @@ class FunkinLua {
 			#end
 		});
 
+		Lua_helper.add_callback(lua, "setSongTime", function(curTime:Int) {
+		PlayState.instance.clearNotesBefore(curTime);
+		PlayState.instance.setSongTime(curTime);
+		});
+
 		// LUA TEXTS
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
 			tag = tag.replace('.', '');
