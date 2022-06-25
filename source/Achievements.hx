@@ -15,11 +15,11 @@ class Achievements {
 		["The Legendary Chalinger",		"Beat Cuphead Week with no Misses.",				'cuphead_nomiss',			false], //2
 		["Determination",				"Beat Sans Week With No Misses.",				'sans_nomiss',			false], //3
 		["PACIFIST.",					"Choose Peace.",					'pacifist',			false], //4
-		["GENOCIDE.",					"Burtly Attack Sans.",				'fkuGenocidal',			false], 
+		["GENOCIDE.",					"Burtly Attack Sans.",				'genocide',			false], 
 		["Bring Back Home The Bacon.",			"Beat Bendy Week with no Misses.",				'bendy_nomiss',			false], //5
-		["Ultimate KnockOut.",				"Defeat Nightmare cuphead.",			'nmCup',			true], //6
-		["Bad Time",					"Defeat Nightmare Sans.",			'nmSans',			true], //7
-		["Inking Mistake.",				"Defeat Nightmare Bendy.",			'nmBendy',			true], //8
+		["Ultimate KnockOut.",				"Defeat Nightmare cuphead.",			'nmCup',			false], //6
+		["Bad Time",					"Defeat Nightmare Sans.",			'nmSans',			false], //7
+		["Inking Mistake.",				"Defeat Nightmare Bendy.",			'nmBendy',			false], //8
 		["Unworthy",					"Hit 50 Blue Bone Note.",	'help',				 false] //9
 	];
 		public static var achievementsMap:Map<String, Bool> = new Map<String, Bool>();
