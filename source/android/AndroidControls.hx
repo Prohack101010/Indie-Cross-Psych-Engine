@@ -81,8 +81,6 @@ class AndroidControls extends FlxSpriteGroup {
 				initControler(1);
 			case VIRTUALPAD_CUSTOM:
 				initControler(2);
-			case DUO:
-				initControler(3);
 			case HITBOX:
 				initControler(4);
 			case KEYBOARD:// nothing
@@ -93,22 +91,24 @@ class AndroidControls extends FlxSpriteGroup {
 	function initControler(vpadMode:Int) {
 		switch (vpadMode){
 			case 0:
-				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);	
+				vpad = new FlxVirtualPad(RIGHT_FULL, A_D);	
+				vpad = config.loadcustom(vpad);
 				add(vpad);						
 			case 1:
-				vpad = new FlxVirtualPad(FULL, NONE);
+				vpad = new FlxVirtualPad(FULL, A_D);
+				vpad = config.loadcustom(vpad);
 				add(vpad);			
 			case 2:
-				vpad = new FlxVirtualPad(FULL, NONE);
+				vpad = new FlxVirtualPad(FULL, A_D);
 				vpad = config.loadcustom(vpad);
 				add(vpad);	
 			case 3:
-				vpad = new FlxVirtualPad(DUO, NONE);
-				add(vpad);		
-			case 4:
+			  vpad = new FlxVirtualPad(NONE, A_D);
+			  vpad = config.loadcustom(vpad);
 				hbox = new FlxHitbox();
 				add(hbox);		
-			case 5:
+				add(vpad);	
+			case 4:
 				//nothing
 			default:
 				//nothing
@@ -123,11 +123,9 @@ class AndroidControls extends FlxSpriteGroup {
 				VIRTUALPAD_LEFT;
 			case 2: 
 				VIRTUALPAD_CUSTOM;
-			case 3: 
-				DUO;
-			case 4:	
+			case 3:	
 				HITBOX;
-			case 5: 
+			case 4: 
 				KEYBOARD;
 			default: 
 				VIRTUALPAD_RIGHT;
@@ -139,7 +137,6 @@ enum ControlsGroup {
 	VIRTUALPAD_RIGHT;
 	VIRTUALPAD_LEFT;
 	VIRTUALPAD_CUSTOM;
-	DUO;
 	HITBOX;
 	KEYBOARD;
 }
