@@ -63,10 +63,9 @@ class MusicBeatState extends FlxUIState
 		switch (androidc.mode)
 		{
 			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-				controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
-			case DUO:
-				controls.setVirtualPadNOTES(androidc.vpad, DUO, NONE);
+				controls.setVirtualPadNOTES(androidc.vpad, FULL, A_D);
 			case HITBOX:
+			controls.setVirtualPadNOTES(androidc.vpad, NONE, A_D);
 				controls.setHitBox(androidc.hbox);
 			default:
 		}
