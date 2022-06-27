@@ -38,7 +38,9 @@ import Controls;
 import DialogueBoxPsych;
 
 import Shaders;
-
+#if android
+import android.AndroidControls;
+import android.FlxVirtualPad;
 #if desktop
 import Discord;
 #end
