@@ -41,6 +41,7 @@ import Shaders;
 #if android
 import android.AndroidControls;
 import android.FlxVirtualPad;
+#end
 #if desktop
 import Discord;
 #end
