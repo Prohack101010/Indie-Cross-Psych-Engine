@@ -38,10 +38,6 @@ import Controls;
 import DialogueBoxPsych;
 
 import Shaders;
-#if android
-import android.AndroidControls;
-import android.FlxVirtualPad;
-#end
 #if desktop
 import Discord;
 #end
@@ -776,8 +772,8 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'space': #if android key = _virtualpad.buttonA.justPressed; #else key = FlxG.keys.justPressed.SPACE; #end
-				case 'shift': #if android key = _virtualpad.buttonD.justPressed; #else key = FlxG.keys.justPressed.SHIFT; #end
+				case 'space': key = FlxG.keys.justPressed.SPACE; 
+				case 'shift': key = FlxG.keys.justPressed.SHIFT; 
 			}
 			return key;
 		});
@@ -788,8 +784,8 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
-				case 'space': #if android key = _virtualpad.buttonA.pressed; #else key = FlxG.keys.pressed.SPACE; #end
-				case 'shift': #if android key = _virtualpad.buttonD.pressed; #else key = FlxG.keys.pressed.SHIFT; #end
+				case 'space': key = FlxG.keys.pressed.SPACE;
+				case 'shift': key = FlxG.keys.pressed.SHIFT; 
 			}
 			return key;
 		});
@@ -1511,7 +1507,16 @@ class FunkinLua {
 			Hardware.vibrate(milliseconds);
 			#end
 		});
-
+				Lua_helper.add_callback(lua, "buttonAjustPressed", function() {
+			#if android
+			virtualpad.buttonA.justPressed;
+			#end
+		});
+		Lua_helper.add_callback(lua, "buttonDjustPressed", function() {
+			#if android
+			virtualpad.buttonD.justPressed;
+			#end
+		});
 		Lua_helper.add_callback(lua, "setSongTime", function(curTime:Int) {
 		PlayState.instance.clearNotesBefore(curTime);
 		PlayState.instance.setSongTime(curTime);
