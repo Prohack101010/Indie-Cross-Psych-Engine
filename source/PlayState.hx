@@ -1096,6 +1096,10 @@ class PlayState extends MusicBeatState
 
 		#if android
 		addAndroidControls();
+		if(virtualpad.buttonA.justPressed)
+    callOnLuas('buttonAjustPressed', []);
+    if(virtualpad.buttonD.justPressed)
+    callOnLuas('buttonDjustPressed', []);
 		#end
 
 		// if (SONG.song == 'South')
