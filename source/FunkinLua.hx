@@ -774,7 +774,7 @@ class FunkinLua {
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
 				case 'space': #if android key = virtualpad.buttonA.justPressed; #else key = FlxG.keys.justPressed.SPACE; #end
-				case 'shift': #if android key = virtualpad.buttonD.justPressed #else key = FlxG.keys.justPressed.SHIFT; #end
+				case 'shift': #if android key = virtualpad.buttonD.justPressed; #else key = FlxG.keys.justPressed.SHIFT; #end
 			}
 			return key;
 		});
@@ -786,7 +786,7 @@ class FunkinLua {
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
 				case 'space': #if android key = virtualpad.buttonA.pressed; #else key = FlxG.keys.pressed.SPACE; #end
-				case 'shift': #if android key = virtualpad.buttonD.pressed #else key = FlxG.keys.pressed.SHIFT; #end
+				case 'shift': #if android key = virtualpad.buttonD.pressed; #else key = FlxG.keys.pressed.SHIFT; #end
 			}
 			return key;
 		});
