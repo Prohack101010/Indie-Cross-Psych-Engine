@@ -785,7 +785,8 @@ class FunkinLua {
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
-				case 'space': key = FlxG.keys.pressed.SPACE;//an extra key for convinience
+				case 'space': #if android key = virtualpad.buttonA.pressed; #else key = FlxG.keys.pressed.SPACE;
+				case 'shit': #if android key = virtualpad.buttonD.pressed #else key = FlxG.keys.pressed.SHIFT;
 			}
 			return key;
 		});
