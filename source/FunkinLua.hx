@@ -1509,12 +1509,12 @@ class FunkinLua {
 		});
 				Lua_helper.add_callback(lua, "buttonAjustPressed", function() {
 			#if android
-			virtualpad.buttonA.justPressed;
+			_virtualpad.buttonA.justPressed;
 			#end
 		});
 		Lua_helper.add_callback(lua, "buttonDjustPressed", function() {
 			#if android
-			virtualpad.buttonD.justPressed;
+			_virtualpad.buttonD.justPressed;
 			#end
 		});
 		Lua_helper.add_callback(lua, "setSongTime", function(curTime:Int) {
