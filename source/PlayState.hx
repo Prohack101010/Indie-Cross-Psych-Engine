@@ -1096,10 +1096,6 @@ class PlayState extends MusicBeatState
 
 		#if android
 		addAndroidControls();
-		if(_virtualpad.buttonA.justPressed)
-    callOnLuas('buttonAjustPressed', []);
-    if(_virtualpad.buttonD.justPressed)
-    callOnLuas('buttonDjustPressed', []);
 		#end
 
 		// if (SONG.song == 'South')
@@ -1233,7 +1229,7 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
-		callOnLuas('onCreatePost', []);
+		{callOn}Luas('onCreatePost', []);
 		
 		super.create();
 
@@ -1730,6 +1726,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
                         #if android
                         androidc.visible = true;
+						_virtualpad.visible = true;
                         #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
@@ -3381,9 +3378,10 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			}
 		}
 
-                #if android
-                androidc.visible = false;
-                #end		
+    	#if android
+        androidc.visible = false;
+		_virtualpad.visible = false;
+        #end		
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -3862,6 +3860,14 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	// Hold notes
 	private function keyShit():Void
 	{
+		#if android
+		if (_virtualpad.buttonA.justPressed)
+			callOnLuas('buttonAjustPressed', []);
+
+		if (_virtualpad.buttonD.justPressed)
+			callOnLuas('buttonDjustPressed', []);
+		#end
+
 		// HOLDING
 		var up = controls.NOTE_UP;
 		var right = controls.NOTE_RIGHT;
