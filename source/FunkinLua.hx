@@ -1507,16 +1507,7 @@ class FunkinLua {
 			Hardware.vibrate(milliseconds);
 			#end
 		});
-				Lua_helper.add_callback(lua, "buttonAjustPressed", function() {
-			#if android
-			_virtualpad.buttonA.justPressed;
-			#end
-		});
-		Lua_helper.add_callback(lua, "buttonDjustPressed", function() {
-			#if android
-			_virtualpad.buttonD.justPressed;
-			#end
-		});
+
 		Lua_helper.add_callback(lua, "setSongTime", function(curTime:Int) {
 		PlayState.instance.clearNotesBefore(curTime);
 		PlayState.instance.setSongTime(curTime);
