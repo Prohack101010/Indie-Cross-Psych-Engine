@@ -878,7 +878,7 @@ class PlayState extends MusicBeatState
 		// doof.x += 70;
 		// doof.y = FlxG.height * 0.5;
 		doof.scrollFactor.set();
-		doof.finishThing = start;
+		doof.finishThing = start
 		doof.nextDialogueThing = startNextDialogue;
 		doof.skipDialogueThing = skipDialogue;
 
@@ -1229,7 +1229,7 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
-		{callOn}Luas('onCreatePost', []);
+		callOnLuas('onCreatePost', []);
 		
 		super.create();
 
