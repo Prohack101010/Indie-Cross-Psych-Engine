@@ -36,7 +36,7 @@ import sys.io.File;
 import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
-
+import vlc.VideoSprite
 import Shaders;
 #if desktop
 import Discord;
@@ -1028,6 +1028,13 @@ class FunkinLua {
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
 		});
+
+			Lua_helper.add_callback(lua, "addVideoSprite", function(tag:String, video:String, x:Float, y:Float, idk:Bool = false, idk2:Bool = false) {
+			var tag:VideoSprite = new VideoSprite(x, y);
+			tag.playVideo(Paths.videos(video), idk, idk2);
+			add(tag);
+		});
+
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float, ?spriteType:String = "sparrow") {
 			tag = tag.replace('.', '');
 			resetSpriteTag(tag);
