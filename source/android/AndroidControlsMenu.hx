@@ -165,10 +165,7 @@ class AndroidControlsMenu extends MusicBeatState
 					add(vpad);
 					loadcustom();
 				case 'Hitbox':
-				remove(vpad);
-				vpad = new FlxVirtualPad(NONE, A_D);
-					loadcustom();
-				//vpad.alpha = 0;
+				vpad.alpha = 0;
 				case 'Keyboard':
 					remove(vpad);
 					vpad.alpha = 0;
