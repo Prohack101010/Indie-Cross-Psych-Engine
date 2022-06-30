@@ -1813,7 +1813,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						add(CountdownReady);
 						FlxTween.tween(CountdownReady, {/*y: CountdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
-							onComplete: function(tCountdown:FlxTween)
+							onComplete: function(twn:FlxTween)
 							{
 								remove(CountdownReady);
 								CountdownReady.destroy();
@@ -1825,7 +1825,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						CountdownSet.scrollFactor.set();
 
 						if (PlayState.isPixelStage)
-							CountdoCountdownSet.setGraphicSize(Std.int(wnSet.width * daPixelZoom));
+							CountdownSet.setGraphicSize(Std.int(wnSet.width * daPixelZoom));
 
 						CountdownSet.screenCenter();
 						CountdownSet.antialiasing = antialias;
