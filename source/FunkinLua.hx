@@ -1509,8 +1509,8 @@ class FunkinLua {
 		});
 
 		Lua_helper.add_callback(lua, "setSongTime", function(curTime:Int) {
-		PlayState.instance.clearNotesBefore(curTime);
-		PlayState.instance.setSongTime(curTime);
+			PlayState.instance.clearNotesBefore(curTime);
+			PlayState.instance.setSongTime(curTime);
 		});
 
 		// LUA TEXTS

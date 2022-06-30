@@ -63,8 +63,9 @@ class MusicBeatState extends FlxUIState
 		switch (androidc.mode)
 		{
 			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-				controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
+				controls.setVirtualPadNOTES(androidc.vpad, FULL, A_D);
 			case HITBOX:
+			  controls.setVirtualPadNOTES(androidc.vpad, NONE, A_D);
 				controls.setHitBox(androidc.hbox);
 			default:
 		}
@@ -80,6 +81,12 @@ class MusicBeatState extends FlxUIState
 		androidc.visible = false;
 
 		add(androidc);
+
+		_virtualpad = new FlxVirtualPad(NONE, A_D);
+		_virtualpad.alpha = 0.75;
+        _virtualpad.cameras = [camcontrol];
+        _virtualpad.visible = false;
+		add(_virtualpad);
 	}
 	#end
 

@@ -3861,15 +3861,11 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	private function keyShit():Void
 	{
 		#if android
-		if(_virtualpad.buttonA.justPressed) {
+		if (_virtualpad.buttonA.justPressed)
 			callOnLuas('buttonAjustPressed', []);
-			return;
-		}
 
-		if(_virtualpad.buttonD.justPressed) {
+		if (_virtualpad.buttonD.justPressed)
 			callOnLuas('buttonDjustPressed', []);
-			return;
-		}
 		#end
 
 		// HOLDING
