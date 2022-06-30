@@ -103,10 +103,10 @@ class AndroidControls extends FlxSpriteGroup {
 				vpad = config.loadcustom(vpad);
 				add(vpad);	
 			case 3:
-			  vpad = new FlxVirtualPad(NONE, A_D);
-			  vpad = config.loadcustom(vpad);
 				hbox = new FlxHitbox();
-				add(hbox);		
+				add(hbox);	
+				vpad = new FlxVirtualPad(NONE, A_D);
+			 	vpad = config.loadcustom(vpad); 	
 				add(vpad);	
 			case 4:
 				//nothing
