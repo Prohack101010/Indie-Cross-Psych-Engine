@@ -1229,7 +1229,7 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
-		callOnLuas('onCreatePost', []);
+		{callOn}Luas('onCreatePost', []);
 		
 		super.create();
 
@@ -3864,12 +3864,12 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		if(_virtualpad.buttonA.justPressed) {
 			callOnLuas('buttonAjustPressed', []);
 			return;
-}
+		}
 
-		if(_virtualpad.buttonD.justPressed) { 
+		if(_virtualpad.buttonD.justPressed) {
 			callOnLuas('buttonDjustPressed', []);
 			return;
-}
+		}
 		#end
 
 		// HOLDING
