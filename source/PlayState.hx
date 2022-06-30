@@ -1721,7 +1721,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		}
 
 		inCutscene = false;
-		var ret:Dynamic = OnLuas('onStartCountdown', []);
+		var ret:Dynamic = callOnLuas('onStartCountdown', []);
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
                         #if android
@@ -1825,7 +1825,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						CountdownSet.scrollFactor.set();
 
 						if (PlayState.isPixelStage)
-							CountdownSet.setGraphicSize(Std.int(wnSet.width * daPixelZoom));
+							CountdownSet.setGraphicSize(Std.int(CountdownSet.width * daPixelZoom));
 
 						CountdownSet.screenCenter();
 						CountdownSet.antialiasing = antialias;
