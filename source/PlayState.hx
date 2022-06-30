@@ -60,6 +60,7 @@ import sys.FileSystem;
 #end
 #if VIDEOS_ALLOWED
 import vlc.MP4Handler;
+import vlc.videoSprite;
 #end
 import Shaders;
 import openfl.filters.ShaderFilter;
@@ -280,6 +281,9 @@ class PlayState extends MusicBeatState
 	public var luaArray:Array<FunkinLua> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
+
+	//video bg bullshits
+	public static var video:videoSprite;
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
