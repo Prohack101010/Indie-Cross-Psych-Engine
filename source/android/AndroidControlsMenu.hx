@@ -270,6 +270,14 @@ class AndroidControlsMenu extends MusicBeatState
 		if (daChoice == 'Pad-Custom'){
 			config.savecustom(vpad);
 		}
+		
+		if (daChoice == 'Pad-Left'){
+			config.savecustom(vpad);
+		} 
+		
+		if (daChoice == 'Pad-Right'){
+			config.savecustom(vpad);
+		}
 	}
 
 	function loadcustom():Void{
