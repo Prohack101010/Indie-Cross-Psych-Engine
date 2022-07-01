@@ -60,7 +60,7 @@ import sys.FileSystem;
 #end
 #if VIDEOS_ALLOWED
 import vlc.MP4Handler;
-import vlc.videoSprite;
+//import vlc.videoSprite;
 #end
 import Shaders;
 import openfl.filters.ShaderFilter;
