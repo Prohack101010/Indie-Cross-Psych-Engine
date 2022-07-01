@@ -283,7 +283,7 @@ class PlayState extends MusicBeatState
 	public var introSoundsSuffix:String = '';
 
 	//video bg bullshits
-	public static var Video:videoSprite;
+	//public static var Video:videoSprite;
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
