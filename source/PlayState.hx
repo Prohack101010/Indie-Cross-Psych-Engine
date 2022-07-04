@@ -60,7 +60,6 @@ import sys.FileSystem;
 #end
 #if VIDEOS_ALLOWED
 import vlc.MP4Handler;
-//import vlc.videoSprite;
 #end
 import Shaders;
 import openfl.filters.ShaderFilter;
@@ -281,9 +280,6 @@ class PlayState extends MusicBeatState
 	public var luaArray:Array<FunkinLua> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
-
-	//video bg bullshits
-	//public static var Video:videoSprite;
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
@@ -959,7 +955,7 @@ class PlayState extends MusicBeatState
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
 
-		// startCountdown();
+		// startwn();
 
 		generateSong(SONG.song);
 		#if LUA_ALLOWED
@@ -1205,7 +1201,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			startCountdown();
+			startwn();
 		}
 		RecalculateRating();
 
@@ -1233,7 +1229,7 @@ class PlayState extends MusicBeatState
 		}
 
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000;
-		callOnLuas('onCreatePost', []);
+		{callOn}Luas('onCreatePost', []);
 		
 		super.create();
 
@@ -1752,7 +1748,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			}
 
 			startedCountdown = true;
-			Conductor.songPosition = 0;
+			Countdown.songPosition = 0;
 			Conductor.songPosition -= Conductor.crochet * 5;
 			setOnLuas('startedCountdown', true);
 			callOnLuas('onCountdownStarted', []);
@@ -1806,7 +1802,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
 					case 1:
 						countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
-						countdownReady.scrollFactor.set();
+						swaglog.scrollFactor.set();
 						countdownReady.updateHitbox();
 
 						if (PlayState.isPixelStage)
@@ -1815,7 +1811,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						countdownReady.screenCenter();
 						countdownReady.antialiasing = antialias;
 						add(countdownReady);
-						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(countdownReady, {/*y: wnReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -1829,12 +1825,12 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						countdownSet.scrollFactor.set();
 
 						if (PlayState.isPixelStage)
-							countdownSet.setGraphicSize(Std.int(countdownSet.width * daPixelZoom));
+						countdown	Set.setGraphicSize(Std.int(countdownSet.width * daPixelZoom));
 
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
 						add(countdownSet);
-						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(wnSet, {/*y: wnSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -1854,13 +1850,13 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 						countdownGo.screenCenter();
 						countdownGo.antialiasing = antialias;
-						add(countdownGo);
-						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						add(countdowno);
+						FlxTween.tween(wnGo, {/*y: wnGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
-								remove(countdownGo);
-								countdownGo.destroy();
+								remove(wnGo);
+								wnGo.destroy();
 							}
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
@@ -1874,7 +1870,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						note.alpha *= 0.5;
 					}
 				});
-				callOnLuas('onCountdownTick', [swagCounter]);
+				callOnLuas('onwnTick', [swagCounter]);
 
 				swagCounter += 1;
 				// generateSong('fresh');
@@ -2386,7 +2382,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	}
 
 	public var paused:Bool = false;
-	var startedCountdown:Bool = false;
+	var startedwn:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
 
@@ -2537,7 +2533,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedwn && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', []);
 			if(ret != FunkinLua.Function_Stop) {
@@ -2611,7 +2607,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 		if (startingSong)
 		{
-			if (startedCountdown)
+			if (startedwn)
 			{
 				Conductor.songPosition += FlxG.elapsed * 1000;
 				if (Conductor.songPosition >= 0)
@@ -3866,14 +3862,14 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	{
 		#if android
 		if(_virtualpad.buttonA.justPressed) {
-		callOnLuas('buttonAjustPressed', []);
-		//return;
-	} 
+			callOnLuas('buttonAjustPressed', []);
+			return;
+		}
 
 		if(_virtualpad.buttonD.justPressed) {
-		callOnLuas('buttonDjustPressed', []);
-		//return;
-	} 
+			callOnLuas('buttonDjustPressed', []);
+			return;
+		}
 		#end
 
 		// HOLDING
