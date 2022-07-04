@@ -1748,7 +1748,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			}
 
 			startedCountdown = true;
-			Countdown.songPosition = 0;
+			.songPosition = 0;
 			Conductor.songPosition -= Conductor.crochet * 5;
 			setOnLuas('startedCountdown', true);
 			callOnLuas('onCountdownStarted', []);
@@ -1850,13 +1850,13 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 						countdownGo.screenCenter();
 						countdownGo.antialiasing = antialias;
-						add(countdowno);
-						FlxTween.tween(wnGo, {/*y: wnGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						add(countdownGo);
+						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
-								remove(wnGo);
-								wnGo.destroy();
+								remove(countdownGo);
+								countdownGo.destroy();
 							}
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
@@ -1870,7 +1870,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						note.alpha *= 0.5;
 					}
 				});
-				callOnLuas('onwnTick', [swagCounter]);
+				callOnLuas('onCountdownTick', [swagCounter]);
 
 				swagCounter += 1;
 				// generateSong('fresh');
@@ -2382,7 +2382,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	}
 
 	public var paused:Bool = false;
-	var startedwn:Bool = false;
+	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 	var limoSpeed:Float = 0;
 
@@ -2533,7 +2533,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedwn && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnLuas('onPause', []);
 			if(ret != FunkinLua.Function_Stop) {
@@ -2607,7 +2607,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 		if (startingSong)
 		{
-			if (startedwn)
+			if (startedCountdown)
 			{
 				Conductor.songPosition += FlxG.elapsed * 1000;
 				if (Conductor.songPosition >= 0)
