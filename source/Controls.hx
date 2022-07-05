@@ -48,6 +48,8 @@ enum abstract Action(String) to String from String
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
+	var ATTACK = "attack";
+	var DODGE = "dodge";
 }
 #else
 @:enum
@@ -81,6 +83,8 @@ abstract Action(String) to String from String
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
+	var ATTACK = "attack";
+	var DODGE = "dodge";
 }
 #end
 
@@ -109,6 +113,8 @@ enum Control
 	ACCEPT;
 	BACK;
 	PAUSE;
+	ATTACK;
+	DODGE;
 }
 
 enum KeyboardScheme
@@ -153,6 +159,8 @@ class Controls extends FlxActionSet
 	var _back = new FlxActionDigital(Action.BACK);
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
+	var _attack = new FlxActionDigital(Action.ATTACK);
+	var _dodge = new FlxActionDigital(DODGE);
 
 	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
@@ -302,6 +310,15 @@ class Controls extends FlxActionSet
 
 	inline function get_RESET()
 		return _reset.check();
+		public var ATTACK(get, never):Bool;
+
+	inline function get_ATTACK()
+		return _attack.check();
+		public var DODGE (get, never):Bool;
+
+	inline function get_DODGE()
+		return _dodge.check();
+		
 
 	#if (haxe >= "4.0.0")
 	public function new(name, scheme = None)
@@ -336,6 +353,8 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+		add(_attack)
+		add(_dodge);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -375,6 +394,12 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+		add(_attack);
+		add(_dodge);
+		add(_attackP);
+		add(_dodgeP);
+		add(_attackR);
+		add(_dodgeR);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -456,7 +481,8 @@ class Controls extends FlxActionSet
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuUI(action, virtualPad.buttonB, state));
 			case A_D:
-				// to be safe
+				inline forEachBound(Control.ATTACK, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
+				inline forEachBound(Control.DODGE, (action, state) -> addbuttonuUI(action, virtualPad.button, state));
 			case A_B_C:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuUI(action, virtualPad.buttonB, state));					
@@ -514,7 +540,8 @@ class Controls extends FlxActionSet
 		switch (Action)
 		{
 		  case A_D:
-		  
+				inline forEachBound(Control.ATTACK, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
+				inline forEachBound(Control.DODGE, (action, state) -> addbuttonuUI(action, virtualPad.button, state));
 			case A:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 			case B:
@@ -611,7 +638,9 @@ class Controls extends FlxActionSet
 			case ACCEPT: _accept;
 			case BACK: _back;
 			case PAUSE: _pause;
-			case RESET: _reset;
+			case RESET: _reset
+			case ATTACK: _attack;
+			case DODGE: _dodge;
 		}
 	}
 
@@ -671,6 +700,10 @@ class Controls extends FlxActionSet
 				func(_pause, JUST_PRESSED);
 			case RESET:
 				func(_reset, JUST_PRESSED);
+			case ATTACK:
+				func(_attack, JUST_PRESSED);
+			case DODGE:
+				func(_dodge, JUST_PRESSED);
 		}
 	}
 
