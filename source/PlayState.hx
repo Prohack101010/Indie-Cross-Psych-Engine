@@ -1201,7 +1201,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-			startwn();
+			startCountdown();
 		}
 		RecalculateRating();
 
@@ -1802,7 +1802,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
 					case 1:
 						countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
-						swaglog.scrollFactor.set();
+						countdownReady.scrollFactor.set();
 						countdownReady.updateHitbox();
 
 						if (PlayState.isPixelStage)
