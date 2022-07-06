@@ -773,7 +773,8 @@ class FunkinLua {
 				case 'accept': key = PlayState.instance.getControl('ACCEPT');
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
-				case 'reset': key = PlayState.instance.getControl('RESET');
+				case 'dodge': key = PlayState.instance.getControl('DODGE');
+				case 'attack': key = PlayState.instance.getControl('ATTACK');
 				case 'space': key = FlxG.keys.justPressed.SPACE; 
 				case 'shift': key = FlxG.keys.justPressed.SHIFT; 
 			}
