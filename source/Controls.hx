@@ -160,7 +160,7 @@ class Controls extends FlxActionSet
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
 	var _attack = new FlxActionDigital(Action.ATTACK);
-	var _dodge = new FlxActionDigital(DODGE);
+	var _dodge = new FlxActionDigital(Action.DODGE);
 
 	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
@@ -396,10 +396,6 @@ class Controls extends FlxActionSet
 		add(_reset);
 		add(_attack);
 		add(_dodge);
-		add(_attackP);
-		add(_dodgeP);
-		add(_attackR);
-		add(_dodgeR);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
