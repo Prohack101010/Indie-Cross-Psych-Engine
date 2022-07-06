@@ -353,7 +353,7 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
-		add(_attack)
+		add(_attack);
 		add(_dodge);
 
 		for (action in digitalActions)
