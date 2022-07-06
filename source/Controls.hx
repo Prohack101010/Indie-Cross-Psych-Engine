@@ -880,6 +880,8 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, keysMap.get('back'));
 				inline bindKeys(Control.PAUSE, keysMap.get('pause'));
 				inline bindKeys(Control.RESET, keysMap.get('reset'));
+				inline bindKeys(Control.ATTACK, keysMap.get('attack'));
+				inline bindKeys(Control.DODGE, keysMap.get('dodge'));
 			case Duo(true):
 				inline bindKeys(Control.UI_UP, [W]);
 				inline bindKeys(Control.UI_DOWN, [S]);
@@ -893,6 +895,8 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, [H, X]);
 				inline bindKeys(Control.PAUSE, [ONE]);
 				inline bindKeys(Control.RESET, [R]);
+				inline bindKeys(Control.ATTACK, [SPACE]);
+				inline bindKeys(Control.DODGE, [SHIFT]);
 			case Duo(false):
 				inline bindKeys(Control.UI_UP, [FlxKey.UP]);
 				inline bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
@@ -906,6 +910,8 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, [P]);
 				inline bindKeys(Control.PAUSE, [ENTER]);
 				inline bindKeys(Control.RESET, [BACKSPACE]);
+				inline bindKeys(Control.ATTACK, [SPACE]);
+				inline bindKeys(Control.DODGE, [SHIFT]);
 			case None: // nothing
 			case Custom: // nothing
 		}
@@ -925,6 +931,8 @@ class Controls extends FlxActionSet
 				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
 				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.ATTACK, [SPACE]);
+				bindKeys(Control.DODGE, [SHIFT]);
 			case Duo(true):
 				bindKeys(Control.UI_UP, [W]);
 				bindKeys(Control.UI_DOWN, [S]);
@@ -938,6 +946,8 @@ class Controls extends FlxActionSet
 				bindKeys(Control.BACK, [H, X]);
 				bindKeys(Control.PAUSE, [ONE]);
 				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.ATTACK, [SPACE]);
+				bindKeys(Control.DODGE, [SHIFT]);
 			case Duo(false):
 				bindKeys(Control.UI_UP, [FlxKey.UP]);
 				bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
@@ -951,6 +961,8 @@ class Controls extends FlxActionSet
 				bindKeys(Control.BACK, [P]);
 				bindKeys(Control.PAUSE, [ENTER]);
 				bindKeys(Control.RESET, [BACKSPACE]);
+				bindKeys(Control.ATTACK, [SPACE]);
+				bindKeys(Control.DODGE, [SHIFT]);
 			case None: // nothing
 			case Custom: // nothing
 		}
