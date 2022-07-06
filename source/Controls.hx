@@ -634,7 +634,7 @@ class Controls extends FlxActionSet
 			case ACCEPT: _accept;
 			case BACK: _back;
 			case PAUSE: _pause;
-			case RESET: _reset
+			case RESET: _reset;
 			case ATTACK: _attack;
 			case DODGE: _dodge;
 		}
