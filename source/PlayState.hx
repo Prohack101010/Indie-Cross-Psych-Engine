@@ -955,7 +955,7 @@ class PlayState extends MusicBeatState
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
 
-		// startCountdown();
+		// startwn();
 
 		generateSong(SONG.song);
 		#if LUA_ALLOWED
@@ -1726,6 +1726,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
                         #if android
                         androidc.visible = true;
+						_virtualpad.visible = true;
                         #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
@@ -1810,7 +1811,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						countdownReady.screenCenter();
 						countdownReady.antialiasing = antialias;
 						add(countdownReady);
-						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(countdownReady, {/*y: wnReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -1820,7 +1821,8 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						});
 						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
 					case 2:
-						countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+						countdownSet.cameras = [camHUD];
 						countdownSet.scrollFactor.set();
 
 						if (PlayState.isPixelStage)
@@ -1828,7 +1830,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
-						add(countdownSet);
+						insert(members.indexOf(notes), countdownSet);
 						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -3377,9 +3379,10 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			}
 		}
 
-                #if android
-                androidc.visible = false;
-                #end		
+    	#if android
+        androidc.visible = false;
+		_virtualpad.visible = false;
+        #end		
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -3858,7 +3861,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	// Hold notes
 	private function keyShit():Void
 	{
-		#if android
+	/*	#if android
 		if(_virtualpad.buttonA.justPressed) {
 			callOnLuas('buttonAjustPressed', []);
 			return;
@@ -3868,13 +3871,16 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			callOnLuas('buttonDjustPressed', []);
 			return;
 		}
-		#end
+		#end */
+
 		// HOLDING
+		var attack = controls.ATTACK;
+		var dodge = controls.DODGE;
 		var up = controls.NOTE_UP;
 		var right = controls.NOTE_RIGHT;
 		var down = controls.NOTE_DOWN;
 		var left = controls.NOTE_LEFT;
-		var controlHoldArray:Array<Bool> = [left, down, up, right];
+		var controlHoldArray:Array<Bool> = [left, down, up, right, attack, dodge];
 		
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if(ClientPrefs.controllerMode)
