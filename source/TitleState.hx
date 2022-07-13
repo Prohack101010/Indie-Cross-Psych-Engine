@@ -347,9 +347,12 @@ class TitleState extends MusicBeatState
 			default:
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
+			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!! me: ok
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
 				BFdance.animation.addByPrefix('dance', 'BF idle dance',  24, false);
+				if (curBeat % 1 == 0) {
+					BFdance.animation.play('dance', true);
+				}
 		}
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
 		
@@ -485,8 +488,7 @@ class TitleState extends MusicBeatState
 		{
 			if(pressedEnter)
 			{
-
-				FlxG.camera.flash(FlxColor.WHITE, 1);
+				FlxG.camera.flash(FlxColor.WHITE, 1); //VAI
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;
