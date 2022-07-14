@@ -30,11 +30,12 @@ class FreeplaySelectState extends MusicBeatState
 	public static var psychEngineVersion:String = '0.5.2h';
 	public static var curSelected:Int = 0;
 
-	var optionShit:Array<String> = ['story_songs', 'bonus_songs', 'nightmare_songs'];
-	var menuItems:FlxTypedGroup<FlxSprite>;
-	var story_songs:FlxSprite;
-	var bonus_songs:FlxSprite;
-	var nightmare_songs:FlxSprite;
+	var optionShit:Array<String> = [
+	'story', 
+	'bonus',
+	'nightmare'
+	];
+	var optionItems:FlxTypedGroup<FlxSprite>;
 	var bg:FlxSprite;	
 
 	override function create()
@@ -57,40 +58,21 @@ class FreeplaySelectState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuBG'));
+		bg = new FlxSprite().loadGraphic('assets/preload/menuBG');
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		story_songs = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/freeplay/story_songs'));
-		menuItems.add(story_songs);
-		story_songs.scrollFactor.set();
-		story_songs.antialiasing = ClientPrefs.globalAntialiasing;
-		story_songs.setGraphicSize(Std.int(story_songs.width * 0.7));
-		story_songs.y += 220;		
-		story_songs.x -= 200;
-		story_songs.alpha = 0.60;
-
-
-		bonus_songs = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/freeplay/bonus_songs'));
-		menuItems.add(bonus_songs);
-		bonus_songs.scrollFactor.set();
-		bonus_songs.antialiasing = ClientPrefs.globalAntialiasing;
-		bonus_songs.setGraphicSize(Std.int(bonus_songs.width * 0.7));
-		bonus_songs.y += 200;		
-		bonus_songs.x -= 200;
-		bonus_songs.alpha = 0.60;
-
-		nightmare_songs = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/freeplay/nightmare_songs'));
-		menuItems.add(nightmare_songs);
-		nightmare_songs.scrollFactor.set();
-		nightmare_songs.antialiasing = ClientPrefs.globalAntialiasing;
-		nightmare_songs.setGraphicSize(Std.int(nightmare_songs.width * 0.7));
-		nightmare_songs.y += 220;
-		nightmare_songs.x -= 200;
-		nightmare_songs.alpha = 0.60;
+		for (i in 0...3)
+		{
+			var item:FlxSprite = new FlxSprite((370 * i) + 180, 0);
+			item.loadGraphic(Paths.image('freeplayselect/' + optionShit[i]));
+			item.screenCenter(Y);
+			item.ID = i;
+			optionItems.add(item);
+		}
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
@@ -153,8 +135,7 @@ class FreeplaySelectState extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
-				
-
+				goToState();
 		}
 	}
 
@@ -168,12 +149,12 @@ class FreeplaySelectState extends MusicBeatState
 
 		switch (daChoice)
 		{
-		case 'story_songs':
-		MusicBeatState.switchState(new FreeplayState());
-		case 'bonus_songs':
-		MusicBeatState.switchState(new FreeplayBonusState());
-		case 'nightmare_songs':
-		MusicBeatState.switchState(new FreeplayNightmareState());
+		case 'story':
+			MusicBeatState.switchState(new FreeplayState());
+		case 'bonus':
+			MusicBeatState.switchState(new FreeplayBonusState());
+		case 'nightmare':
+			MusicBeatState.switchState(new FreeplayNightmareState());
 		}
 	}
 
@@ -181,26 +162,19 @@ class FreeplaySelectState extends MusicBeatState
 	{
 		curSelected += huh;
 
-		if (curSelected >= menuItems.length)
+		if (curSelected >= optionItems.length)
 			curSelected = 0;
 		if (curSelected < 0)
-			curSelected = menuItems.length - 1;	
+			curSelected = optionItems.length - 1;
 
-		switch (optionShit[curSelected])
-		{
-			case 'story_songs':
-			story_songs.alpha = 1;
-			bonus_songs.alpha = 0.6; 
-			nightmare_songs.alpha = 0.6; 
+		for (item in optionItems.members) {
+			item.alpha = 0.47;
+			item.color = 0xFF363636;
 
-			case 'bonus_songs':
-			bonus_songs.alpha = 1; 
-			story_songs.alpha = 0.6;
-			nightmare_songs.alpha = 0.6; 				
-			case 'nightmare_songs':
-			nightmare_songs.alpha = 1; 
-			bonus_songs.alpha = 0.6;
-			story_songs.alpha = 0.6;
-		}						
+			if(item.ID == curSelected) {
+				item.alpha = 1;
+				item.color = 0xFFFFFFFF;
+			}
+		}
 	}
 }
