@@ -45,6 +45,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		['MECHANICS'],
 		['dodge', 'dodge'],
 		['attack', 'attack'],
+		[''], 
 		['UI'],
 		['Left', 'ui_left'],
 		['Down', 'ui_down'],
