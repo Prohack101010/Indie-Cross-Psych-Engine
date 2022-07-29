@@ -588,7 +588,7 @@ public var ATTACK_P(get, never):Bool;
 			case A_D:
 				inline forEachBound(Control.ATTACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 
-				inline forEachBound(Control.DODGE, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonD, state))
+				inline forEachBound(Control.DODGE, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonD, state));
 			case A_B:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonB, state));
