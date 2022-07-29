@@ -1084,7 +1084,7 @@ public var ATTACK_P(get, never):Bool;
 	{
 		#if !switch
 		addGamepadLiteral(id, [
-			Control.ACCEPT => [A, START],
+			Control.ACCEPT => [START],
 			Control.BACK => [B],
 			Control.UI_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP],
 			Control.UI_DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
@@ -1095,12 +1095,14 @@ public var ATTACK_P(get, never):Bool;
 			Control.NOTE_LEFT => [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT, RIGHT_STICK_DIGITAL_LEFT, X],
 			Control.NOTE_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT, B],
 			Control.PAUSE => [START],
-			Control.RESET => [8]
+			Control.RESET => [8],
+			Control.ATTACK => [A],
+			Control.DODGE => [O]
 		]);
 		#else
 		addGamepadLiteral(id, [
 			//Swap A and B for switch
-			Control.ACCEPT => [B, START],
+			Control.ACCEPT => [START],
 			Control.BACK => [A],
 			Control.UI_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP],
 			Control.UI_DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN, RIGHT_STICK_DIGITAL_DOWN],
@@ -1112,6 +1114,8 @@ public var ATTACK_P(get, never):Bool;
 			Control.NOTE_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT, A],
 			Control.PAUSE => [START],
 			Control.RESET => [8],
+			Control.ATTACK => [B],
+			Control.DODGE => [O]
 		]);
 		#end
 	}
