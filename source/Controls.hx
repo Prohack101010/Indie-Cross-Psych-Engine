@@ -48,8 +48,13 @@ enum abstract Action(String) to String from String
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
+
 	var ATTACK = "attack";
 	var DODGE = "dodge";
+	var ATTACK_R = "attack-release";
+	var DODGE_R = "dodge-release";
+	var ATTACK_P = "attack-press";
+	var DODGE_P = "dodge-press";
 }
 #else
 @:enum
@@ -83,8 +88,13 @@ abstract Action(String) to String from String
 	var BACK = "back";
 	var PAUSE = "pause";
 	var RESET = "reset";
+
 	var ATTACK = "attack";
 	var DODGE = "dodge";
+  var ATTACK_R = "attack-release";
+	var DODGE_R = "dodge-release";
+	var ATTACK_P = "attack-press";
+	var DODGE_P = "dodge-press";
 }
 #end
 
@@ -159,8 +169,13 @@ class Controls extends FlxActionSet
 	var _back = new FlxActionDigital(Action.BACK);
 	var _pause = new FlxActionDigital(Action.PAUSE);
 	var _reset = new FlxActionDigital(Action.RESET);
+
 	var _attack = new FlxActionDigital(Action.ATTACK);
 	var _dodge = new FlxActionDigital(Action.DODGE);
+	var _attackR = new FlxActionDigital(Action.ATTACK_R);
+	var _dodgeR = new FlxActionDigital(Action.DODGE_R);
+	var _attackP = new FlxActionDigital(Action.ATTACK_P);
+	var _dodgeP = new FlxActionDigital(Action.DODGE_P);
 
 	#if (haxe >= "4.0.0")
 	var byName:Map<String, FlxActionDigital> = [];
@@ -310,14 +325,31 @@ class Controls extends FlxActionSet
 
 	inline function get_RESET()
 		return _reset.check();
-		public var ATTACK(get, never):Bool;
 
+
+	public var ATTACK(get, never):Bool;
 	inline function get_ATTACK()
 		return _attack.check();
-		public var DODGE (get, never):Bool;
 
+		public var DODGE(get, never):Bool;
 	inline function get_DODGE()
 		return _dodge.check();
+
+public var ATTACK_R(get, never):Bool;
+	inline function get_ATTACK_R()
+		return _attackR.check();
+
+		public var DODGE_R(get, never):Bool;
+	inline function get_DODGE_R()
+		return _dodgeR.check();
+
+public var ATTACK_P(get, never):Bool;
+	inline function get_ATTACK_P()
+		return _attackP.check();
+
+		public var DODGE_P(get, never):Bool;
+	inline function get_DODGE_P()
+		return _dodgeP.check();
 		
 
 	#if (haxe >= "4.0.0")
@@ -353,8 +385,13 @@ class Controls extends FlxActionSet
 		add(_back);
 		add(_pause);
 		add(_reset);
+
 		add(_attack);
-		add(_dodge);
+		add(_dodge)
+		add(_attackR);
+		add(_dodgeR);
+		add(_attackP);
+		add(_dodgeP);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -396,6 +433,10 @@ class Controls extends FlxActionSet
 		add(_reset);
 		add(_attack);
 		add(_dodge);
+		add(_attackR);
+		add(_dodgeR);
+		add(_attackP);
+		add(_dodgeP);
 
 		for (action in digitalActions)
 			byName[action.name] = action;
@@ -544,6 +585,10 @@ class Controls extends FlxActionSet
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonB, state));
 			case D:
 				//nothing				
+			case A_D:
+				inline forEachBound(Control.ATTACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
+
+				inline forEachBound(Control.DODGE, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonD, state))
 			case A_B:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonB, state));
@@ -696,10 +741,15 @@ class Controls extends FlxActionSet
 				func(_pause, JUST_PRESSED);
 			case RESET:
 				func(_reset, JUST_PRESSED);
+
 			case ATTACK:
-				func(_attack, JUST_PRESSED);
+				func(_attackP, JUST_PRESSED)
+				func(_attack, PRESSED);
+				func(_attackR, JUST_RELEASER);
 			case DODGE:
-				func(_dodge, JUST_PRESSED);
+				func(_dodgeP, JUST_PRESSED);
+				func(_dodge, PRESSED);
+				func(_dodgeR, JUST_RELEASER);
 		}
 	}
 
@@ -880,6 +930,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, keysMap.get('back'));
 				inline bindKeys(Control.PAUSE, keysMap.get('pause'));
 				inline bindKeys(Control.RESET, keysMap.get('reset'));
+
 				inline bindKeys(Control.ATTACK, keysMap.get('attack'));
 				inline bindKeys(Control.DODGE, keysMap.get('dodge'));
 			case Duo(true):
@@ -895,6 +946,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, [H, X]);
 				inline bindKeys(Control.PAUSE, [ONE]);
 				inline bindKeys(Control.RESET, [R]);
+
 				inline bindKeys(Control.ATTACK, [SPACE]);
 				inline bindKeys(Control.DODGE, [SHIFT]);
 			case Duo(false):
@@ -910,6 +962,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.BACK, [P]);
 				inline bindKeys(Control.PAUSE, [ENTER]);
 				inline bindKeys(Control.RESET, [BACKSPACE]);
+
 				inline bindKeys(Control.ATTACK, [SPACE]);
 				inline bindKeys(Control.DODGE, [SHIFT]);
 			case None: // nothing
@@ -931,6 +984,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
 				bindKeys(Control.RESET, [R]);
+
 				bindKeys(Control.ATTACK, [SPACE]);
 				bindKeys(Control.DODGE, [SHIFT]);
 			case Duo(true):
@@ -946,6 +1000,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.BACK, [H, X]);
 				bindKeys(Control.PAUSE, [ONE]);
 				bindKeys(Control.RESET, [R]);
+
 				bindKeys(Control.ATTACK, [SPACE]);
 				bindKeys(Control.DODGE, [SHIFT]);
 			case Duo(false):
@@ -961,6 +1016,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.BACK, [P]);
 				bindKeys(Control.PAUSE, [ENTER]);
 				bindKeys(Control.RESET, [BACKSPACE]);
+
 				bindKeys(Control.ATTACK, [SPACE]);
 				bindKeys(Control.DODGE, [SHIFT]);
 			case None: // nothing
