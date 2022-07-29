@@ -387,7 +387,7 @@ public var ATTACK_P(get, never):Bool;
 		add(_reset);
 
 		add(_attack);
-		add(_dodge)
+		add(_dodge);
 		add(_attackR);
 		add(_dodgeR);
 		add(_attackP);
