@@ -930,7 +930,6 @@ public var ATTACK_P(get, never):Bool;
 				inline bindKeys(Control.BACK, keysMap.get('back'));
 				inline bindKeys(Control.PAUSE, keysMap.get('pause'));
 				inline bindKeys(Control.RESET, keysMap.get('reset'));
-
 				inline bindKeys(Control.ATTACK, keysMap.get('attack'));
 				inline bindKeys(Control.DODGE, keysMap.get('dodge'));
 			case Duo(true):
