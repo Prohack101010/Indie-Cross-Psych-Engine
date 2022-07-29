@@ -304,6 +304,9 @@ class PlayState extends MusicBeatState
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
+
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack'))
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('dodge'))
 		];
 
 		if (FlxG.sound.music != null)
@@ -3885,7 +3888,7 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if(ClientPrefs.controllerMode)
 		{
-			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
+			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P, controls.ATTACK_P, controls.DODGE_P];
 			if(controlArray.contains(true))
 			{
 				for (i in 0...controlArray.length)
@@ -3931,7 +3934,7 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if(ClientPrefs.controllerMode)
 		{
-			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
+			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R, controls.ATTACK_R, controls.DODGE_P];
 			if(controlArray.contains(true))
 			{
 				for (i in 0...controlArray.length)
