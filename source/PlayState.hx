@@ -303,10 +303,7 @@ class PlayState extends MusicBeatState
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_up')),
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right')),
-
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack')),
-			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('dodge'))
+			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_right'))
 		];
 
 		if (FlxG.sound.music != null)
@@ -2664,12 +2661,12 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		FlxG.watch.addQuick("beatShit", curBeat);
 		FlxG.watch.addQuick("stepShit", curStep);
 
-		// RESET = Quick Game Over Screen
+		/* RESET = Quick Game Over Screen
 		if (!ClientPrefs.noReset && controls.RESET && !inCutscene && !endingSong)
 		{
 			health = 0;
 			trace("RESET = True");
-		}
+		} */ 
 		doDeathCheck();
 
 		if (unspawnNotes[0] != null)
@@ -3877,8 +3874,8 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		#end */
 
 		// HOLDING
-		var attack = controls.ATTACK;
-		var dodge = controls.DODGE;
+//		var attack = controls.ATTACK;
+/		var dodge = controls.DODGE;
 		var up = controls.NOTE_UP;
 		var right = controls.NOTE_RIGHT;
 		var down = controls.NOTE_DOWN;
@@ -3888,7 +3885,7 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if(ClientPrefs.controllerMode)
 		{
-			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P, controls.ATTACK_P, controls.DODGE_P];
+			var controlArray:Array<Bool> = [controls.NOTE_LEFT_P, controls.NOTE_DOWN_P, controls.NOTE_UP_P, controls.NOTE_RIGHT_P];
 			if(controlArray.contains(true))
 			{
 				for (i in 0...controlArray.length)
@@ -3934,7 +3931,7 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		// TO DO: Find a better way to handle controller inputs, this should work for now
 		if(ClientPrefs.controllerMode)
 		{
-			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R, controls.ATTACK_R, controls.DODGE_P];
+			var controlArray:Array<Bool> = [controls.NOTE_LEFT_R, controls.NOTE_DOWN_R, controls.NOTE_UP_R, controls.NOTE_RIGHT_R];
 			if(controlArray.contains(true))
 			{
 				for (i in 0...controlArray.length)
