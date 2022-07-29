@@ -745,11 +745,11 @@ public var ATTACK_P(get, never):Bool;
 			case ATTACK:
 				func(_attackP, JUST_PRESSED);
 				func(_attack, PRESSED);
-				func(_attackR, JUST_RELEASER);
+				func(_attackR, JUST_RELEASED);
 			case DODGE:
 				func(_dodgeP, JUST_PRESSED);
 				func(_dodge, PRESSED);
-				func(_dodgeR, JUST_RELEASER);
+				func(_dodgeR, JUST_RELEASED);
 		}
 	}
 
