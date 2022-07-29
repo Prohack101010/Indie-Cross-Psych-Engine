@@ -743,7 +743,7 @@ public var ATTACK_P(get, never):Bool;
 				func(_reset, JUST_PRESSED);
 
 			case ATTACK:
-				func(_attackP, JUST_PRESSED)
+				func(_attackP, JUST_PRESSED);
 				func(_attack, PRESSED);
 				func(_attackR, JUST_RELEASER);
 			case DODGE:
