@@ -456,7 +456,8 @@ class Controls extends FlxActionSet
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuUI(action, virtualPad.buttonB, state));
 			case A_D:
-				// to be safe
+				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
+				inline forEachBound(Control.RESET, (action, state) -> addbuttonuUI(action, virtualPad.buttonD, state));
 			case A_B_C:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuUI(action, virtualPad.buttonB, state));					
@@ -513,8 +514,6 @@ class Controls extends FlxActionSet
 
 		switch (Action)
 		{
-		  case A_D:
-		  
 			case A:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 			case B:
@@ -524,6 +523,9 @@ class Controls extends FlxActionSet
 			case A_B:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonB, state));
+			case A_D:
+				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuUI(action, virtualPad.buttonA, state));
+				inline forEachBound(Control.RESET, (action, state) -> addbuttonuUI(action, virtualPad.buttonD, state));
 			case A_B_C:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbuttonuNOTES(action, virtualPad.buttonB, state));				
@@ -860,10 +862,10 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.NOTE_DOWN, [S]);
 				inline bindKeys(Control.NOTE_LEFT, [A]);
 				inline bindKeys(Control.NOTE_RIGHT, [D]);
-				inline bindKeys(Control.ACCEPT, [G, Z]);
+				inline bindKeys(Control.ACCEPT, [G, SPACE]);
 				inline bindKeys(Control.BACK, [H, X]);
 				inline bindKeys(Control.PAUSE, [ONE]);
-				inline bindKeys(Control.RESET, [R]);
+				inline bindKeys(Control.RESET, [SHIFT]);
 			case Duo(false):
 				inline bindKeys(Control.UI_UP, [FlxKey.UP]);
 				inline bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
@@ -873,10 +875,10 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.NOTE_DOWN, [FlxKey.DOWN]);
 				inline bindKeys(Control.NOTE_LEFT, [FlxKey.LEFT]);
 				inline bindKeys(Control.NOTE_RIGHT, [FlxKey.RIGHT]);
-				inline bindKeys(Control.ACCEPT, [O]);
+				inline bindKeys(Control.ACCEPT, [O, SPACE]);
 				inline bindKeys(Control.BACK, [P]);
 				inline bindKeys(Control.PAUSE, [ENTER]);
-				inline bindKeys(Control.RESET, [BACKSPACE]);
+				inline bindKeys(Control.RESET, [SHIFT]);
 			case None: // nothing
 			case Custom: // nothing
 		}
@@ -895,7 +897,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
 				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
 				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.RESET, [SHIFT]);
 			case Duo(true):
 				bindKeys(Control.UI_UP, [W]);
 				bindKeys(Control.UI_DOWN, [S]);
@@ -905,10 +907,10 @@ class Controls extends FlxActionSet
 				bindKeys(Control.NOTE_DOWN, [S]);
 				bindKeys(Control.NOTE_LEFT, [A]);
 				bindKeys(Control.NOTE_RIGHT, [D]);
-				bindKeys(Control.ACCEPT, [G, Z]);
+				bindKeys(Control.ACCEPT, [G, SPACE]);
 				bindKeys(Control.BACK, [H, X]);
 				bindKeys(Control.PAUSE, [ONE]);
-				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.RESET, [SHIFT]);
 			case Duo(false):
 				bindKeys(Control.UI_UP, [FlxKey.UP]);
 				bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
@@ -918,10 +920,10 @@ class Controls extends FlxActionSet
 				bindKeys(Control.NOTE_DOWN, [FlxKey.DOWN]);
 				bindKeys(Control.NOTE_LEFT, [FlxKey.LEFT]);
 				bindKeys(Control.NOTE_RIGHT, [FlxKey.RIGHT]);
-				bindKeys(Control.ACCEPT, [O]);
+				bindKeys(Control.ACCEPT, [O, SPACE]);
 				bindKeys(Control.BACK, [P]);
 				bindKeys(Control.PAUSE, [ENTER]);
-				bindKeys(Control.RESET, [BACKSPACE]);
+				bindKeys(Control.RESET, [SHIFT]);
 			case None: // nothing
 			case Custom: // nothing
 		}
