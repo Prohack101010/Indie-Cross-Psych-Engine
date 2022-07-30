@@ -1726,7 +1726,6 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
                         #if android
                         androidc.visible = true;
-						_virtualpad.visible = true;
                         #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
