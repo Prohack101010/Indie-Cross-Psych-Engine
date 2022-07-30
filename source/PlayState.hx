@@ -3875,7 +3875,7 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 
 		// HOLDING
 //		var attack = controls.ATTACK;
-/		var dodge = controls.DODGE;
+//		var dodge = controls.DODGE;
 		var up = controls.NOTE_UP;
 		var right = controls.NOTE_RIGHT;
 		var down = controls.NOTE_DOWN;
