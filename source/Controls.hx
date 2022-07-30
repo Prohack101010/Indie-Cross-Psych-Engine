@@ -833,7 +833,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.ACCEPT, [O, SPACE]);
 				inline bindKeys(Control.BACK, [P]);
 				inline bindKeys(Control.PAUSE, [ENTER]);
-				inline bindKeys(Control.RESET, [SHFT]);
+				inline bindKeys(Control.RESET, [SHIFT]);
 			case None: // nothing
 			case Custom: // nothing
 		}
