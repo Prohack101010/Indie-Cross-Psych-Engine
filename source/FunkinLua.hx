@@ -765,19 +765,17 @@ class FunkinLua {
 			var key:Bool = false;
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
-				case 'dodge': key = PlayState.instance.getControl('DODGE');
-				case 'attack': key = PlayState.instance.getControl('ATTACK');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_P');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_P');
 				case 'accept': key = PlayState.instance.getControl('ACCEPT');
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
-
-				case 'dodge': key = PlayState.instance.getControl('DODGE_P');
-				case 'attack': key = PlayState.instance.getControl('ATTACK_P');
+				case 'reset': key = PlayState.instance.getControl('RESET');
 				case 'space': key = FlxG.keys.justPressed.SPACE; 
-				case 'shift': key = FlxG.keys.justPressed.SHIFT; 
+				case 'shift': key = FlxG.keys.justPressed.SHIFT;
+				case 'attack': key = PlayState.instance.getControl('ACCEPT');
+				case 'dodge': key = PlayState.instance.getControl('RESET');
 			}
 			return key;
 		});
@@ -791,8 +789,6 @@ class FunkinLua {
 				case 'space': key = FlxG.keys.pressed.SPACE;
 				case 'shift': key = FlxG.keys.pressed.SHIFT; 
 
-				case 'dodge': key = PlayState.instance.getControl('DODGE');
-				case 'attack': key = PlayState.instance.getControl('ATTACK');
 			}
 			return key;
 		});
@@ -806,8 +802,6 @@ class FunkinLua {
 				case 'space': key = FlxG.keys.justReleased.SPACE;
         case 'shift': key = FlxG.keys.justReleased.SHIFT;
 
-				case 'dodge': key = PlayState.instance.getControl('DODGE_R');
-				case 'attack': key = PlayState.instance.getControl('ATTACK_R');
 			}
 			return key;
 		});
