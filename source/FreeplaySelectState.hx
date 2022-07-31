@@ -29,9 +29,9 @@ class FreeplaySelectState extends MusicBeatState
 
 	public static var psychEngineVersion:String = '0.5.2h';
 	public static var curSelected:Int = 0;
-	public var curSelectedStory:Bool;
-	public var curSelectedBonus:Bool;
-	public var curSelectedNightmare:Bool;
+	public static var curSelectedStory:Bool;
+	public static var curSelectedBonus:Bool;
+	public static var curSelectedNightmare:Bool;
 	var optionShit:Array<String> = [
 	'story', 
 	'bonus',
