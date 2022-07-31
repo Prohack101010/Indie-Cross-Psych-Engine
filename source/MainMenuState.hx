@@ -108,7 +108,7 @@ class MainMenuState extends MusicBeatState
 		awards.x -= 200;
 		awards.alpha = 0.60;
 		
-		Story_modeSplash = new FlxSprite(-10, -400).loadGraphic(Paths.image('mainmenu/opened/Story_mode flash'));
+		Story_modeSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Story_mode flash'));
 		Story_modeSplash.scrollFactor.set();
 		Story_modeSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		Story_modeSplash.setGraphicSize(Std.int(Story_modeSplash.width * 0.7));
