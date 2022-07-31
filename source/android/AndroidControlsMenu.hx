@@ -24,7 +24,7 @@ class AndroidControlsMenu extends MusicBeatState
 	var inputvari:PsychAlphabet;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
-	var controlitems:Array<String> = ['Pad-Right','Pad-Left','Pad-Custom','Hitbox','Keyboard'];
+	var controlitems:Array<String> = ['Pad-Right','Pad-Left','Pad-Custom','Duo','Hitbox','Keyboard'];
 	var curSelected:Int = 0;
 	var buttonistouched:Bool = false;
 	var bindbutton:FlxButton;
@@ -151,37 +151,27 @@ class AndroidControlsMenu extends MusicBeatState
 		{
 				case 'Pad-Right':
 					remove(vpad);
-					vpad = new FlxVirtualPad(RIGHT_FULL, A_D);
+					vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
 					add(vpad);
-					loadcustom();
 				case 'Pad-Left':
 					remove(vpad);
-					vpad = new FlxVirtualPad(FULL, A_D);
+					vpad = new FlxVirtualPad(FULL, NONE);
 					add(vpad);
-					loadcustom();
 				case 'Pad-Custom':
 					remove(vpad);
-					vpad = new FlxVirtualPad(RIGHT_FULL, A_D);
+					vpad = new FlxVirtualPad(RIGHT_FULL, NONE);
 					add(vpad);
 					loadcustom();
+				case 'Duo':
+					remove(vpad);
+					vpad = new FlxVirtualPad(DUO, NONE);
+					add(vpad);
 				case 'Hitbox':
-				vpad.alpha = 0;
+					vpad.alpha = 0;
 				case 'Keyboard':
 					remove(vpad);
 					vpad.alpha = 0;
 		}
-
-		if (daChoice  != "Pad-Left")
-	{
-	  vpad.buttonUp.x = 1022;
-	  vpad.buttonUp.y = 306;
-	  vpad.buttonDown.x = 1022;
-	  vpad.buttonDown.y = 519;
-	  vpad.buttonLeft.x = 869;
-	  vpad.buttonLeft.y = 411;
-	  vpad.buttonRight.x = 1148;
-	  vpad.buttonRight.y = 411;
-	}
 
 		if (daChoice != "Hitbox")
 		{
@@ -236,14 +226,9 @@ class AndroidControlsMenu extends MusicBeatState
 				if (vpad.buttonRight.justPressed) {
 					movebutton(touch, vpad.buttonRight);
 				}
+
 				if (vpad.buttonLeft.justPressed) {
 					movebutton(touch, vpad.buttonLeft);
-				}
-				if (vpad.buttonA.justPressed) {
-					movebutton(touch, vpad.buttonA);
-				}
-				if (vpad.buttonD.justPressed) {
-					movebutton(touch, vpad.buttonD);
 				}
 			}
 		}
@@ -268,14 +253,6 @@ class AndroidControlsMenu extends MusicBeatState
 		var daChoice:String = controlitems[Math.floor(curSelected)];
 
 		if (daChoice == 'Pad-Custom'){
-			config.savecustom(vpad);
-		}
-		
-		if (daChoice == 'Pad-Left'){
-			config.savecustom(vpad);
-		} 
-		
-		if (daChoice == 'Pad-Right'){
 			config.savecustom(vpad);
 		}
 	}
