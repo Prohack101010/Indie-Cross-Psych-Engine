@@ -99,7 +99,7 @@ class MainMenuState extends MusicBeatState
 		credits.x -= 200;
 		credits.alpha = 0.60;
 
-		awards = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Achievements'));
+		awards = new FlxSprite(-100, -450).loadGraphic(Paths.image('mainmenu/opened/Achievements'));
 		menuItems.add(awards);
 		awards.scrollFactor.set();
 		awards.antialiasing = ClientPrefs.globalAntialiasing;
@@ -144,7 +144,7 @@ class MainMenuState extends MusicBeatState
 		creditsSplash.alpha = 0;
 		add(creditsSplash);	
 
-		awardsSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Achievements flash'));
+		awardsSplash = new FlxSprite(-100, -450).loadGraphic(Paths.image('mainmenu/opened/Achievements flash'));
 		awardsSplash.scrollFactor.set();
 		awardsSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		awardsSplash.setGraphicSize(Std.int(awardsSplash.width * 0.7));
