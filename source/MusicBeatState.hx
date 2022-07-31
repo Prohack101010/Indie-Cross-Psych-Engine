@@ -66,7 +66,6 @@ class MusicBeatState extends FlxUIState
 				controls.setVirtualPadNOTES(androidc.vpad, FULL, NONE);
 			case HITBOX:
 				controls.setHitBox(androidc.hbox);
-				controls.setVirtualPadNOTES(androidc.vpad, NONE, NONE);
 			default:
 		}
 
