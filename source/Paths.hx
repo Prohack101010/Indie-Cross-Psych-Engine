@@ -61,41 +61,72 @@ class Paths
 		'assets/shared/music/tea-time.$SOUND_EXT',
 	];
 	/// haya I love you for the base cache dump I took to the max
-	public static function clearUnusedMemory() {
+	public static function clearUnusedMemory()
+	{
 		// clear non local assets in the tracked assets list
-		for (key in currentTrackedAssets.keys()) {
-			// if it is not currently contained within the used local assets
-			if (!localTrackedAssets.contains(key) 
-				&& !dumpExclusions.contains(key)) {
-				// get rid of it
+		var counter:Int = 0;
+		for (key in currentTrackedAssets.keys())
+		{
+			if (!localTrackedAssets.contains(key) && !dumpExclusions.contains(key))
+			{
 				var obj = currentTrackedAssets.get(key);
-				@:privateAccess
-				if (obj != null) {
-					openfl.Assets.cache.removeBitmapData(key);
-					FlxG.bitmap._cache.remove(key);
+				if (obj != null)
+				{
+					var isTexture:Bool = currentTrackedTextures.exists(key);
+					if (isTexture)
+					{
+						var texture = currentTrackedTextures.get(key);
+						texture.dispose();
+						texture = null;
+						currentTrackedTextures.remove(key);
+					}
+					@:privateAccess
+					if (openfl.Assets.cache.hasBitmapData(key))
+					{
+						openfl.Assets.cache.removeBitmapData(key);
+						FlxG.bitmap._cache.remove(key);
+					}
+					trace('removed $key, ' + (isTexture ? 'is a texture' : 'is not a texture'));
 					obj.destroy();
 					currentTrackedAssets.remove(key);
+					counter++;
 				}
 			}
 		}
+		trace('removed $counter assets');
 		// run the garbage collector for good measure lmfao
 		System.gc();
 	}
 
 	// define the locally tracked assets
 	public static var localTrackedAssets:Array<String> = [];
-	public static function clearStoredMemory(?cleanUnused:Bool = false) {
+	public static function clearStoredMemory(?cleanUnused:Bool = false)
+	{
 		// clear anything not in the tracked assets list
 		@:privateAccess
 		for (key in FlxG.bitmap._cache.keys())
 		{
 			var obj = FlxG.bitmap._cache.get(key);
-			if (obj != null && !currentTrackedAssets.exists(key)) {
+			if (obj != null && !currentTrackedAssets.exists(key))
+			{
 				openfl.Assets.cache.removeBitmapData(key);
 				FlxG.bitmap._cache.remove(key);
 				obj.destroy();
 			}
 		}
+
+		// clear all sounds that are cached
+		for (key in currentTrackedSounds.keys())
+		{
+			if (!localTrackedAssets.contains(key) && !dumpExclusions.contains(key) && key != null)
+			{
+				Assets.cache.clear(key);
+				currentTrackedSounds.remove(key);
+			}
+		}
+		// flags everything to be cleared out next unused memory clear
+		localTrackedAssets = [];
+	}
 
 		// clear all sounds that are cached
 		for (key in currentTrackedSounds.keys()) {
@@ -342,32 +373,37 @@ class Paths
 
 	// completely rewritten asset loading? fuck!
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
-	public static function returnGraphic(key:String, ?library:String) {
-		#if MODS_ALLOWED
-		var modKey:String = modsImages(key);
-		if(FileSystem.exists(modKey)) {
-			if(!currentTrackedAssets.exists(modKey)) {
-				var newBitmap:BitmapData = BitmapData.fromFile(modKey);
-				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
-				newGraphic.persist = true;
-				currentTrackedAssets.set(modKey, newGraphic);
-			}
-			localTrackedAssets.push(modKey);
-			return currentTrackedAssets.get(modKey);
-		}
-		#end
-
+	public static function returnGraphic(key:String, ?library:String, ?textureCompression:Bool = false)
+	{
 		var path = getPath('images/$key.png', IMAGE, library);
-		if (OpenFlAssets.exists(path, IMAGE)) {
-			if(!currentTrackedAssets.exists(path)) {
-				var newGraphic:FlxGraphic = FlxG.bitmap.add(path, false, path);
-				newGraphic.persist = true;
-				currentTrackedAssets.set(path, newGraphic);
+		if (FileSystem.exists(path))
+		{
+			if (!currentTrackedAssets.exists(key))
+			{
+				var bitmap = BitmapData.fromFile(path);
+				var newGraphic:FlxGraphic;
+				if (textureCompression)
+				{
+					var texture = FlxG.stage.context3D.createTexture(bitmap.width, bitmap.height, BGRA, true, 0);
+					texture.uploadFromBitmapData(bitmap);
+					currentTrackedTextures.set(key, texture);
+					bitmap.dispose();
+					bitmap.disposeImage();
+					bitmap = null;
+					trace('new texture $key, bitmap is $bitmap');
+					newGraphic = FlxGraphic.fromBitmapData(BitmapData.fromTexture(texture), false, key, false);
+				}
+				else
+				{
+					newGraphic = FlxGraphic.fromBitmapData(bitmap, false, key, false);
+					trace('new bitmap $key, not textured');
+				}
+				currentTrackedAssets.set(key, newGraphic);
 			}
-			localTrackedAssets.push(path);
-			return currentTrackedAssets.get(path);
+			localTrackedAssets.push(key);
+			return currentTrackedAssets.get(key);
 		}
-		trace('oh no its returning null NOOOO');
+		trace('oh no ' + key + ' is returning null NOOOO');
 		return null;
 	}
 
