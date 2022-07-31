@@ -26,6 +26,8 @@ typedef WeekFile =
 	var hiddenUntilUnlocked:Bool;
 	var hideStoryMode:Bool;
 	var hideFreeplay:Bool;
+	var hideBonus:Bool;
+	var hideNightmare:Bool;
 	var difficulties:String;
 }
 
@@ -46,23 +48,27 @@ class WeekData {
 	public var hiddenUntilUnlocked:Bool;
 	public var hideStoryMode:Bool;
 	public var hideFreeplay:Bool;
+	public var hideBonus:Bool;
+	public var hideNightmare:Bool;
 	public var difficulties:String;
 
 	public var fileName:String;
 
 	public static function createWeekFile():WeekFile {
 		var weekFile:WeekFile = {
-			songs: [["Bopeebo", "dad", [146, 113, 253]], ["Fresh", "dad", [146, 113, 253]], ["Dad Battle", "dad", [146, 113, 253]]],
+			songs: [["segs", "dad", [146, 113, 253]], ["pussy", "dad", [146, 113, 253]], ["dick Battle", "dad", [146, 113, 253]]],
 			weekCharacters: ['dad', 'bf', 'gf'],
 			weekBackground: 'stage',
 			weekBefore: 'tutorial',
-			storyName: 'Your New Week',
+			storyName: '',
 			weekName: 'Custom Week',
 			freeplayColor: [146, 113, 253],
 			startUnlocked: true,
 			hiddenUntilUnlocked: false,
 			hideStoryMode: false,
 			hideFreeplay: false,
+			hideBonus: true,
+			hideNightmare: true,
 			difficulties: ''
 		};
 		return weekFile;
@@ -81,6 +87,8 @@ class WeekData {
 		hiddenUntilUnlocked = weekFile.hiddenUntilUnlocked;
 		hideStoryMode = weekFile.hideStoryMode;
 		hideFreeplay = weekFile.hideFreeplay;
+		hideBonus = weekFile.hideBonus;
+		hideNightmare = weekFile.hideNightmare;
 		difficulties = weekFile.difficulties;
 
 		this.fileName = fileName;
@@ -148,7 +156,7 @@ class WeekData {
 						}
 						#end
 
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
+						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay) || (!isStoryMode && !weekFile.hideBonus) || (!isStoryMode && !weekFile.hideNightmare))){
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
 						}
@@ -198,7 +206,7 @@ class WeekData {
 					weekFile.folder = directory.substring(Paths.mods().length, directory.length-1);
 					#end
 				}
-				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay))
+				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay && curSelectedStory == true) || (!PlayState.isStoryMode && !WeekFile.hideBonus && curSelectedBonus == true) || (!PlayState.isStoryMode && !weekFile.hideNightmare && curSelectedNightmare == true))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
 					weeksList.push(weekToCheck);
