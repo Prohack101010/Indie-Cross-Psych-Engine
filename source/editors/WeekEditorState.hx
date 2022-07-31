@@ -750,6 +750,18 @@ class WeekEditorFreeplayState extends MusicBeatState
 		{
 			weekFile.hideFreeplay = hideFreeplayCheckbox.checked;
 		};
+var hideBonusCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "week will be available in the bonus menu", 100);
+		hideBonusCheckbox.checked = weekFile.hideFreeplay;
+		hideBonusCheckbox.callback = function()
+		{
+			weekFile.hideFreeplay = hideBonusCheckbox.checked;
+		};
+var hideNightmareCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "week will be hidden in the nightmarw menu", 100);
+		hideNightmareCheckbox.checked = weekFile.hideFreeplay;
+		hideNightmareCheckbox.callback = function()
+		{
+			weekFile.hideFreeplay = hideBonusCheckbox.checked;
+		};
 		
 		tab_group.add(new FlxText(10, bgColorStepperR.y - 18, 0, 'Selected background Color R/G/B:'));
 		tab_group.add(new FlxText(10, iconInputText.y - 18, 0, 'Selected icon:'));
@@ -760,6 +772,8 @@ class WeekEditorFreeplayState extends MusicBeatState
 		tab_group.add(pasteColor);
 		tab_group.add(iconInputText);
 		tab_group.add(hideFreeplayCheckbox);
+		tab_group.add(hideBonusCheckbox);
+		tab_group.add(hideNightmareCheckbox);
 		UI_box.addGroup(tab_group);
 	}
 
