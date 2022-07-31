@@ -29,7 +29,9 @@ class FreeplaySelectState extends MusicBeatState
 
 	public static var psychEngineVersion:String = '0.5.2h';
 	public static var curSelected:Int = 0;
-
+	public var curSelectedStory:Bool;
+	public var curSelectedBonus:Bool;
+	public var curSelectedNightmare:Bool;
 	var optionShit:Array<String> = [
 	'story', 
 	'bonus',
@@ -37,7 +39,9 @@ class FreeplaySelectState extends MusicBeatState
 	];
 	var optionItems:FlxTypedGroup<FlxSprite>;
 	var bg:FlxSprite;	
-
+	var curSelectedStory:Bool;
+	var curSelectedBonus:Bool;
+	var curSelectedNightmare:Bool;
 	override function create()
 	{
 		#if desktop
@@ -152,9 +156,9 @@ class FreeplaySelectState extends MusicBeatState
 		case 'story':
 			MusicBeatState.switchState(new FreeplayState());
 		case 'bonus':
-			MusicBeatState.switchState(new FreeplayBonusState());
+			MusicBeatState.switchState(new FreeplayState());
 		case 'nightmare':
-			MusicBeatState.switchState(new FreeplayNightmareState());
+			MusicBeatState.switchState(new FreeplayState());
 		}
 	}
 
@@ -175,6 +179,21 @@ class FreeplaySelectState extends MusicBeatState
 				item.alpha = 1;
 				item.color = 0xFFFFFFFF;
 			}
+		}
+		switch (optionShit[curSelected])
+		{
+			case 'Story':
+curSelectedStory = true;
+curSelectedNightmare = false;
+curSelectedBonus = false;
+			case 'bonus':
+curSelectedBonus = true;
+curSelectedStory = false;
+curSelectedNightmare = false;
+			case 'nightmare':
+curSelectedNightmare = true;
+curSelectedStory = false;
+curSelectedBonus = false;
 		}
 	}
 }
