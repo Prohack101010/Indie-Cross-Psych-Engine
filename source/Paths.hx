@@ -114,6 +114,7 @@ class Paths
 				obj.destroy();
 			}
 		}
+	}
 
 		// clear all sounds that are cached
 		for (key in currentTrackedSounds.keys())
