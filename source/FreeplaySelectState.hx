@@ -63,9 +63,6 @@ class FreeplaySelectState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		menuItems = new FlxTypedGroup<FlxSprite>();
-		add(menuItems);
-
 		for (i in 0...3)
 		{
 			var item:FlxSprite = new FlxSprite((370 * i) + 180, 0);
