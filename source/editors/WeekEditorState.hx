@@ -751,16 +751,16 @@ class WeekEditorFreeplayState extends MusicBeatState
 			weekFile.hideFreeplay = hideFreeplayCheckbox.checked;
 		};
 var hideBonusCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "week will be available in the bonus menu", 100);
-		hideBonusCheckbox.checked = weekFile.hideFreeplay;
+		hideBonusCheckbox.checked = weekFile.hideBonus;
 		hideBonusCheckbox.callback = function()
 		{
-			weekFile.hideFreeplay = hideBonusCheckbox.checked;
+			weekFile.hideBonus = hideBonusCheckbox.checked;
 		};
 var hideNightmareCheckbox:FlxUICheckBox = new FlxUICheckBox(10, iconInputText.y + 30, null, null, "week will be hidden in the nightmarw menu", 100);
-		hideNightmareCheckbox.checked = weekFile.hideFreeplay;
+		hideNightmareCheckbox.checked = weekFile.hideNightmare;
 		hideNightmareCheckbox.callback = function()
 		{
-			weekFile.hideFreeplay = hideBonusCheckbox.checked;
+			weekFile.hideNightmare = hideBonusCheckbox.checked;
 		};
 		
 		tab_group.add(new FlxText(10, bgColorStepperR.y - 18, 0, 'Selected background Color R/G/B:'));
