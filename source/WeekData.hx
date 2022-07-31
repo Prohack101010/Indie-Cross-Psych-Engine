@@ -156,7 +156,7 @@ class WeekData {
 						}
 						#end
 
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay) || (!isStoryMode && !weekFile.hideBonus) || (!isStoryMode && !weekFile.hideNightmare))){
+						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay && curSelectedStory == true) || (!isStoryMode && !weekFile.hideBonus && curSelectedBonus == true) || (!isStoryMode && !weekFile.hideNightmare && curSelectedNightmare == true))){
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
 						}
@@ -192,7 +192,7 @@ class WeekData {
 		#end
 	}
 
-	private static function addWeek(weekToCheck:String, path:String, directory:String, i:Int, originalLength:Int)
+	public static function addWeek(weekToCheck:String, path:String, directory:String, i:Int, originalLength:Int)
 	{
 		if(!weeksLoaded.exists(weekToCheck))
 		{
