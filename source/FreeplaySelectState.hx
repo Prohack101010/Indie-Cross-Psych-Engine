@@ -39,9 +39,6 @@ class FreeplaySelectState extends MusicBeatState
 	];
 	var optionItems:FlxTypedGroup<FlxSprite>;
 	var bg:FlxSprite;	
-	var curSelectedStory:Bool;
-	var curSelectedBonus:Bool;
-	var curSelectedNightmare:Bool;
 	override function create()
 	{
 		#if desktop
