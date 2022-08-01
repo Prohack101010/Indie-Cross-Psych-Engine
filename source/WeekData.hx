@@ -206,7 +206,7 @@ class WeekData {
 					weekFile.folder = directory.substring(Paths.mods().length, directory.length-1);
 					#end
 				}
-				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay && FreeplaySelectState.curSelectedStory == true) || (!PlayState.isStoryMode && !WeekFile.hideBonus && FreeplaySelectState.curSelectedBonus == true) || (!PlayState.isStoryMode && !weekFile.hideNightmare && FreeplaySelectState.curSelectedNightmare == true))
+				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay && FreeplaySelectState.curSelectedStory == true) || (!PlayState.isStoryMode && !weekFile.hideBonus && FreeplaySelectState.curSelectedBonus == true) || (!PlayState.isStoryMode && !weekFile.hideNightmare && FreeplaySelectState.curSelectedNightmare == true))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
 					weeksList.push(weekToCheck);
