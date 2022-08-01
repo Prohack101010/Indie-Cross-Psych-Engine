@@ -140,7 +140,7 @@ class OptionsState extends MusicBeatState
 		}
 
 		#if android
-		if (_virtualpad.buttonC.justPressed) {
+		if (virtualpad.buttonC.justPressed) {
 			MusicBeatState.switchState(new android.AndroidControlsMenu());
 		}
 		#end
