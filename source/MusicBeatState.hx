@@ -1,5 +1,11 @@
 package;
 
+#if android
+import android.AndroidControls;
+import android.flixel.FlxVirtualPad;
+import flixel.input.actions.FlxActionInput;
+import flixel.util.FlxDestroyUtil;
+#end
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -38,7 +44,6 @@ class MusicBeatState extends FlxUIState
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
 		virtualPad = new FlxVirtualPad(DPad, Action);
-		virtualPad.alpha = 0.6;
 		add(virtualPad);
 
 		controls.setVirtualPadUI(virtualPad, DPad, Action);
@@ -58,7 +63,6 @@ class MusicBeatState extends FlxUIState
 	public function addAndroidControls()
 	{
 		androidControls = new AndroidControls();
-		androidControls.alpha = 0.6;
 
 		switch (AndroidControls.getMode())
 		{
@@ -129,9 +133,10 @@ class MusicBeatState extends FlxUIState
 			androidControls = null;
 		}
 		#end
+	}
+
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
-}
 		super.create();
 
 		if(!skip) {
@@ -220,8 +225,7 @@ class MusicBeatState extends FlxUIState
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
-
-leState.openSubState(new CustomFadeTransition(0.6, false));
+			leState.openSubState(new CustomFadeTransition(0.6, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
 					FlxG.resetState();
