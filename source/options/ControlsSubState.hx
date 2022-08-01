@@ -8,7 +8,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.addons.transition.FlxTransitionableState;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
@@ -41,7 +40,7 @@ class ControlsSubState extends MusicBeatSubstate {
 		['Down', 'note_down'],
 		['Up', 'note_up'],
 		['Right', 'note_right'],
-		[''], 
+		[''],
 		['UI'],
 		['Left', 'ui_left'],
 		['Down', 'ui_down'],
@@ -72,7 +71,8 @@ class ControlsSubState extends MusicBeatSubstate {
 	public function new() {
 		super();
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.color = 0xFFea71fd;
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
@@ -133,12 +133,12 @@ class ControlsSubState extends MusicBeatSubstate {
 
 			if (controls.BACK) {
 				ClientPrefs.reloadControls();
-			        #if android
-                                FlxTransitionableState.skipNextTransOut = true;
-			        FlxG.resetState();
-                                #else
-                                close();
-                                #end
+				#if android
+				flixel.addons.transition.FlxTransitionableState.skipNextTransOut = true;
+				FlxG.resetState();
+				#else
+				close();
+				#end
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
 
