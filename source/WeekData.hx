@@ -1,5 +1,5 @@
 package;
-
+import FreeplaySelectState;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
