@@ -1725,7 +1725,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
                         #if android
-                        androidc.visible = true;
+                        androidControls.visible = true;
                         #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
@@ -3379,8 +3379,8 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		}
 
     	#if android
-        androidc.visible = false;
-		_virtualpad.visible = false;
+        androidControls.visible = false;
+		virtualPad.visible = false;
         #end		
 		timeBarBG.visible = false;
 		timeBar.visible = false;
