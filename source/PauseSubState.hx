@@ -60,6 +60,7 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		difficultyChoices.push('BACK');
 
+
 		pauseMusic = new FlxSound();
 		if(songName != null) {
 			pauseMusic.loadEmbedded(Paths.music(songName), true, true);
@@ -136,7 +137,7 @@ class PauseSubState extends MusicBeatSubstate
 		#if android
 		if (PlayState.chartingMode)
 		{
-			addVirtualPad(FULL, A);
+			addVirtualPad(LEFT_FULL, A);
 		}
 		else
 		{
@@ -230,6 +231,9 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
+				case 'Chart Editor':
+		                        MusicBeatState.switchState(new editors.ChartingState());
+		                        PlayState.chartingMode = true;
 				case "Restart Song":
 					restartSong();
 				case "Leave Charting Mode":
@@ -259,9 +263,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
-                                case 'Chart Editor':
-		                        MusicBeatState.switchState(new editors.ChartingState());
-		                        PlayState.chartingMode = true;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
