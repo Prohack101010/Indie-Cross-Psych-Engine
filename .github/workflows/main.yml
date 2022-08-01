@@ -63,7 +63,7 @@ jobs:
           haxelib install flixel-addons --quiet
           haxelib install hxCodec --quiet
           haxelib git linc_luajit https://github.com/MAJigsaw77/linc_luajit.git
-          haxelib git extension-androidtools https://github.com/MaysLastPlay77/extension-androidtools.git
+          haxelib git extension-androidtools https://github.com/jigsaw-4277821/extension-androidtools.git
           haxelib run lime setup flixel
 
       - name: Create Version Tag
