@@ -156,7 +156,7 @@ class WeekData {
 						}
 						#end
 
-						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay && curSelectedStory == true) || (!isStoryMode && !weekFile.hideBonus && curSelectedBonus == true) || (!isStoryMode && !weekFile.hideNightmare && curSelectedNightmare == true))){
+						if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay && FreeplaySelectState.curSelectedStory == true) || (!isStoryMode && !weekFile.hideBonus && FreeplaySelectState.curSelectedBonus == true) || (!isStoryMode && !weekFile.hideNightmare && FreeplaySelectState.curSelectedNightmare == true))){
 							weeksLoaded.set(sexList[i], weekFile);
 							weeksList.push(sexList[i]);
 						}
@@ -206,7 +206,7 @@ class WeekData {
 					weekFile.folder = directory.substring(Paths.mods().length, directory.length-1);
 					#end
 				}
-				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay && curSelectedStory == true) || (!PlayState.isStoryMode && !WeekFile.hideBonus && curSelectedBonus == true) || (!PlayState.isStoryMode && !weekFile.hideNightmare && curSelectedNightmare == true))
+				if((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay && FreeplaySelectState.curSelectedStory == true) || (!PlayState.isStoryMode && !WeekFile.hideBonus && FreeplaySelectState.curSelectedBonus == true) || (!PlayState.isStoryMode && !weekFile.hideNightmare && FreeplaySelectState.curSelectedNightmare == true))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
 					weeksList.push(weekToCheck);
