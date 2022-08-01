@@ -62,7 +62,7 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		Story_mode = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Story_mode'));
+		Story_mode = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Story_mode'));
 		menuItems.add(Story_mode);
 		Story_mode.scrollFactor.set();
 		Story_mode.antialiasing = ClientPrefs.globalAntialiasing;
@@ -72,7 +72,7 @@ class MainMenuState extends MusicBeatState
 		Story_mode.alpha = 0.60;
 
 
-		freeplay = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Freeplay'));
+		freeplay = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Freeplay'));
 		menuItems.add(freeplay);
 		freeplay.scrollFactor.set();
 		freeplay.antialiasing = ClientPrefs.globalAntialiasing;
@@ -81,7 +81,7 @@ class MainMenuState extends MusicBeatState
 		freeplay.x -= 200;
 		freeplay.alpha = 0.60;
 
-		options = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Options'));
+		options = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Options'));
 		menuItems.add(options);
 		options.scrollFactor.set();
 		options.antialiasing = ClientPrefs.globalAntialiasing;
@@ -90,7 +90,7 @@ class MainMenuState extends MusicBeatState
 		options.x -= 200;
 		options.alpha = 0.60;
 
-		credits = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Credits'));
+		credits = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Credits'));
 		menuItems.add(credits);
 		credits.scrollFactor.set();
 		credits.antialiasing = ClientPrefs.globalAntialiasing;
@@ -99,7 +99,7 @@ class MainMenuState extends MusicBeatState
 		credits.x -= 200;
 		credits.alpha = 0.60;
 
-		awards = new FlxSprite(-100, -450).loadGraphic(Paths.image('mainmenu/opened/Achievements'));
+		awards = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Achievements'));
 		menuItems.add(awards);
 		awards.scrollFactor.set();
 		awards.antialiasing = ClientPrefs.globalAntialiasing;
@@ -108,7 +108,7 @@ class MainMenuState extends MusicBeatState
 		awards.x -= 200;
 		awards.alpha = 0.60;
 		
-		Story_modeSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Story_mode flash'));
+		Story_modeSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Story_mode flash'));
 		Story_modeSplash.scrollFactor.set();
 		Story_modeSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		Story_modeSplash.setGraphicSize(Std.int(Story_modeSplash.width * 0.7));
@@ -117,7 +117,7 @@ class MainMenuState extends MusicBeatState
 		Story_modeSplash.alpha = 0;
 		add(Story_modeSplash);
 
-		freeplaySplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Freeplay flash'));
+		freeplaySplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Freeplay flash'));
 		freeplaySplash.scrollFactor.set();
 		freeplaySplash.antialiasing = ClientPrefs.globalAntialiasing;
 		freeplaySplash.setGraphicSize(Std.int(freeplaySplash.width * 0.7));
@@ -126,7 +126,7 @@ class MainMenuState extends MusicBeatState
 		freeplaySplash.alpha = 0;
 		add(freeplaySplash);
 		
-		optionsSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Options flash'));
+		optionsSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Options flash'));
 		optionsSplash.scrollFactor.set();
 		optionsSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		optionsSplash.setGraphicSize(Std.int(optionsSplash.width * 0.7));
@@ -135,7 +135,7 @@ class MainMenuState extends MusicBeatState
 		optionsSplash.alpha = 0;
 		add(optionsSplash);	
 
-		creditsSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Credits flash'));
+		creditsSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Credits flash'));
 		creditsSplash.scrollFactor.set();
 		creditsSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		creditsSplash.setGraphicSize(Std.int(creditsSplash.width * 0.7));
@@ -144,7 +144,7 @@ class MainMenuState extends MusicBeatState
 		creditsSplash.alpha = 0;
 		add(creditsSplash);	
 
-		awardsSplash = new FlxSprite(-100, -450).loadGraphic(Paths.image('mainmenu/opened/Achievements flash'));
+		awardsSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Achievements flash'));
 		awardsSplash.scrollFactor.set();
 		awardsSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		awardsSplash.setGraphicSize(Std.int(awardsSplash.width * 0.7));
