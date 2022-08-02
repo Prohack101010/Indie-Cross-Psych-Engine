@@ -11,22 +11,6 @@ import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
 
-//crash handler stuff
-#if CRASH_HANDLER
-import lime.app.Application;
-import openfl.events.UncaughtErrorEvent;
-import haxe.CallStack;
-import haxe.io.Path;
-#if desktop
-import Discord.DiscordClient;
-#end
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
-#end
-
-using StringTools;
-
 class Main extends Sprite
 {
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
@@ -37,7 +21,7 @@ class Main extends Sprite
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
-	public static var toastManager:ToastHandler;
+	public static var toastManager:ToastHandler; 
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -49,6 +33,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+ 	        SUtil.gameCrashCheck();
 
 		if (stage != null)
 		{
@@ -84,7 +70,11 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		SUtil.check();
+		SUtil.doTheCheck();
+
+		#if !debug
+		initialState = TitleState;
+		#end
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
@@ -97,61 +87,11 @@ class Main extends Sprite
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
 
-		
-		toastManager = new ToastHandler();
-		addChild(toastManager);
-
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
-
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
+		toastManager = new ToastHandler();
+		addChild(toastManager);
 	}
-
-	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
-	// very cool person for real they don't get enough credit for their work
-	#if CRASH_HANDLER
-	function onCrash(e:UncaughtErrorEvent):Void
-	{
-		var errMsg:String = "";
-		var path:String;
-		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
-
-		dateNow = dateNow.replace(" ", "_");
-		dateNow = dateNow.replace(":", "'");
-
-		path = SUtil.getPath() + "crash/" + "PsychEngine_" + dateNow + ".txt";
-
-		for (stackItem in callStack)
-		{
-			switch (stackItem)
-			{
-				case FilePos(s, file, line, column):
-					errMsg += file + " (line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
-			}
-		}
-
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/jigsaw-4277821/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
-
-		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
-			FileSystem.createDirectory(SUtil.getPath() + "crash/");
-
-		File.saveContent(path, errMsg + "\n");
-
-		Sys.println(errMsg);
-		Sys.println("Crash dump saved in " + Path.normalize(path));
-
-		Application.current.window.alert(errMsg, "Error!");
-		#if desktop
-		DiscordClient.shutdown();
-		#end
-		Sys.exit(1);
-	}
-	#end
 }
