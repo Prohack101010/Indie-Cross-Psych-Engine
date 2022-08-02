@@ -955,7 +955,7 @@ class PlayState extends MusicBeatState
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 		playerStrums = new FlxTypedGroup<StrumNote>();
 
-		// startwn();
+		// startCountdown();
 
 		generateSong(SONG.song);
 		#if LUA_ALLOWED
@@ -1724,9 +1724,9 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
-    #if android
-  androidControls.visible = true;
-    #end
+                        #if android
+                        androidc.visible = true;
+                        #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 
@@ -1820,15 +1820,14 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						});
 						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
 					case 2:
-countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
-						countdownSet.cameras = [camHUD];
+						countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 						countdownSet.scrollFactor.set();
 
 						if (PlayState.isPixelStage)
 							countdownSet.setGraphicSize(Std.int(countdownSet.width * daPixelZoom));
+
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
-						insert(members.indexOf(notes), countdownSet); 
 						add(countdownSet);
 						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
@@ -2660,12 +2659,12 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 		FlxG.watch.addQuick("beatShit", curBeat);
 		FlxG.watch.addQuick("stepShit", curStep);
 
-		/* RESET = Quick Game Over Screen
+		// RESET = Quick Game Over Screen
 		if (!ClientPrefs.noReset && controls.RESET && !inCutscene && !endingSong)
 		{
 			health = 0;
 			trace("RESET = True");
-		} */ 
+		}
 		doDeathCheck();
 
 		if (unspawnNotes[0] != null)
@@ -3378,9 +3377,9 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 			}
 		}
 
-    	#if android
-        androidControls.visible = false;
-        #end		
+                #if android
+                androidc.visible = false;
+                #end		
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -3859,18 +3858,6 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 	// Hold notes
 	private function keyShit():Void
 	{
-	/*	#if android
-		if(_virtualpad.buttonA.justPressed) {
-			callOnLuas('buttonAjustPressed', []);
-			return;
-		}
-
-		if(_virtualpad.buttonD.justPressed) {
-			callOnLuas('buttonDjustPressed', []);
-			return;
-		}
-		#end */
-
 		// HOLDING
 		var up = controls.NOTE_UP;
 		var right = controls.NOTE_RIGHT;
