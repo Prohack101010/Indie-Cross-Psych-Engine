@@ -127,12 +127,12 @@ class FreeplaySelectState extends MusicBeatState
 				{
 					//FlxTween.tween(nightmareSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(optionsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
 				}
-				}									
+				}
 			}
-		}
 
 		super.update(elapsed);
-{
+	}
+
 	public function goToState()
 	{
 		var daChoice:String = optionShit[curSelected];
@@ -145,7 +145,6 @@ class FreeplaySelectState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 			case 'nightmare':
 				MusicBeatState.switchState(new FreeplayState());
-		}
 	}
 }
 	public function changeItem(huh:Int = 0)
