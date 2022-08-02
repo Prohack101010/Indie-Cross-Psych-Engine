@@ -147,7 +147,7 @@ class FreeplaySelectState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 		}
 	}
-
+}
 	public function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
@@ -182,5 +182,4 @@ curSelectedNightmare = false;
 curSelectedBonus = true;
 		}
 	}
-}
 }
