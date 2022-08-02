@@ -104,6 +104,7 @@ class OptionsState extends MusicBeatState
 		tipText.scrollFactor.set();
 		add(tipText);
 		#end
+		FlxG.sound.playMusic(Paths.music('settin'), 1, true);
 
 		changeSelection();
 		ClientPrefs.saveSettings();
@@ -131,6 +132,7 @@ class OptionsState extends MusicBeatState
 		}
 
 		if (controls.BACK) {
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
