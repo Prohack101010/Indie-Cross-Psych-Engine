@@ -132,7 +132,7 @@ class FreeplaySelectState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-
+{
 	public function goToState()
 	{
 		var daChoice:String = optionShit[curSelected];
@@ -182,4 +182,5 @@ curSelectedNightmare = false;
 curSelectedBonus = true;
 		}
 	}
+}
 }
