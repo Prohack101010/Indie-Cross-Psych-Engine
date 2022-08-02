@@ -1725,7 +1725,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
                         #if android
-                        androidc.visible = true;
+                        androidControls.visible = true;
                         #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
@@ -3378,7 +3378,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		}
 
                 #if android
-                androidc.visible = false;
+                androidControls.visible = false;
                 #end		
 		timeBarBG.visible = false;
 		timeBar.visible = false;
