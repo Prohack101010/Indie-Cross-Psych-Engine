@@ -39,7 +39,9 @@ class AndroidControlsSubState extends FlxSubState
 	{
 		curSelected = AndroidControls.getMode();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuBG'));
+                var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuBG"));
+
+                bg.updateHitbox();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
