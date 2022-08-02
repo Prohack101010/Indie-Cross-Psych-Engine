@@ -1724,9 +1724,9 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
 		if(ret != FunkinLua.Function_Stop) {
 			if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
-                        #if android
-                        androidControls.visible = true;
-                        #end
+    #if android
+  androidControls.visible = true;
+    #end
 			generateStaticArrows(0);
 			generateStaticArrows(1);
 
@@ -1810,7 +1810,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						countdownReady.screenCenter();
 						countdownReady.antialiasing = antialias;
 						add(countdownReady);
-						FlxTween.tween(countdownReady, {/*y: wnReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -1820,8 +1820,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 						});
 						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
 					case 2:
-countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
-						countdownSet.cameras = [camHUD];
+						countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 						countdownSet.scrollFactor.set();
 
 						if (PlayState.isPixelStage)
@@ -1829,7 +1828,7 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 
 						countdownSet.screenCenter();
 						countdownSet.antialiasing = antialias;
-						insert(members.indexOf(notes), countdownSet);
+						add(countdownSet);
 						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
 							ease: FlxEase.cubeInOut,
 							onComplete: function(twn:FlxTween)
@@ -3380,7 +3379,6 @@ countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 
     	#if android
         androidControls.visible = false;
-		virtualPad.visible = false;
         #end		
 		timeBarBG.visible = false;
 		timeBar.visible = false;
