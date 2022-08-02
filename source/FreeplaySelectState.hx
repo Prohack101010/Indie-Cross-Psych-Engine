@@ -21,8 +21,6 @@ using StringTools;
 
 class FreeplaySelectState extends MusicBeatState
 {
-
-	public static var curSelected:Int = 0;
 	public static var curSelected:Int = 0;
 	public static var curSelectedStory:Bool;
 	public static var curSelectedBonus:Bool;
