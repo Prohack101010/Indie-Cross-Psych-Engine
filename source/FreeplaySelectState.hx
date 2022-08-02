@@ -51,24 +51,33 @@ class FreeplaySelectState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		story = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplaySelect/story'));
+		story = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/story'));
 		menuItems.add(story);
 		story.scrollFactor.set();
 		story.antialiasing = ClientPrefs.globalAntialiasing;
 		story.setGraphicSize(Std.int(story.width * 0.7));
+		story.y += 230;		
+		story.x -= 200;
+		story.alpha = 0.60;
 
-
-		bonus = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplaySelect/bonus'));
+		bonus = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/bonus'));
 		menuItems.add(bonus);
 		bonus.scrollFactor.set();
 		bonus.antialiasing = ClientPrefs.globalAntialiasing;
 		bonus.setGraphicSize(Std.int(bonus.width * 0.7));
+		bonus.y += 230;		
+		bonus.x -= 200;
+		bonus.alpha = 0.60;
 
-		nightmare = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplaySelect/nightmare'));
+		nightmare = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/nightmare'));
 		menuItems.add(nightmare);
 		nightmare.scrollFactor.set();
 		nightmare.antialiasing = ClientPrefs.globalAntialiasing;
 		nightmare.setGraphicSize(Std.int(nightmare.width * 0.7));
+		nightmare.y += 230;		
+		nightmare.x -= 200;
+		nightmare.alpha = 0.60;
+
 		changeItem();
 
 		#if android
