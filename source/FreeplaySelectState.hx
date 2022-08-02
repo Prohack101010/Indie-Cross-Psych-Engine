@@ -81,7 +81,7 @@ class FreeplaySelectState extends MusicBeatState
 		nightmare.x -= 200;
 		nightmare.alpha = 0.60;
 
-		storySplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/storySlpash'));
+		storySplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/storySplash'));
 		storySplash.scrollFactor.set();
 		storySplash.antialiasing = ClientPrefs.globalAntialiasing;
 		storySplash.setGraphicSize(Std.int(storySplash.width * 0.7));
@@ -90,7 +90,7 @@ class FreeplaySelectState extends MusicBeatState
 		storySplash.alpha = 0;
 		add(storySplash);	
 	
-		bonusSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/bonusSlpash'));
+		bonusSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/bonusSplash'));
 		bonusSplash.scrollFactor.set();
 		bonusSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		bonusSplash.setGraphicSize(Std.int(bonusSplash.width * 0.7));
@@ -207,15 +207,15 @@ curSelectedBonus = false;
 				story.alpha = 0.6;
 				nightmare.alpha = 0.6;
 curSelectedStory = false;
-curSelectedNightmare = true;
-curSelectedBonus = false;
+curSelectedNightmare = false;
+curSelectedBonus = true;
 			case 'nightmare':
 				bonus.alpha = 0.6;
 				story.alpha = 0.6;
 				nightmare.alpha = 1;
 curSelectedStory = false;
-curSelectedNightmare = false;
-curSelectedBonus = true;
+curSelectedNightmare = true;
+curSelectedBonus = false;
 		}
 	}
 }
