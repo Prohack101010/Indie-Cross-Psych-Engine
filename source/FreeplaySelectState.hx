@@ -30,6 +30,9 @@ class FreeplaySelectState extends MusicBeatState
 	var story:FlxSprite;
 	var bonus:FlxSprite;
 	var nightmare:FlxSprite;
+	var storySplash:FlxSprite;
+	var bonusSplash:FlxSprite;
+	var nightmareSplash:FlxSprite;
 	var bg:FlxSprite;	
 
 	override function create()
@@ -78,6 +81,33 @@ class FreeplaySelectState extends MusicBeatState
 		nightmare.x -= 200;
 		nightmare.alpha = 0.60;
 
+		storySplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/storySlpash'));
+		storySplash.scrollFactor.set();
+		storySplash.antialiasing = ClientPrefs.globalAntialiasing;
+		storySplash.setGraphicSize(Std.int(storySplash.width * 0.7));
+		storySplash.y += 230;
+		storySplash.x -= 200;
+		storySplash.alpha = 0;
+		add(storySplash);	
+	
+		bonusSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/bonusSlpash'));
+		bonusSplash.scrollFactor.set();
+		bonusSplash.antialiasing = ClientPrefs.globalAntialiasing;
+		bonusSplash.setGraphicSize(Std.int(bonusSplash.width * 0.7));
+		bonusSplash.y += 230;
+		bonusSplash.x -= 200;
+		bonusSplash.alpha = 0;
+		add(bonusSplash);	
+
+		nightmareSplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('freeplayselect/nightmareSplash'));
+		nightmareSplash.scrollFactor.set();
+		nightmareSplash.antialiasing = ClientPrefs.globalAntialiasing;
+		nightmareSplash.setGraphicSize(Std.int(nightmareSplash.width * 0.7));
+		nightmareSplash.y += 230;
+		changeItemSplash.x -= 200;
+		nightmareSplash.alpha = 0;
+		add(nightmareSplash);	
+
 		changeItem();
 
 		#if android
@@ -114,7 +144,7 @@ class FreeplaySelectState extends MusicBeatState
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				MusicBeatState.switchState(new TitleState());
+				MusicBeatState.switchState(new MainMenuState());
 			}
 
 			if (controls.ACCEPT)
@@ -124,15 +154,15 @@ class FreeplaySelectState extends MusicBeatState
 				
 				if (curSelected == 0)
 				{
-					//FlxTween.tween(storySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(Story_modeSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+					FlxTween.tween(storySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(storySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
 				}
 				else if (curSelected == 1)
 				{
-					//FlxTween.tween(bonusSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(freeplaySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+					FlxTween.tween(bonusSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(bonusSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
 				} 
 				else if (curSelected == 2) 
 				{
-					//FlxTween.tween(nightmareSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(optionsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+					FlxTween.tween(nightmareSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(nightmareSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
 				}
 				}
 			}
@@ -147,11 +177,11 @@ class FreeplaySelectState extends MusicBeatState
 		switch (daChoice)
 		{
 		    case 'story':
-				FlxG.switchState(new (FreeplayState));
+				MusicBeatState.switchState(new FreeplayState());
 			case 'bonus':
-				FlxG.switchState(new (FreeplayState));
+				MusicBeatState.switchState(new FreeplayState());
 			case 'nightmare':
-				FlxG.switchState(new (FreeplayState));
+				MusicBeatState.switchState(new FreeplayState());
 	}
 }
 	public function changeItem(huh:Int = 0)
