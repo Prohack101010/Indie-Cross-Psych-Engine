@@ -142,7 +142,7 @@ class AndroidControlsSubState extends FlxSubState
 				AndroidControls.setCustomMode(virtualPad);
 
 			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
+			FlxG.switchState(new options.OptionsState());
 		}
 
 		super.update(elapsed);
