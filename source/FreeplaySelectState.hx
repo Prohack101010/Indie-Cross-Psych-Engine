@@ -104,7 +104,7 @@ class FreeplaySelectState extends MusicBeatState
 		nightmareSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		nightmareSplash.setGraphicSize(Std.int(nightmareSplash.width * 0.7));
 		nightmareSplash.y += 230;
-		changeItemSplash.x -= 200;
+		nightmareSplash.x -= 200;
 		nightmareSplash.alpha = 0;
 		add(nightmareSplash);	
 
