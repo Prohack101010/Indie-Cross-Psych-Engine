@@ -1539,7 +1539,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		char.x += char.positionArray[0];
 		char.y += char.positionArray[1];
 	}
-
+public function startVideo(name:String) {
 #if VIDEOS_ALLOWED
 		inCutscene = true;
 
