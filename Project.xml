@@ -164,7 +164,7 @@
 	<android permission="android.permission.VIBRATE"/>
 	<android permission="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<android permission="android.permission.READ_EXTERNAL_STORAGE"/>
-	<android target-sdk-version="29" />
+	<!-- <android target-sdk-version="29" /> -->
 
 	<!-- _________________________________ Custom _______________________________ -->
 
