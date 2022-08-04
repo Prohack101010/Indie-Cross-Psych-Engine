@@ -1715,7 +1715,7 @@ public function startVideo(name:String) {
 	public function startCountdown():Void
 	{
 		if(startedCountdown) {
-			callOnLuas('onStartCountdown', []);
+			callOnLuas('onStartCountdown', [], false);
 			return;
 		}
 
@@ -1920,10 +1920,13 @@ public function startVideo(name:String) {
 
 		FlxG.sound.music.time = time;
 		FlxG.sound.music.play();
-
-		vocals.time = time;
+		if (Conductor.songPosition <= vocals.length)
+		{
+			vocals.time = time;
+		}
 		vocals.play();
 		Conductor.songPosition = time;
+			vocals.time = time;
 	}
 
 	function startNextDialogue() {
@@ -2375,8 +2378,11 @@ public function startVideo(name:String) {
 
 		FlxG.sound.music.play();
 		Conductor.songPosition = FlxG.sound.music.time;
-		vocals.time = Conductor.songPosition;
-		vocals.play();
+		if (Conductor.songPosition <= vocals.length)
+		{
+			vocals.time = Conductor.songPosition;
+		}
+		vocals.play()
 	}
 
 	public var paused:Bool = false;
@@ -2508,7 +2514,7 @@ public function startVideo(name:String) {
 		if(!inCutscene) {
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
-			if(!startingSong && !endingSong && boyfriend.animation.curAnim.name.startsWith('idle')) {
+			if(!startingSong && !endingSong && boyfriend.animation.curAnim != null && boyfriend.animation.curAnim.name.startsWith('idle')) {
 				boyfriendIdleTime += elapsed;
 				if(boyfriendIdleTime >= 0.15) { // Kind of a mercy thing for making the achievement easier to get as it's apparently frustrating to some playerss
 					boyfriendIdled = true;
@@ -3879,7 +3885,7 @@ public function startVideo(name:String) {
 		}
 
 		// FlxG.watch.addQuick('asdfa', upP);
-		if (!boyfriend.stunned && generatedMusic)
+		if (startedCountdown && !boyfriend.stunned && generatedMusic)
 		{
 			// rewritten inputs???
 			notes.forEachAlive(function(daNote:Note)
