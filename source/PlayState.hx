@@ -1715,7 +1715,7 @@ public function startVideo(name:String) {
 	public function startCountdown():Void
 	{
 		if(startedCountdown) {
-			callOnLuas('onStartCountdown', [], false);
+			callOnLuas('onStartCountdown', []);
 			return;
 		}
 
