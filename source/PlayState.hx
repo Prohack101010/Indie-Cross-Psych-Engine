@@ -2382,7 +2382,7 @@ public function startVideo(name:String) {
 		{
 			vocals.time = Conductor.songPosition;
 		}
-		vocals.play()
+		vocals.play();
 	}
 
 	public var paused:Bool = false;
