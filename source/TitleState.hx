@@ -287,7 +287,6 @@ class TitleState extends MusicBeatState
 		cup.updateHitbox();
 		cup.angle = 0;
 		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
-		cup.setGraphicSize(Std.int(cup.width / resizeConstant)); 
 		add(cup);
 
 		sans = new FlxSprite(399, - 70);
@@ -298,7 +297,6 @@ class TitleState extends MusicBeatState
 		sans.updateHitbox();
 		sans.angle = 0;
 		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
-		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		add(sans);
 
 		bendy = new FlxSprite(660, 70);
@@ -308,8 +306,7 @@ class TitleState extends MusicBeatState
 		bendy.animation.play('bump');
 		bendy.updateHitbox();
 		bendy.angle = 0;
-		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING}); 
-		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
+		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
 		add(bendy); 
 
 		logoBl = new FlxSprite(-80, 0);
@@ -319,7 +316,6 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;
 
@@ -354,7 +350,6 @@ class TitleState extends MusicBeatState
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!! me: ok
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
 				BFdance.animation.addByPrefix('dance', 'BF idle dance',  24, false);
-				BFdance.setGraphicSize(Std.int(BFdance.width / resizeConstant));
 				if (curBeat % 1 == 0) {
 					BFdance.animation.play('dance', true);
 				}
@@ -371,19 +366,18 @@ class TitleState extends MusicBeatState
 		Play.antialiasing = ClientPrefs.globalAntialiasing;
 		Play.animation.addByPrefix('bump', 'c', 24, false);
 		Play.animation.play('bump');
-		Play.setGraphicSize(Std.int(Play.width / resizeConstant));
 		Play.updateHitbox();
 
 		titleText = new FlxSprite(735, 600);
 		#if MODS_ALLOWED
-		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/title/Playbutton.png";
+		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/titel/Playbutton.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "mods/images/title/Playbuttom.png";
+			path = SUtil.getPath() + "mods/images/titel/Playbuttom.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "assets/images/title/Playbutton.png";
+			path = SUtil.getPath() + "assets/images/titel/Playbutton.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
@@ -395,7 +389,6 @@ class TitleState extends MusicBeatState
 		titleText.antialiasing = ClientPrefs.globalAntialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
-		titleText.setGraphicSize(Std.int(titleText.width / resizeConstant));
 		// titleText.screenCenter(X);
 		add(titleText);
 		add(Play);
