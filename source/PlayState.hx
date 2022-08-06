@@ -1539,6 +1539,11 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		char.x += char.positionArray[0];
 		char.y += char.positionArray[1];
 	}
+		public function getLuaObject(tag:String, text:Bool=true):FlxSprite {
+		if(modchartSprites.exists(tag)) return modchartSprites.get(tag);
+		if(text && modchartTexts.exists(tag)) return modchartTexts.get(tag);
+		return null;
+	}
 public function startVideo(name:String) {
 #if VIDEOS_ALLOWED
 		inCutscene = true;
