@@ -1308,7 +1308,7 @@ class PlayState extends MusicBeatState
 		}
 		if (kr>2)
 			kr = 2;
-	}*/
+	}
 	public function addTextToDebug(text:String) {
 		#if LUA_ALLOWED
 		luaDebugGroup.forEachAlive(function(spr:DebugLuaText) {
