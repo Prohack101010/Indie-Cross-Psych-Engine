@@ -136,7 +136,9 @@ class PlayState extends MusicBeatState
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
-
+	public static var brightFyreVal:Float = 0;
+	public static var brightMagnitude:Float = 0;
+	public static var brightSpeed:Float = 0;
 	private var strumLine:FlxSprite;
 
 	//Handles the new epic mega sexy cam code that i've done
@@ -1193,7 +1195,8 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-
+        case 'devils-gambit':
+				brightSetup();
 				default:
 					startCountdown();
 			}
@@ -2895,7 +2898,61 @@ public function startVideo(name:String) {
 		}
 		return false;
 	}
-
+	public static function brightSetup()
+	{
+		if (curStage == 'factory' && (ClientPrefs.flashing && !ClientPrefs.lowQuality))
+		{
+			{
+				defaultBrightVal = -0.05;
+				brightSpeed = 0.2;
+				brightMagnitude = 0.05;
+			}
+			else
+			{
+				if (SONG.song.toLowerCase() == 'ritual')
+				{
+					defaultBrightVal = -0.05;
+					brightSpeed = 0.5;
+					brightMagnitude = 0.05;
+				}
+				else
+				{
+					if (SONG.song.toLowerCase() == 'nightmare-run')
+					{
+						defaultBrightVal = -0.05;
+						brightSpeed = 0.5;
+						brightMagnitude = 0.05;
+					}
+					else if (SONG.song.toLowerCase() == 'imminent-demise')
+					{
+						defaultBrightVal = 0;
+					}
+					else
+					{
+						defaultBrightVal = -0.05;
+						brightSpeed = 0.5;
+						brightMagnitude = 0.05;
+					}
+				}
+			}
+		}
+		else if (SONG.song.toLowerCase() == 'devils-gambit')
+		{
+			defaultBrightVal = -0.05;
+			brightSpeed = 0.2;
+			brightMagnitude = 0.05;
+		}
+		else if (SONG.song.toLowerCase() == 'burning-in-hell')
+		{
+			defaultBrightVal = -0.04;
+			brightSpeed = 0.1;
+			brightMagnitude = 0.04;
+		}
+		else
+		{
+			defaultBrightVal = 0;
+		}
+	}
 	public function checkEventNote() {
 		while(eventNotes.length > 0) {
 			var leStrumTime:Float = eventNotes[0].strumTime;
