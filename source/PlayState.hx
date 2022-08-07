@@ -143,7 +143,7 @@ class PlayState extends MusicBeatState
 	public var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
-
+	public var krTweenObj:FlxTween;
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
 	public var playerStrums:FlxTypedGroup<StrumNote>;
@@ -168,8 +168,8 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
-		private var krBar:FlxBar;
-	var kr = 0.0;
+	public var krBar:FlxBar;
+	public var kr = 0.0;
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
@@ -719,7 +719,7 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 		if(curStage == 'hall' || curStage == 'hallDark' || curStage == 'nightmareHall') {
-				krTween(healthincrease);
+	//			krTween(healthincrease);
 		}
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
@@ -1299,10 +1299,10 @@ class PlayState extends MusicBeatState
 
 		updatesansbars();
 	}*/
-	public function updatesansbars() {
-		if (kr > health)
+	public static function updatesansbars() {
+		if (kr > shownHealth)
 			healthBar.color = 0xFFff00ff;
-		if (kr <= health) {
+		if (kr <= shownHealth) {
 			healthBar.color = 0xFFFFFFFF;
 			kr = health;
 		}
