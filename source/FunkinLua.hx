@@ -433,7 +433,7 @@ class FunkinLua {
 			luaTrace("Object " + obj + " doesn't exist!");
 		});
 		Lua_helper.add_callback(lua, "krTween", function(amt:Float) {
-		if (health <= 0)
+		if (shownHealth <= 0)
 			amt = Math.abs(amt);
 		krTweenObj.cancel();
 		krTweenObj = FlxTween.num(kr, kr - amt, 0.1, {ease: FlxEase.cubeInOut}, function(v:Float)
@@ -445,7 +445,7 @@ class FunkinLua {
 				});
 			Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
 
-		if (health <= 0)
+		if (shownHealth <= 0)
 		{
 			amt = Math.abs(amt);
 		}
