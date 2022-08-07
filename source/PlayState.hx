@@ -1354,18 +1354,21 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 
         switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud': 
+            case 'camhud' | 'hud': if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
                 camHUDShaders = [];
                 var newCamEffects:Array<BitmapFilter>=[];
                 camHUD.setFilters(newCamEffects);
-            case 'camother' | 'other': 
+            }
+            case 'camother' | 'other': if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
                 camOtherShaders = [];
                 var newCamEffects:Array<BitmapFilter>=[];
                 camOther.setFilters(newCamEffects);
-            default: 
+             }
+            default: if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
                 camGameShaders = [];
                 var newCamEffects:Array<BitmapFilter>=[];
                 camGame.setFilters(newCamEffects);
+            }
         }
 
   }
