@@ -1329,7 +1329,6 @@ class PulseShader extends FlxShader
 }
 class BrightEffect extends Effect
 {
-	public var shader:brightShader new brightShader()
 	public function new(brightness:Float, contrast:Float){
 		brightShader.shader.data.brightness.value = [brightness];
 		brightShader.shader.data.contrast.value = [contrast];
