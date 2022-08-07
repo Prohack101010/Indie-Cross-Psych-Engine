@@ -3488,7 +3488,10 @@ public function startVideo(name:String) {
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 				#end
 			}
-
+		defaultBrightVal = 0;
+		brightSpeed = 0;
+		brightMagnitude = 0;
+		setBrightness(0);
 			if (chartingMode)
 			{
 				openChartEditor();
@@ -4010,7 +4013,15 @@ public function startVideo(name:String) {
 			vocals.volume = 0;
 			doDeathCheck(true);
 		}
-
+		if (brightSpeed != 0)
+		{
+			brightFyreVal = defaultBrightVal + Math.sin((Conductor.songPosition / 1000) * (Conductor.bpm / 60) * brightSpeed) * brightMagnitude;
+			setBrightness(brightFyreVal);
+		}
+		else
+		{
+			setBrightness(defaultBrightVal);
+		}
 		//For testing purposes
 		//trace(daNote.missHealth);
 		songMisses++;
