@@ -1,5 +1,5 @@
 package;
-
+import Shaders.BrightHandler;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -237,4 +237,15 @@ class MusicBeatState extends FlxUIState
 	{
 		//do literally nothing dumbass
 	}
+	// BRIGHT SHADER
+	public var brightShader(get, never):ShaderFilter;
+
+	inline function get_brightShader():ShaderFilter
+		return BrightHandler.brightShader;
+
+	public function setBrightness(brightness:Float):Void
+		BrightHandler.setBrightness(brightness);
+
+	public function setContrast(contrast:Float):Void
+		BrightHandler.setContrast(contrast);
 }
