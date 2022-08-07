@@ -238,9 +238,9 @@ class MusicBeatState extends FlxUIState
 		//do literally nothing dumbass
 	}
 	// BRIGHT SHADER
-	public var brightShader(get, never):ShaderFilter;
+	public var brightShader(get, never):BitmapFilter;
 
-	inline function get_brightShader():ShaderFilter
+	inline function get_brightShader():BitmapFilter
 		return BrightHandler.brightShader;
 
 	public function setBrightness(brightness:Float):Void
