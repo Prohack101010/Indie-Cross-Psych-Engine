@@ -100,7 +100,7 @@ class ClientPrefs {
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.specialNotes = specialNotes;
-		Flxg.save.data.Shader = Shaders;
+		FlxG.save.data.Shader = Shaders;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
@@ -154,10 +154,10 @@ class ClientPrefs {
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
 		}
-		if(flxG.save.data.specialNotes! = null) {
+		if(FlxG.save.data.specialNotes! = null) {
 			specialNotes = FlxG.save.data.specialNotes;
 		}
-		if(flxG.save.data.Shaders! = null) {
+		if(FlxG.save.data.Shaders! = null) {
 			Shaders = FlxG.save.data.Shaders;
 		}
 		if(FlxG.save.data.showFPS != null) {
