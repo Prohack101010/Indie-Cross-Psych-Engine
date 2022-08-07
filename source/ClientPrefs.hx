@@ -10,7 +10,7 @@ class ClientPrefs {
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var specialNotes:Bool = true;
-	public static var Shaders:Bool = true
+	public static var Shaders:Bool = true;
 	public static var showFPS:Bool = #if android false #else true #end;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
