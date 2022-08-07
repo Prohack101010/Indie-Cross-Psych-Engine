@@ -1327,32 +1327,6 @@ class PulseShader extends FlxShader
        super();
     }
 }
-class BrightEffect extends Effect
-{
-	public function new(brightness:Float, contrast:Float){
-		brightShader.shader.data.brightness.value = [brightness];
-		brightShader.shader.data.contrast.value = [contrast];
-	}
-}
-class Bright extends FlxShader
-{
-	@:glFragmentSource('
-		#pragma header
-
-		uniform float brightness;
-		uniform float contrast;
-
-		void main()
-		{
-			vec4 col = texture2D(bitmap, openfl_TextureCoordv);
-			col.rgb = col.rgb * contrast;
-			col.rgb = col.rgb + brightness;
-
-			gl_FragColor = col;
-		}')
-  }
-
-
 
 class Effect {
 	public function setValue(shader:FlxShader, variable:String, value:Float){
