@@ -15,7 +15,7 @@ typedef ShaderEffect = {
 }
 class BrightHandler
 {
-	public var shader:brightShader = new Bright();
+	public var shader:brightShader = new brightShader();
 	public static function setBrightness(brightness:Float):Void
 	{
 		brightShader.shader.data.brightness.value = [brightness];
