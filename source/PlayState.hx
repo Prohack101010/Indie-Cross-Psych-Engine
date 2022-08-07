@@ -143,7 +143,6 @@ class PlayState extends MusicBeatState
 	public var camFollowPos:FlxObject;
 	private static var prevCamFollow:FlxPoint;
 	private static var prevCamFollowPos:FlxObject;
-	public var krTweenObj:FlxTween;
 	public var strumLineNotes:FlxTypedGroup<StrumNote>;
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
 	public var playerStrums:FlxTypedGroup<StrumNote>;
@@ -168,8 +167,8 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
-	public var krBar:FlxBar;
-	public var kr = 0.0;
+	var krBar:FlxBar;
+	var kr = 0.0;
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
@@ -1272,8 +1271,8 @@ class PlayState extends MusicBeatState
 		noteKillOffset = 350 / songSpeed;
 		return value;
 	}
-/*	public static function krTween(amt:Float) {
-		if (health <= 0)
+	function krTween(amt:Float) {
+		if (shownHealth <= 0)
 			amt = Math.abs(amt);
 		krTweenObj.cancel();
 		krTweenObj = FlxTween.num(kr, kr - amt, 0.1, {ease: FlxEase.cubeInOut}, function(v:Float)
@@ -1281,10 +1280,8 @@ class PlayState extends MusicBeatState
 			kr = v;
 			updatesansbars();
 		});
-	}
-	public static function krChange(amt:Float, force:Bool = false) {
-
-		if (health <= 0)
+	function krChange(amt:Float, force:Bool = false) {
+		if (shownHealth <= 0)
 		{
 			amt = Math.abs(amt);
 		}
@@ -1298,8 +1295,8 @@ class PlayState extends MusicBeatState
 			kr -= amt;
 
 		updatesansbars();
-	}*/
-	public static function updatesansbars() {
+	}
+	function updatesansbars() {
 		if (kr > shownHealth)
 			healthBar.color = 0xFFff00ff;
 		if (kr <= shownHealth) {
