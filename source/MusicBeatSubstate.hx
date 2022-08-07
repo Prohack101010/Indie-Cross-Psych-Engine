@@ -122,7 +122,7 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		//do literally nothing dumbass
 	}
-	//BRIGHT SHADER
+	/* BRIGHT SHADER
 	public var brightShader(get, never):BitmapFilter;
 
 	inline function get_brightShader():BitmapFilter
@@ -139,4 +139,5 @@ class MusicBeatSubstate extends FlxSubState
 	{
 		BrightHandler.setContrast(contrast);
 	}
+	)*/
 }
