@@ -2907,16 +2907,14 @@ public function startVideo(name:String) {
 				brightMagnitude = 0.05;
 			}
 			else
-			{
-				if (SONG.song.toLowerCase() == 'ritual')
+				else if (SONG.song.toLowerCase() == 'ritual')
 				{
 					defaultBrightVal = -0.05;
 					brightSpeed = 0.5;
 					brightMagnitude = 0.05;
 				}
 				else
-				{
-					if (SONG.song.toLowerCase() == 'nightmare-run')
+					else if (SONG.song.toLowerCase() == 'nightmare-run')
 					{
 						defaultBrightVal = -0.05;
 						brightSpeed = 0.5;
@@ -2931,8 +2929,6 @@ public function startVideo(name:String) {
 						defaultBrightVal = -0.05;
 						brightSpeed = 0.5;
 						brightMagnitude = 0.05;
-					}
-				}
 			}
 		else if (SONG.song.toLowerCase() == 'devils-gambit')
 		{
