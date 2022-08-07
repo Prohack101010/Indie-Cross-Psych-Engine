@@ -441,7 +441,6 @@ class FunkinLua {
 			kr = v;
 			PlayState.updatesansbars();
 		});
-	}
 		//PlayState.krTween(amt);
 				});
 			Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
@@ -460,7 +459,6 @@ class FunkinLua {
 			kr -= amt;
 
 		PlayState.updatesansbars();
-	}
 //		PlayState.krChange(amt, force);
 				});
 		// gay ass tweens
