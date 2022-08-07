@@ -154,10 +154,10 @@ class ClientPrefs {
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
 		}
-		if(FlxG.save.data.specialNotes! = null) {
+		if(FlxG.save.data.specialNotes != null) {
 			specialNotes = FlxG.save.data.specialNotes;
 		}
-		if(FlxG.save.data.Shaders! = null) {
+		if(FlxG.save.data.Shaders != null) {
 			Shaders = FlxG.save.data.Shaders;
 		}
 		if(FlxG.save.data.showFPS != null) {
