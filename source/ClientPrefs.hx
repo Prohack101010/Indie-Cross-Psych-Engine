@@ -10,7 +10,7 @@ class ClientPrefs {
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var specialNotes:Bool = true;
-	public static var shaders:Bool = true
+	public static var Shaders:Bool = true
 	public static var showFPS:Bool = #if android false #else true #end;
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
@@ -100,7 +100,7 @@ class ClientPrefs {
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.specialNotes = specialNotes;
-		Flxg.save.data.shader = shaders;
+		Flxg.save.data.Shader = Shaders;
 		FlxG.save.data.showFPS = showFPS;
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
@@ -157,8 +157,8 @@ class ClientPrefs {
 		if(flxG.save.data.specialNotes! = null) {
 			specialNotes = FlxG.save.data.specialNotes;
 		}
-		if(flxG.save.data.shaders! = null) {
-			shaders = FlxG.save.data.shaders;
+		if(flxG.save.data.Shaders! = null) {
+			Shaders = FlxG.save.data.Shaders;
 		}
 		if(FlxG.save.data.showFPS != null) {
 			showFPS = FlxG.save.data.showFPS;
