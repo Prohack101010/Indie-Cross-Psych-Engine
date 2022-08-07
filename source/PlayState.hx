@@ -2901,7 +2901,6 @@ public function startVideo(name:String) {
 	public static function brightSetup()
 	{
 		if (curStage == 'factory' && (ClientPrefs.flashing && !ClientPrefs.lowQuality))
-		{
 			{
 				defaultBrightVal = -0.05;
 				brightSpeed = 0.2;
