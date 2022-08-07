@@ -15,7 +15,7 @@ typedef ShaderEffect = {
 }
 class BrightHandler
 {
-	public static var brightShader:ShaderFilter = new ShaderFilter(new Bright());
+	public static var brightShader:BitmapFilter = new BitmapFilter(new Bright());
 
 	public static function setBrightness(brightness:Float):Void
 	{
@@ -911,7 +911,7 @@ void main()
 }
 class BloomEffect extends Effect{
 	
-	public static var bloomShader:ShaderFilter = new ShaderFilter(new Bloom());
+	public static var bloomShader:BitmapFilter = new BitmapFilter(new Bloom());
 	public function new(blurSize:Float, intensity:Float){
 		shader.blurSize.value = [blurSize];
 		shader.intensity.value = [intensity];
