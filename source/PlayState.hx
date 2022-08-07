@@ -168,7 +168,8 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
-	
+		private var krBar:FlxBar;
+	var kr = 0.0;
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
 	public var startingSong:Bool = false;
@@ -203,7 +204,7 @@ class PlayState extends MusicBeatState
 
 	var halloweenBG:BGSprite;
 	var halloweenWhite:BGSprite;
-
+	var krTweenObj:FlxTween;
 	var phillyCityLights:FlxTypedGroup<BGSprite>;
 	var phillyTrain:BGSprite;
 	var blammedLightsBlack:ModchartSprite;
@@ -315,7 +316,7 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 		shader_chromatic_abberation = new ChromaticAberrationEffect();
-
+		krTweenObj = FlxTween.tween(this, {}, 0);
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -717,7 +718,9 @@ class PlayState extends MusicBeatState
 
 		add(dadGroup);
 		add(boyfriendGroup);
-		
+		if(curStage == 'hall' || curStage == 'hallDark' || curStage == 'nightmareHall') {
+				krTween(healthincrease);
+		}
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
 		}
@@ -1043,7 +1046,15 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
-
+				krBar = new FlxBar(healthBar.x, healthBar.y, LEFT_TO_RIGHT, Std.int(healthBar.width), Std.int(healthBar.height), this,
+				'kr', 0,2); 
+				krBar.scrollFactor.set(0, 0);
+				krBar.createFilledBar(FlxColor.RED, 0xFFff00ff);
+				krBar.cameras = [camHUD];
+		krBar.visible = !ClientPrefs.hideHud;
+		krBar.alpha = ClientPrefs.healthBarAlpha;
+		add(krBar);
+		
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideHud;
@@ -1261,7 +1272,43 @@ class PlayState extends MusicBeatState
 		noteKillOffset = 350 / songSpeed;
 		return value;
 	}
+	public static function krTween(amt:Float) {
+		if (health <= 0)
+			amt = Math.abs(amt);
+		krTweenObj.cancel();
+		krTweenObj = FlxTween.num(kr, kr - amt, 0.1, {ease: FlxEase.cubeInOut}, function(v:Float)
+		{
+			kr = v;
+			updatesansbars();
+		});
+	}
+	public static function krChange(amt:Float, force:Bool = false) {
 
+		if (health <= 0)
+		{
+			amt = Math.abs(amt);
+		}
+		
+		if (krTweenObj!=null)
+			krTweenObj.cancel();
+
+		if (force)
+			kr = amt;
+		else
+			kr -= amt;
+
+		updatesansbars();
+	}
+	function updatesansbars() {
+		if (kr > health)
+			healthMax.color = 0xFFff00ff;
+		if (kr <= health) {
+			healthMax.color = 0xFFFFFFFF;
+			kr = health;
+		}
+		if (kr>2)
+			kr = 2;
+	}
 	public function addTextToDebug(text:String) {
 		#if LUA_ALLOWED
 		luaDebugGroup.forEachAlive(function(spr:DebugLuaText) {
@@ -2527,6 +2574,21 @@ public function startVideo(name:String) {
 				}
 			} else {
 				boyfriendIdleTime = 0;
+			}
+		}
+		if (krBar !=null)
+		{
+			if (kr<health) {
+				kr=health;
+				krBar.alpha = 0;
+				healthMax.color = 0xFFFFFFFF;
+			}
+			if (kr>2)
+				kr = 2;
+			if (kr != health && kr > health) {
+				krBar.alpha = healthBar.alpha;
+				healthMax.color = 0xFFFF00FF;
+				kr -= elapsed / 5.5;
 			}
 		}
 
