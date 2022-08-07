@@ -1272,7 +1272,7 @@ class PlayState extends MusicBeatState
 		noteKillOffset = 350 / songSpeed;
 		return value;
 	}
-	public static function krTween(amt:Float) {
+/*	public static function krTween(amt:Float) {
 		if (health <= 0)
 			amt = Math.abs(amt);
 		krTweenObj.cancel();
@@ -1298,17 +1298,17 @@ class PlayState extends MusicBeatState
 			kr -= amt;
 
 		updatesansbars();
-	}
-	function updatesansbars() {
+	}*/
+	public function updatesansbars() {
 		if (kr > health)
-			healthMax.color = 0xFFff00ff;
+			healthBar.color = 0xFFff00ff;
 		if (kr <= health) {
-			healthMax.color = 0xFFFFFFFF;
+			healthBar.color = 0xFFFFFFFF;
 			kr = health;
 		}
 		if (kr>2)
 			kr = 2;
-	}
+	}*/
 	public function addTextToDebug(text:String) {
 		#if LUA_ALLOWED
 		luaDebugGroup.forEachAlive(function(spr:DebugLuaText) {
@@ -2581,13 +2581,13 @@ public function startVideo(name:String) {
 			if (kr<health) {
 				kr=health;
 				krBar.alpha = 0;
-				healthMax.color = 0xFFFFFFFF;
+				healthBar.color = 0xFFFFFFFF;
 			}
 			if (kr>2)
 				kr = 2;
 			if (kr != health && kr > health) {
 				krBar.alpha = healthBar.alpha;
-				healthMax.color = 0xFFFF00FF;
+				healthBar.color = 0xFFFF00FF;
 				kr -= elapsed / 5.5;
 			}
 		}
