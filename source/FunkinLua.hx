@@ -432,7 +432,14 @@ class FunkinLua {
 			}
 			luaTrace("Object " + obj + " doesn't exist!");
 		});
+		Lua_helper.add_callback(lua, "krTween", function(amt:Float) {
+		PlayState.krTween(amt)
+				});
+			Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
 
+		PlayState.krChange(amt, force)
+
+				});
 		// gay ass tweens
 		Lua_helper.add_callback(lua, "doTweenX", function(tag:String, vars:String, value:Dynamic, duration:Float, ease:String) {
 			var penisExam:Dynamic = tweenShit(tag, vars);
