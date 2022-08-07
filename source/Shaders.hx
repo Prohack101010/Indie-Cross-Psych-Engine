@@ -13,17 +13,11 @@ using StringTools;
 typedef ShaderEffect = {
   var shader:Dynamic;
 }
-class BrightHandler
+class BrightEffect extends Effect
 {
 	public var shader:brightShader = new brightShader()
-
-	public static function setBrightness(brightness:Float):Void
-	{
+	public function new(brightness:Float, contrast:Float){
 		brightShader.shader.data.brightness.value = [brightness];
-	}
-	
-	public static function setContrast(contrast:Float):Void
-	{
 		brightShader.shader.data.contrast.value = [contrast];
 	}
 }
