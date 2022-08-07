@@ -42,7 +42,7 @@ class Bright extends FlxShader
 
 			gl_FragColor = col;
 		}')
-
+  }
 class BuildingEffect {
   public var shader:BuildingShader = new BuildingShader();
   public function new(){
