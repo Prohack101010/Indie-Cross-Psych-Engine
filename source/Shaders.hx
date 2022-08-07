@@ -12,6 +12,36 @@ using StringTools;
 typedef ShaderEffect = {
   var shader:Dynamic;
 }
+class BrightHandler
+{
+	public static var brightShader:ShaderFilter = new ShaderFilter(new Bright());
+
+	public static function setBrightness(brightness:Float):Void
+	{
+		brightShader.shader.data.brightness.value = [brightness];
+	}
+	
+	public static function setContrast(contrast:Float):Void
+	{
+		brightShader.shader.data.contrast.value = [contrast];
+	}
+}
+class Bright extends FlxShader
+{
+	@:glFragmentSource('
+		#pragma header
+
+		uniform float brightness;
+		uniform float contrast;
+
+		void main()
+		{
+			vec4 col = texture2D(bitmap, openfl_TextureCoordv);
+			col.rgb = col.rgb * contrast;
+			col.rgb = col.rgb + brightness;
+
+			gl_FragColor = col;
+		}')
 
 class BuildingEffect {
   public var shader:BuildingShader = new BuildingShader();
