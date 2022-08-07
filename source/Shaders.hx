@@ -8,6 +8,7 @@ import openfl.display.ShaderInput;
 import openfl.utils.Assets;
 import flixel.FlxG;
 import openfl.Lib;
+import openfl.filters.ShaderFilter;
 using StringTools;
 typedef ShaderEffect = {
   var shader:Dynamic;
@@ -910,7 +911,7 @@ void main()
 }
 class BloomEffect extends Effect{
 	
-	public var shader:BloomShader = new BloomShader();
+	public static var bloomShader:ShaderFilter = new ShaderFilter(new Bloom());
 	public function new(blurSize:Float, intensity:Float){
 		shader.blurSize.value = [blurSize];
 		shader.intensity.value = [intensity];
