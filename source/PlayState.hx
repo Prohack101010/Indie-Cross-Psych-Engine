@@ -2922,12 +2922,6 @@ public function startVideo(name:String) {
 					{
 						defaultBrightVal = 0;
 					}
-					else
-					{
-						defaultBrightVal = -0.05;
-						brightSpeed = 0.5;
-						brightMagnitude = 0.05;
-			}
 		else if (SONG.song.toLowerCase() == 'devils-gambit')
 		{
 			defaultBrightVal = -0.05;
