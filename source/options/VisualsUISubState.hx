@@ -41,6 +41,13 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
+		var option:Option = new Option('Shaders',
+			"unchecke this to disable shaders, disable for better performances, (we recommend people that are sensitive to flashing to disable it)",
+			'Shaders',
+			'bool',
+			true);
+		addOption(option);
+
 		var option:Option = new Option('Hide HUD',
 			'If checked, hides most HUD elements.',
 			'hideHud',
@@ -57,7 +64,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Flashing Lights',
-			"Uncheck this if you're sensitive to flashing lights!",
+			"Uncheck this if you're sensitive to flashing lights! (this will also disable shaders! )",
 			'flashing',
 			'bool',
 			true);
