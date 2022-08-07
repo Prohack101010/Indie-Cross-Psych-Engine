@@ -2906,14 +2906,12 @@ public function startVideo(name:String) {
 				brightSpeed = 0.2;
 				brightMagnitude = 0.05;
 			}
-			else
 				else if (SONG.song.toLowerCase() == 'ritual')
 				{
 					defaultBrightVal = -0.05;
 					brightSpeed = 0.5;
 					brightMagnitude = 0.05;
 				}
-				else
 					else if (SONG.song.toLowerCase() == 'nightmare-run')
 					{
 						defaultBrightVal = -0.05;
