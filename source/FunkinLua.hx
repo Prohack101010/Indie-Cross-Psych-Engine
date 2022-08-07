@@ -433,11 +433,11 @@ class FunkinLua {
 			luaTrace("Object " + obj + " doesn't exist!");
 		});
 		Lua_helper.add_callback(lua, "krTween", function(amt:Float) {
-		PlayState.krTween(amt)
+		PlayState.krTween(amt);
 				});
 			Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
 
-		PlayState.krChange(amt, force)
+		PlayState.krChange(amt, force);
 
 				});
 		// gay ass tweens
