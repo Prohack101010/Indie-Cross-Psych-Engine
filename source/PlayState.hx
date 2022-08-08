@@ -1279,7 +1279,7 @@ class PlayState extends MusicBeatState
 		{
 			kr = v;
 			updatesansbars();
-		}
+		});
 	}
 	function krChange(amt:Float, force:Bool = false) {
 		if (shownHealth <= 0)
