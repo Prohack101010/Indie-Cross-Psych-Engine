@@ -1521,12 +1521,14 @@ class FunkinLua {
 			Hardware.vibrate(milliseconds);
 			#end
 		});
-
-		Lua_helper.add_callback(lua, "setSongTime", function(curTime:Int) {
-			PlayState.instance.clearNotesBefore(curTime);
-			PlayState.instance.setSongTime(curTime);
+		Lua_helper.add_callback(lua, "krTween", function(amt:Float) {
+PlayState.instance.krTween(amt)
 		});
+		Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
 
+PlayState.instance.krChange(amt, force)
+
+		});
 		// LUA TEXTS
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
 			tag = tag.replace('.', '');
