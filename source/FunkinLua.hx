@@ -1522,11 +1522,11 @@ class FunkinLua {
 			#end
 		});
 		Lua_helper.add_callback(lua, "krTween", function(amt:Float) {
-PlayState.instance.krTween(amt)
+PlayState.instance.krTween(amt);
 		});
 		Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
 
-PlayState.instance.krChange(amt, force)
+PlayState.instance.krChange(amt, force);
 
 		});
 		// LUA TEXTS
