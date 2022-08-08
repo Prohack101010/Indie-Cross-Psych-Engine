@@ -718,7 +718,7 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 		if(curStage == 'hall' || curStage == 'hallDark' || curStage == 'nightmareHall') {
-	//			krTween(healthincrease);
+				krTween(healthincrease);
 		}
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
@@ -1271,7 +1271,7 @@ class PlayState extends MusicBeatState
 		noteKillOffset = 350 / songSpeed;
 		return value;
 	}
-	function krTween(amt:Float) {
+	public function krTween(amt:Float) {
 		if (shownHealth <= 0)
 			amt = Math.abs(amt);
 		krTweenObj.cancel();
@@ -1281,7 +1281,7 @@ class PlayState extends MusicBeatState
 			updatesansbars();
 		});
 	}
-	function krChange(amt:Float, force:Bool = false) {
+	public function krChange(amt:Float, force:Bool = false) {
 		if (shownHealth <= 0)
 		{
 			amt = Math.abs(amt);
@@ -1297,7 +1297,7 @@ class PlayState extends MusicBeatState
 
 		updatesansbars();
 	}
-	function updatesansbars() {
+	public function updatesansbars() {
 		if (kr > shownHealth)
 			healthBar.color = 0xFFff00ff;
 		if (kr <= shownHealth) {
