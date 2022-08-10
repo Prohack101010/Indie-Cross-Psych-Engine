@@ -49,7 +49,36 @@ class CoolUtil
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}
+	public static var defaultMechDiff:Array<String> = [
+		'Off',
+		'Standard',
+		'hell'
+	];
+	public static var defaultMechDiff:String = 'Standard'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
+	public static var mechDiff:Array<String> = [];
 
+	public static function getDifficultyFilePath(num:Null<Int> = null)
+	{
+		if(num == null) num = PlayState.storyDifficulty;
+
+		var fileSuffix:String = difficulties[num];
+		if(fileSuffix != defaultDifficulty)
+		{
+			fileSuffix = '-' + fileSuffix;
+		}
+		else
+		{
+			fileSuffix = '';
+		}
+		return Paths.formatToSongPath(fileSuffix);
+	}
+
+	public static function mechDiffString():String
+	{
+		return difficulties[PlayState.storyDifficulty].toUpperCase();
+	}
+
+	public static var mechsDiff:Array<String> = [];
 	public static function coolTextFile(path:String):Array<String>
 	{
 		var daList:Array<String> = [];
