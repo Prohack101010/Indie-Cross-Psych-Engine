@@ -718,7 +718,7 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 		if(curStage == 'hall' || curStage == 'hallDark' || curStage == 'nightmareHall') {
-				krTween(healthincrease);
+				krTween(health);
 		}
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
