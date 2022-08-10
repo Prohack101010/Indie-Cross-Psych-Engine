@@ -52,30 +52,26 @@ class CoolUtil
 	public static var defaultMechDiff:Array<String> = [
 		'Off',
 		'Standard',
-		'hell'
+		'Hell'
 	];
 	public static var defaultMechDiff:String = 'Standard'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
 	public static var mechDiff:Array<String> = [];
 
-	public static function getDifficultyFilePath(num:Null<Int> = null)
+	public static function getMechDifficultyFilePath(num:String)
 	{
-		if(num == null) num = PlayState.storyDifficulty;
-
-		var fileSuffix:String = difficulties[num];
-		if(fileSuffix != defaultDifficulty)
-		{
-			fileSuffix = '-' + fileSuffix;
-		}
-		else
-		{
-			fileSuffix = '';
-		}
-		return Paths.formatToSongPath(fileSuffix);
+var W = "mechDiff/" + num + ".lua";
+			if(FileSystem.exists(Paths.modFolders(W))) {
+				W = Paths.modFolders(W);
+			} else {
+				W = SUtil.getPath() + Paths.getPreloadPath(W);
+				if(FileSystem.exists(W)) {
+				}
+			}
 	}
 
-	public static function mechDiffString():String
+	public static function mechDifficultyString():String
 	{
-		return difficulties[PlayState.storyDifficulty].toUpperCase();
+		return mechDifficulties[PlayState.mechStoryDifficulty].toUpperCase();
 	}
 
 	public static var mechsDiff:Array<String> = [];
