@@ -1332,31 +1332,28 @@ class PlayState extends MusicBeatState
 public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
 
         switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud': if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
+            case 'camhud' | 'hud':
                     camHUDShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camHUDShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camHUD.setFilters(newCamEffects);
-            }
-            case 'camother' | 'other': if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
+            case 'camother' | 'other':
                     camOtherShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camOtherShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camOther.setFilters(newCamEffects);
-            }
-            case 'camgame' | 'game': if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
+            case 'camgame' | 'game':
                     camGameShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camGameShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camGame.setFilters(newCamEffects);
-            }
-            default: if(!ClientPrefs.flashing || !ClientPrefs.Shaders) {
+            default:
                 if(modchartSprites.exists(cam)) {
                     Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
                 } else if(modchartTexts.exists(cam)) {
@@ -1364,8 +1361,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
                 } else {
                     var OBJ = Reflect.getProperty(PlayState.instance,cam);
                     Reflect.setProperty(OBJ,"shader", effect.shader);
-                }  
-            }
+                }
         }
 
   }
