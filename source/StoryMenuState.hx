@@ -271,7 +271,7 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 
 		cupTea = new FlxSprite();
-		cupTea.frames = Paths.getSparrowAtlas('the_thing2.0', 'cup');
+		cupTea.frames = Paths.getSparrowAtlas('the_thing2.0', 'preload');
 		cupTea.animation.addByPrefix('start', "BOO instance 1", 24, false);
 		cupTea.setGraphicSize(Std.int((FlxG.width / FlxG.camera.zoom) * 1.1), Std.int((FlxG.height / FlxG.camera.zoom) * 1.1));
 		cupTea.updateHitbox();
