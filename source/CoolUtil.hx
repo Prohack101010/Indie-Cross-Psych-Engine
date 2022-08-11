@@ -64,8 +64,6 @@ var W = "mechDiff/" + num + ".lua";
 				W = Paths.modFolders(W);
 			} else {
 				W = SUtil.getPath() + Paths.getPreloadPath(W);
-				if(FileSystem.exists(W)) {
-				}
 			}
 	}
 
@@ -74,7 +72,6 @@ var W = "mechDiff/" + num + ".lua";
 		return mechDifficulties[PlayState.mechStoryDifficulty].toUpperCase();
 	}
 
-	public static var mechsDiff:Array<String> = [];
 	public static function coolTextFile(path:String):Array<String>
 	{
 		var daList:Array<String> = [];
