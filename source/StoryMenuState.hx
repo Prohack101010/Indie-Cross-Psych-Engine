@@ -1,5 +1,6 @@
 package;
-
+import ClientPrefs;
+import CoolUtil;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -301,7 +302,7 @@ class StoryMenuState extends MusicBeatState
 //		new FlxTimer().start(Main.transitionDuration, function(tmr:FlxTimer)
 		{
 			allowTransit = true;
-		});
+//		});
 	}
 
 	override function update(elapsed:Float)
