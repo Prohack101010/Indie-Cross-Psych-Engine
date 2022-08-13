@@ -27,15 +27,15 @@ class DiffButton extends FlxSprite
 		animOffsets = new Map<String, Array<Dynamic>>();
 		
 		frames = Paths.getSparrowAtlas('story mode/Difficulties', 'preload');
-		animation.addByPrefix(HelperFunctions.mechDifficultyFromInt(2), 'Mechs Dis instance 1', 24, true);
-		animation.addByPrefix(HelperFunctions.mechDifficultyFromInt(1), 'Mechs Hard instance 1', 24, true);
-		animation.addByPrefix(HelperFunctions.mechDifficultyFromInt(0), 'Mechs Hell instance 1', 24, true);
+		//diffmechSpr.animation.addByPrefix('Off', 'Mechs Dis instance 1', 24, true);
+		//diffmechSpr.animation.addByPrefix('Standrad', 'Mechs Hard instance 1', 24, true);
+		//diffmechSpr.animation.addByPrefix('Hell', 'Mechs Hell instance 1', 24, true);
 
-		addOffset(HelperFunctions.mechDifficultyFromInt(2), 0, 0);
-		addOffset(HelperFunctions.mechDifficultyFromInt(1), 0, 0);
-		addOffset(HelperFunctions.mechDifficultyFromInt(0), 10, 30);
+		diffmechSpr.addOffset('Off', 0, 0);
+		diffmechSpr.addOffset('Standrad', 0, 0);
+		diffmechSpr.addOffset('Hell', 10, 30);
 
-		playAnim(HelperFunctions.mechDifficultyFromInt(StoryMenuState.curMechDifficulty), true);
+		//playAnim(HelperFunctions.mechDifficultyFromInt(StoryMenuState.curMechDifficulty), true);
 
         offset.set(0, 0);
 		antialiasing = ClientPrefs.globalAntialiasing;
@@ -72,6 +72,7 @@ class DiffButton extends FlxSprite
 
 class StoryMenuState extends MusicBeatState
 {
+	public static var weekCompleted:Map<String, Bool> = new Map<String, Bool>();
 	public static var weekData:Array<Dynamic> = [
 		['Snake-Eyes', 'Technicolor-Tussle', 'Knockout'],
 		['Whoopee', 'Sansational', 'Burning-In-Hell', 'Final-Stretch'],
@@ -150,7 +151,7 @@ class StoryMenuState extends MusicBeatState
 		gamingSands.updateHitbox();
 		gamingSands.x = -13;
 		gamingSands.y = -41;
-		gamingSands.ClientPrefs.globalAntialiasing;
+		gamingSands.antialiasing = ClientPrefs.globalAntialiasing;
 		add(gamingSands);
 
 		bendoBG = new FlxSprite();
@@ -214,7 +215,7 @@ class StoryMenuState extends MusicBeatState
 		diffmechTween = FlxTween.tween(this, {}, 0);
 
 		holdshifttext = new FlxText(8, 257, 0, "Hold 'SHIFT' to change", 24);
-		holdshifttext.setFormat(HelperFunctions.returnMenuFont(scoreText), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		holdshifttext.setFormat(Paths.font("Bronx.otf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		holdshifttext.borderSize = 1.5;
 		holdshifttext.antialiasing = ClientPrefs.globalAntialiasing;
 		holdshifttext.alpha = 0.8;
@@ -257,7 +258,7 @@ class StoryMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
-		scoreText.setFormat(HelperFunctions.returnMenuFont(scoreText), 32, FlxColor.WHITE, CENTER);
+		scoreText.setFormat(Paths.font("Bronx.otf"), 32, FlxColor.WHITE, CENTER);
 		scoreText.screenCenter();
 		scoreText.borderSize = 2.4;
 		scoreText.y += 335;
@@ -297,7 +298,7 @@ class StoryMenuState extends MusicBeatState
 		addvirtualPad(UP_DOWN, A_B_C);
 		#end
 
-		new FlxTimer().start(Main.transitionDuration, function(tmr:FlxTimer)
+//		new FlxTimer().start(Main.transitionDuration, function(tmr:FlxTimer)
 		{
 			allowTransit = true;
 		});
@@ -308,7 +309,7 @@ class StoryMenuState extends MusicBeatState
 		if (FlxG.sound.music != null && !lockInput)
 		{
 			if (!FlxG.sound.music.playing)
-				FlxG.sound.playMusic(Paths.music(Main.menuMusic));
+				FlxG.sound.playMusic(Paths.music("freakyMenu"));
 		}
 
 		// scoreText.setFormat('VCR OSD Mono', 32);
@@ -322,28 +323,28 @@ class StoryMenuState extends MusicBeatState
 
 		if (!lockInput)
 		{
-			if (controls.UP_P)
+			if (controls.UI_UP_P)
 			{
 				changeWeek(curWeek - 1);
 			}
 
-			if (controls.DOWN_P)
+			if (controls.UI_DOWN_P)
 			{
 				changeWeek(curWeek + 1);
 			}
 
 			if (FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonC.pressed #end) //holding shift while changing diffiuclty, change mech diff
 			{
-				if (controls.RIGHT_P)
+				if (controls.UI_RIGHT_P)
 					changeMechDifficulty(-1);
-				if (controls.LEFT_P)
+				if (controls.UI_LEFT_P)
 					changeMechDifficulty(1);
 			}
 			else //not holding shift, change chart diffiuclty
 			{
-				if (controls.RIGHT_P)
+				if (controls.UI_RIGHT_P)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+				if (controls.UI_LEFT_P)
 					changeDifficulty(-1);
 			}
 
@@ -372,7 +373,10 @@ class StoryMenuState extends MusicBeatState
 
 		super.update(elapsed);
 	}
-
+	function weekIsLocked(name:String):Bool {
+		var leWeek:WeekData = WeekData.weeksLoaded.get(name);
+		return (!leWeek.startUnlocked && leWeek.weekBefore.length > 0 && (!weekCompleted.exists(leWeek.weekBefore) || !weekCompleted.get(leWeek.weekBefore)));
+	}
 	function backOut()
 	{
 		if (!lockInput && allowTransit)
@@ -393,34 +397,6 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (stopspamming == false)
 			{
-				if (PlayState.storyWeek == curWeek && leftDuringWeek && PlayState.isStoryMode && PlayState.storyDifficulty == curDifficulty)
-				{
-					#if android
-					removevirtualPad();
-					#end
-					persistentUpdate = false;
-					lockInput = true;
-					openSubState(new Prompt("Would You Like to Resume Your Current Week?"));
-					Prompt.acceptThing = function()
-					{
-						PlayState.playCutscene = true;
-						PlayState.isStoryMode = true;
-						leftDuringWeek = false;
-						LoadingState.target = new PlayState();
-						LoadingState.stopMusic = true;
-						FlxG.switchState(new LoadingState());
-					}
-					Prompt.backThing = function()
-					{
-						leftDuringWeek = false;
-						lockInput = false;
-						persistentUpdate = true;
-						#if android
-		                addvirtualPad(UP_DOWN, A_B_C);
-		                #end
-					}
-				}
-				else
 				{
 					aaaaa();
 				}
@@ -458,7 +434,7 @@ class StoryMenuState extends MusicBeatState
 				options[curWeek].x -= 15;
 				optFlashes[curWeek].alpha = 1;
 
-				OptionsMenu.returnedfromOptions = false;
+//				OptionsMenu.returnedfromOptions = false;
 
 				for (i in 0...options.length)
 				{
@@ -496,28 +472,28 @@ class StoryMenuState extends MusicBeatState
 		lockInput = true;
 
 		PlayState.storyDifficulty = curDifficulty;
-		PlayState.difficulty = curDifficulty;
+		PlayState.storyDifficulty = curDifficulty;
 
 		var poop:String = Highscore.formatSong(PlayState.storyPlaylist[0], curDifficulty);
 
-		PlayState.geno = false;
+//		PlayState.geno = false;
 
-		HelperFunctions.checkExistingChart(PlayState.storyPlaylist[0], poop);
-
+//		HelperFunctions.checkExistingChart(PlayState.storyPlaylist[0], poop);
+		CoolUtil.getDifficultyFilePath(curDifficulty)
 		PlayState.storyWeek = curWeek;
-		PlayState.mechanicType = curMechDifficulty;
+		PlayState.mechStoryDifficulty = curMechDifficulty;
 		PlayState.campaignScore = 0;
 
-		LoadingState.target = new PlayState();
-		LoadingState.stopMusic = true;
+//		MusicBeatState.switchState( new PlayState());
+		//LoadingState.stopMusic = true;
 
-		PlayState.storyIndex = 1;
+//		PlayState.storyIndex = 1;
 
 		new FlxTimer().start(waitDuration, function(tmr:FlxTimer)
 		{
-			PlayState.playCutscene = true;
+			PlayState.seenCutscene = true;
 
-			FlxG.switchState(new LoadingState());
+			MusicBeatState.switchState(new PlayState());
 		});
 
 		stopspamming = true;
@@ -568,11 +544,20 @@ class StoryMenuState extends MusicBeatState
 		switch (curMechDifficulty)
 		{
 			case 0:
-				diffmechSpr.playAnim(HelperFunctions.mechDifficultyFromInt(0));
+		diffmechSpr.animation.addByPrefix('Off', 'Mechs Dis instance 1', 24, true);
+		diffmechSpr.animation.addByPrefix('Standrad', 'Mechs Hard instance 1', 24, true);
+		diffmechSpr.animation.addByPrefix('Hell', 'Mechs Hell instance 1', 24, true);
+				diffmechSpr.playAnim('Off');
 			case 1:
-				diffmechSpr.playAnim(HelperFunctions.mechDifficultyFromInt(1));
+		diffmechSpr.animation.addByPrefix('Off', 'Mechs Dis instance 1', 24, true);
+		diffmechSpr.animation.addByPrefix('Standrad', 'Mechs Hard instance 1', 24, true);
+		diffmechSpr.animation.addByPrefix('Hell', 'Mechs Hell instance 1', 24, true);
+				diffmechSpr.playAnim('Standrad');
 			case 2:
-				diffmechSpr.playAnim(HelperFunctions.mechDifficultyFromInt(2));
+		diffmechSpr.animation.addByPrefix('Off', 'Mechs Dis instance 1', 24, true);
+		diffmechSpr.animation.addByPrefix('Standrad', 'Mechs Hard instance 1', 24, true);
+		diffmechSpr.animation.addByPrefix('Hell', 'Mechs Hell instance 1', 24, true);
+				diffmechSpr.playAnim('Hell');
 		}
 
 		diffmechSpr.x = diffmechOrigX - 20;
