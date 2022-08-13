@@ -3529,7 +3529,7 @@ public function startVideo(name:String) {
 				else
 				{
 					var difficulty:String = CoolUtil.getDifficultyFilePath();
-
+					var mechDifficulty:String = CoolUtil.getMechDifficultyFilePath();
 					trace('LOADING NEXT SONG');
 					trace(Paths.formatToSongPath(PlayState.storyPlaylist[0]) + difficulty);
 
