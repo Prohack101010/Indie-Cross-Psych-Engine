@@ -49,7 +49,7 @@ class CoolUtil
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}
-	public static var defaultMechDiff:Array<String> = [
+	public static var defaultMechDiffs:Array<String> = [
 		'Off',
 		'Standard',
 		'Hell'
@@ -69,7 +69,7 @@ var W = "mechDiff/" + num + ".lua";
 
 	public static function mechDifficultyString():String
 	{
-		return mechDifficulties[PlayState.mechStoryDifficulty].toUpperCase();
+		return Difficulties[PlayState.mechStoryDifficulty].toUpperCase();
 	}
 
 	public static function coolTextFile(path:String):Array<String>
