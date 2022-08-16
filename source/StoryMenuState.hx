@@ -633,4 +633,3 @@ class StoryMenuState extends MusicBeatState
 		options[num].screenCenter(X);
 	}
 }
-}
