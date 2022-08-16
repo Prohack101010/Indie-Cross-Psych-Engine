@@ -303,7 +303,7 @@ class StoryMenuState extends MusicBeatState
 //		{
 //			allowTransit = true;
 //		});
-//	}
+  	}
 
 	override function update(elapsed:Float)
 	{
