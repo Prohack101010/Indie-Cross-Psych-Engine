@@ -300,10 +300,10 @@ class StoryMenuState extends MusicBeatState
 		#end
 
 //		new FlxTimer().start(Main.transitionDuration, function(tmr:FlxTimer)
-		{
-			allowTransit = true;
+//		{
+//			allowTransit = true;
 //		});
-	}
+//	}
 
 	override function update(elapsed:Float)
 	{
