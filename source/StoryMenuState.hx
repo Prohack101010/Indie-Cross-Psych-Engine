@@ -480,7 +480,7 @@ class StoryMenuState extends MusicBeatState
 //		PlayState.geno = false;
 
 //		HelperFunctions.checkExistingChart(PlayState.storyPlaylist[0], poop);
-		CoolUtil.getDifficultyFilePath(curDifficulty)
+		CoolUtil.getDifficultyFilePath(curDifficulty);
 		PlayState.storyWeek = curWeek;
 		PlayState.mechStoryDifficulty = curMechDifficulty;
 		PlayState.campaignScore = 0;
