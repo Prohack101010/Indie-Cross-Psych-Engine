@@ -69,7 +69,7 @@ var W = "mechDiff/" + num + ".lua";
 
 	public static function mechDifficultyString():String
 	{
-		return Difficulties[PlayState.mechStoryDifficulty].toUpperCase();
+		return difficulties[PlayState.mechStoryDifficulty].toUpperCase();
 	}
 
 	public static function coolTextFile(path:String):Array<String>
