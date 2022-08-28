@@ -57,7 +57,7 @@ class CoolUtil
 	public static var defaultMechDiff:String = 'Standard'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
 	public static var mechDiff:Array<String> = [];
 
-	public static function getMechDifficultyFilePath(num:Int)
+	public static function getMechDifficultyFilePath(num:Null<Int> = null)
 	{
 var W = "mechDiff/" + num + ".lua";
 			if(FileSystem.exists(Paths.modFolders(W))) {
