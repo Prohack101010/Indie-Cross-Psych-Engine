@@ -14,7 +14,7 @@ class CustomFadeTransition extends FlxSubState
 	var rect:FlxSprite;
 	var tween:FlxTween;
 	public static var nextCamera:FlxCamera;
-	public static var finishCallback:() -> Void;
+	public var finishCallback:Void->Void;
 	var duration:Float;
 
 	var fi:Bool = true;
@@ -24,7 +24,7 @@ class CustomFadeTransition extends FlxSubState
 		super();
 
 		this.duration = duration;
-		this.finishCallback = finishCallback;
+		this.finishCallback finishCallback;
 		this.fi = isTransIn;
 	if(nextCamera != null) {
 			this.cameras = [nextCamera];
