@@ -21,6 +21,15 @@ import flixel.util.FlxDestroyUtil;
 
 class MusicBeatState extends FlxUIState
 {
+	public static var disableNextTransIn:Bool = false;
+	public static var disableNextTransOut:Bool = false;
+
+	public var enableTransIn:Bool = true;
+	public var enableTransOut:Bool = true;
+
+	var transOutRequested:Bool = false;
+	var finishedTransOut:Bool = false;
+
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -135,6 +144,23 @@ class MusicBeatState extends FlxUIState
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
+		if (disableNextTransIn)
+		{
+			enableTransIn = false;
+			disableNextTransIn = false;
+		}
+
+		if (disableNextTransOut)
+		{
+			enableTransOut = false;
+			disableNextTransOut = false;
+		}
+
+		if (enableTransIn)
+		{
+			trace("transIn");
+			fadeIn();
+		}
 
 		if(!skip) {
 			openSubState(new CustomFadeTransition(0.7, true));
@@ -193,23 +219,46 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
 	}
 
-	public static function switchState(nextState:FlxState) {
-		// Custom made Trans in
-		var curState:Dynamic = FlxG.state;
-		var leState:MusicBeatState = curState;
-		if(!FlxTransitionableState.skipNextTransIn) {
-			leState.openSubState(new CustomFadeTransition(0.6, false));
-			if(nextState == FlxG.state) {
-					FlxG.resetState();
-				//trace('resetted');
-			} else {
-					FlxG.switchState(nextState);
-				//trace('changed state');
+	public static function switchState(state:FlxState) {
+if (!finishedTransOut && !transOutRequested)
+		{
+			if (enableTransOut)
+			{
+				fadeOut(function()
+				{
+					finishedTransOut = true;
+					FlxG.switchState(state);
+				});
+
+				transOutRequested = true;
 			}
-			return;
+			else
+				return true;
 		}
-		FlxTransitionableState.skipNextTransIn = false;
-		FlxG.switchState(nextState);
+
+		return finishedTransOut;
+	}
+
+  	function fadeIn()
+	{
+		subStateRecv(this, new CustomFadeTransition(0.5, true, function()
+		{
+			closeSubState();
+		}));
+	}
+
+	function fadeOut(finishCallback:() -> Void)
+	{
+		trace("trans out");
+		subStateRecv(this, new CustomFadeTransition(0.5, false, finishCallback));
+	}
+
+	function subStateRecv(from:FlxState, state:FlxSubState)
+	{
+		if (from.subState == null)
+			from.openSubState(state);
+		else
+			subStateRecv(from.subState, state);
 	}
 
 	public static function resetState() {
