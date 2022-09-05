@@ -67,7 +67,7 @@ class k extends FlxUIState
 
 	function fadeIn()
 	{
-		subStateRecv(this, new DiamondTransSubState(0.5, true, function()
+		subStateRecv(this, new CustomFadeTransition(0.5, true, function()
 		{
 			closeSubState();
 		}));
@@ -76,7 +76,7 @@ class k extends FlxUIState
 	function fadeOut(finishCallback:() -> Void)
 	{
 		trace("trans out");
-		subStateRecv(this, new DiamondTransSubState(0.5, false, finishCallback));
+		subStateRecv(this, new CustomFadeTransition(0.5, false, finishCallback));
 	}
 
 	function subStateRecv(from:FlxState, state:FlxSubState)
