@@ -130,7 +130,8 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Dialogue Editor':
 					MusicBeatState.switchState(new DialogueEditorState());
 				case 'Chart Editor'://felt it would be cool maybe
-					MusicBeatState.switchState(new ChartingState(), false);
+					MusicBeatState.switchState(new ChartingState());
+					MusicBeatState.switchState(new ChartingState());
                                 case 'mods menu':
 					MusicBeatState.switchState(new ModsMenuState()); //idk why but ye just add it
 			}
