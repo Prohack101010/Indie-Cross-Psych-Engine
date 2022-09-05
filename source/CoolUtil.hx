@@ -49,29 +49,6 @@ class CoolUtil
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}
-	public static var defaultMechDiffs:Array<String> = [
-		'Off',
-		'Standard',
-		'Hell'
-	];
-	public static var defaultMechDiff:String = 'Standard'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
-	public static var mechDiff:Array<String> = [];
-
-	public static function getMechDifficultyFilePath(num:String)
-	{
-var W = 'mechDiff/' + num + '.lua';
-		if(num == null) num = PlayState.mechStoryDifficulty;
-			if(FileSystem.exists(Paths.modFolders(W))) {
-				W = Paths.modFolders(W);
-			} else {
-				W = SUtil.getPath() + Paths.getPreloadPath(W);
-			}
-	}
-
-	public static function mechDifficultyString():String
-	{
-		return difficulties[PlayState.mechStoryDifficulty].toUpperCase();
-	}
 
 	public static function coolTextFile(path:String):Array<String>
 	{
