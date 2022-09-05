@@ -44,7 +44,7 @@ class K extends FlxUIState
 		super.update(elapsed);
 	}
 
-	override public static function switchTo(state:FlxState)
+	override public function switchTo(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
