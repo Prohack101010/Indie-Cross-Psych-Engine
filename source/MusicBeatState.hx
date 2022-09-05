@@ -196,7 +196,7 @@ class MusicBeatState extends FlxUIState
 
 	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
-k.switchTo(nextState)
+k.switchTo(nextState);
 	}
 
 	public static function resetState() {
