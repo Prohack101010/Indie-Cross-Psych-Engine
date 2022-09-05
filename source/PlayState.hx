@@ -4754,7 +4754,7 @@ public function startVideo(name:String) {
 				}
 
 				if(unlock) {
-					Achievements.unlockAchievement(achievementName);
+					Achievements.giveAchievement(achievementName);
 					return achievementName;
 				}
 			}
