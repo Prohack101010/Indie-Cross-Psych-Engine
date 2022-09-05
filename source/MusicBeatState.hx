@@ -253,7 +253,7 @@ if (!finishedTransOut && !transOutRequested)
 		subStateRecv(this, new CustomFadeTransition(0.5, false, finishCallback));
 	}
 
-	function subStateRecv(from:FlxState, state:FlxSubState)
+	function subStateRecv(from:FlxState, state:FlxState)
 	{
 		if (from.subState == null)
 			from.openSubState(state);
