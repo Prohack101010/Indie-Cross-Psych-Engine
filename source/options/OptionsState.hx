@@ -70,7 +70,6 @@ class OptionsState extends MusicBeatState
 	var selectorRight:Alphabet;
 
 	override function create() {
-		FlxG.sound.playMusic(Paths.music('settin'), 1, true);
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
