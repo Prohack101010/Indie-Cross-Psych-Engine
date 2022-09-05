@@ -5,7 +5,7 @@ import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.addons.ui.FlxUIState;
 
-class k extends FlxUIState
+class K extends FlxUIState
 {
 	public static var disableNextTransIn:Bool = false;
 	public static var disableNextTransOut:Bool = false;
