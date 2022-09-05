@@ -196,7 +196,7 @@ class MusicBeatState extends K
 
 	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
-K.switchTo(nextState); 
+K.instance.switchTo(nextState); 
 	}
 
 	public static function resetState() {
