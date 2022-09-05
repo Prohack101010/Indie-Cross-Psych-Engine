@@ -20,7 +20,7 @@ import flixel.util.FlxDestroyUtil;
 import K;
 #end
 
-class MusicBeatState extends FlxUIState
+class MusicBeatState extends K
 {
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
