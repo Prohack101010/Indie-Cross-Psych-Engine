@@ -194,7 +194,7 @@ class MusicBeatState extends K
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
 	}
 
-	public function switchState(nextState:FlxState) {
+	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
 K.switchTo(nextState); 
 	}
