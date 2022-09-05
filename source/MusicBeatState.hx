@@ -17,7 +17,7 @@ import android.AndroidControls;
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
-import k;
+import K;
 #end
 
 class MusicBeatState extends FlxUIState
@@ -196,7 +196,7 @@ class MusicBeatState extends FlxUIState
 
 	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
-k.switchTo(nextState);
+K.switchTo(nextState);
 	}
 
 	public static function resetState() {
