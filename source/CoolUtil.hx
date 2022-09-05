@@ -59,7 +59,7 @@ class CoolUtil
 
 	public static function getMechDifficultyFilePath(num:String)
 	{
-var W = "mechDiff/" + num + ".lua";
+var W = 'mechDiff/' + num + '.lua';
 		if(num == null) num = PlayState.mechStoryDifficulty;
 			if(FileSystem.exists(Paths.modFolders(W))) {
 				W = Paths.modFolders(W);
