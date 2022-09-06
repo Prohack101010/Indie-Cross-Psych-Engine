@@ -20,7 +20,7 @@ import flixel.util.FlxDestroyUtil;
 import K;
 #end
 
-class MusicBeatState extends K
+class MusicBeatState extends FlxUIState
 {
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
@@ -194,9 +194,9 @@ class MusicBeatState extends K
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
 	}
 
-	public function switchState(nextState:FlxState) {
+	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
-                K.switchTo(nextState); 
+K.switchTo(nextState); 
 	}
 
 	public static function resetState() {
