@@ -7,11 +7,11 @@ import flixel.addons.ui.FlxUIState;
 
 class K extends MusicBeatState
 {
-	public static var disableNextTransIn:Bool = false;
-	public static var disableNextTransOut:Bool = false;
+	public var disableNextTransIn:Bool = false;
+	public var disableNextTransOut:Bool = false;
 
-	public var enableTransIn:Bool = true;
-	public var enableTransOut:Bool = true;
+	var enableTransIn:Bool = true;
+	var enableTransOut:Bool = true;
 
 	var transOutRequested:Bool = false;
 	var finishedTransOut:Bool = false;
@@ -47,7 +47,7 @@ class K extends MusicBeatState
   {
     switchTo(balls);
   }
-	override public function switchTo(state:FlxState):Dynamic
+	override public function switchTo(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
@@ -64,7 +64,7 @@ class K extends MusicBeatState
 			else
 				return true;
 		}
-    Std.string();
+//    Std.string();
 		return finishedTransOut;
 	}
 
