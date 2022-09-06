@@ -83,11 +83,11 @@ public static function switchTheFuckingState(balls:FlxState)
 		leState.openSubState(new CustomFadeTransition(0.5, false, finishCallback));
 	}
 
-	public static function subStateRecv(from:FlxState, state:FlxSubState)
+/*	public static function subStateRecv(from:FlxState, state:FlxSubState)
 	{
 		if (from.subState == null)
 			from.openSubState(state);
 		else
 			subStateRecv(from.subState, state);
-	}
+	}*/
 }
