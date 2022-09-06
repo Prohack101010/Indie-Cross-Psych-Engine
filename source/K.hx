@@ -10,8 +10,8 @@ class K extends MusicBeatState
 	public static var disableNextTransIn:Bool = false;
 	public static var disableNextTransOut:Bool = false;
 
-	public var enableTransIn:Bool = true;
-	public var enableTransOut:Bool = true;
+	public static var enableTransIn:Bool = true;
+	public static var enableTransOut:Bool = true;
 
 	var transOutRequested:Bool = false;
 	var finishedTransOut:Bool = false;
@@ -45,9 +45,9 @@ class K extends MusicBeatState
 	}
 public static function switchTheFuckingState(balls:FlxState)
   {
-    switchTo(balls);
+    switchTheState(balls);
   }
-	public static function switchTo(state:FlxState)
+	public static function switchTheState(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
