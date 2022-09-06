@@ -47,7 +47,7 @@ class K extends MusicBeatState
   {
     switchTo(balls);
   }
-	override public function switchTo(state:FlxState)
+	override public function switchTo(state:FlxState):Bool
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
