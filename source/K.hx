@@ -7,6 +7,8 @@ import flixel.addons.ui.FlxUIState;
 
 class K extends MusicBeatState
 {
+		public static var curState:Dynamic = FlxG.state;
+		var leState:MusicBeatState = curState;
 	public static var disableNextTransIn:Bool = false;
 	public static var disableNextTransOut:Bool = false;
 
@@ -45,9 +47,9 @@ class K extends MusicBeatState
 	}
 public static function switchTheFuckingState(balls:FlxState)
   {
-    switchTheState(balls);
+    switchState(balls);
   }
-	public static function switchTheState(state:FlxState)
+	public static function switchState(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
@@ -69,7 +71,7 @@ public static function switchTheFuckingState(balls:FlxState)
 
 	public static function fadeIn()
 	{
-		subStateRecv(this, new CustomFadeTransition(0.5, true, function()
+		leState.openSubState( new CustomFadeTransition(0.5, true, function()
 		{
 			closeSubState();
 		}));
@@ -78,7 +80,7 @@ public static function switchTheFuckingState(balls:FlxState)
 	public static function fadeOut(finishCallback:() -> Void)
 	{
 		trace("trans out");
-		subStateRecv(this, new CustomFadeTransition(0.5, false, finishCallback));
+		leState.openSubState(new CustomFadeTransition(0.5, false, finishCallback));
 	}
 
 	public static function subStateRecv(from:FlxState, state:FlxSubState)
