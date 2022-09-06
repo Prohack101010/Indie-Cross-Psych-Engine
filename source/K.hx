@@ -64,7 +64,7 @@ public function switchTheFuckingState(balls:FlxState)
 			else
 				return true;
 		}
-
+    Std.string();
 		return finishedTransOut;
 	}
 
