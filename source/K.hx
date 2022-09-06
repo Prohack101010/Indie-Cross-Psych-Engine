@@ -13,8 +13,8 @@ class K extends MusicBeatState
 	public static var enableTransIn:Bool = true;
 	public static var enableTransOut:Bool = true;
 
-	var transOutRequested:Bool = false;
-	var finishedTransOut:Bool = false;
+	public static var transOutRequested:Bool = false;
+	public static var finishedTransOut:Bool = false;
 
 	override function create()
 	{
