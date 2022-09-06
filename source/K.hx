@@ -71,7 +71,7 @@ public static function switchTheFuckingState(balls:FlxState)
 
 	public static function fadeIn()
 	{
-		leState.openSubState( new CustomFadeTransition(0.5, true, function()
+		leState.openSubState(new CustomFadeTransition(0.5, true, function()
 		{
 			closeSubState();
 		}));
