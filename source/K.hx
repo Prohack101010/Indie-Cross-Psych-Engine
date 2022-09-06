@@ -16,7 +16,7 @@ class K extends FlxUIState
 	var transOutRequested:Bool = false;
 	var finishedTransOut:Bool = false;
 
-	override function create()
+	function create()
 	{
 		super.create();
 
@@ -39,12 +39,12 @@ class K extends FlxUIState
 		}
 	}
 
-	override function update(elapsed:Float)
+	function update(elapsed:Float)
 	{
 		super.update(elapsed);
 	}
 
-	override public function switchTo(state:FlxState)
+	public function switchTo(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
