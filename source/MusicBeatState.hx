@@ -11,17 +11,28 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
+import flixel.FlxSubState;
 import flixel.FlxBasic;
 #if android
 import android.AndroidControls;
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
-import K;
+//import K;
 #end
 
 class MusicBeatState extends FlxUIState
 {
+		public static var curState:Dynamic = FlxG.state;
+		public static var leState:MusicBeatState = curState;
+	public static var disableNextTransIn:Bool = false;
+	public static var disableNextTransOut:Bool = false;
+
+	public static var enableTransIn:Bool = true;
+	public static var enableTransOut:Bool = true;
+
+	public static var transOutRequested:Bool = false;
+	public static var finishedTransOut:Bool = false;
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -136,6 +147,23 @@ class MusicBeatState extends FlxUIState
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
+		if (disableNextTransIn)
+		{
+			enableTransIn = false;
+			disableNextTransIn = false;
+		}
+
+		if (disableNextTransOut)
+		{
+			enableTransOut = false;
+			disableNextTransOut = false;
+		}
+
+		if (enableTransIn)
+		{
+			trace("transIn");
+			fadeIn();
+		}
 
 		if(!skip) {
 			openSubState(new CustomFadeTransition(0.7, true));
@@ -194,9 +222,38 @@ class MusicBeatState extends FlxUIState
 		curStep = lastChange.stepTime + Math.floor(((Conductor.songPosition - ClientPrefs.noteOffset) - lastChange.songTime) / Conductor.stepCrochet);
 	}
 
-	public static function switchState(nextState:FlxState) {
-		// Custom made Trans in
-K.switchTheFuckingState(nextState); 
+	public static function switchState(state:FlxState)
+	{
+		if (!finishedTransOut && !transOutRequested)
+		{
+			if (enableTransOut)
+			{
+				fadeOut(function()
+				{
+					finishedTransOut = true;
+					FlxG.switchState(state);
+				});
+
+				transOutRequested = true;
+			}
+			else
+				return true;
+		}
+		return finishedTransOut;
+	}
+
+	public static function fadeIn()
+	{
+		leState.openSubState(new CustomFadeTransition(0.5, true, function()
+		{
+//			FlxG.closeSubState();
+		}));
+	}
+
+	public static function fadeOut(finishCallback:() -> Void)
+	{
+		trace("trans out");
+		leState.openSubState(new CustomFadeTransition(0.5, false, finishCallback));
 	}
 
 	public static function resetState() {
