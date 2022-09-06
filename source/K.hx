@@ -67,7 +67,7 @@ public static function switchTheFuckingState(balls:FlxState)
 		return finishedTransOut;
 	}
 
-	function fadeIn()
+	public static function fadeIn()
 	{
 		subStateRecv(this, new CustomFadeTransition(0.5, true, function()
 		{
@@ -75,7 +75,7 @@ public static function switchTheFuckingState(balls:FlxState)
 		}));
 	}
 
-	function fadeOut(finishCallback:() -> Void)
+	public static function fadeOut(finishCallback:() -> Void)
 	{
 		trace("trans out");
 		subStateRecv(this, new CustomFadeTransition(0.5, false, finishCallback));
