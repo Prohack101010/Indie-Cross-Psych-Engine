@@ -73,7 +73,7 @@ public static function switchTheFuckingState(balls:FlxState)
 	{
 		leState.openSubState(new CustomFadeTransition(0.5, true, function()
 		{
-			closeSubState();
+			FlxG.closeSubState();
 		}));
 	}
 
