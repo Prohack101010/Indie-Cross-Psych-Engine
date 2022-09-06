@@ -47,7 +47,7 @@ public static function switchTheFuckingState(balls:FlxState)
   {
     switchTo(balls);
   }
-	static public override function switchTo(state:FlxState)
+	static public function switchTo(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
