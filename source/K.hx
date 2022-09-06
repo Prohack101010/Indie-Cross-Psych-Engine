@@ -5,7 +5,7 @@ import flixel.FlxState;
 import flixel.FlxSubState;
 import flixel.addons.ui.FlxUIState;
 
-class K extends FlxUIState
+class K extends MusicBeatState
 {
 	public static var disableNextTransIn:Bool = false;
 	public static var disableNextTransOut:Bool = false;
