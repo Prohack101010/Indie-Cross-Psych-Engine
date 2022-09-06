@@ -8,7 +8,7 @@ import flixel.addons.ui.FlxUIState;
 class K extends MusicBeatState
 {
 		public static var curState:Dynamic = FlxG.state;
-		var leState:MusicBeatState = curState;
+		public static var leState:MusicBeatState = curState;
 	public static var disableNextTransIn:Bool = false;
 	public static var disableNextTransOut:Bool = false;
 
