@@ -43,8 +43,11 @@ class K extends MusicBeatState
 	{
 		super.update(elapsed);
 	}
-
-	public static override function switchTo(state:FlxState)
+public static function switchTheFuckingState(balls:FlxState)
+  {
+    switchState(balls);
+  }
+	override function switchTo(state:FlxState)
 	{
 		if (!finishedTransOut && !transOutRequested)
 		{
