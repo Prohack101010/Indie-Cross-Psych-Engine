@@ -210,8 +210,8 @@ class MusicBeatState extends FlxUIState
 		}
 			if(nextState == FlxG.state) {
 //				CustomFadeTransition.finishCallback = function() {
-					FlxG.resetState();
-				};
+//					FlxG.resetState();
+//				};
 				//trace('resetted');
 			} else {
 //				CustomFadeTransition.finishCallback = function() {
