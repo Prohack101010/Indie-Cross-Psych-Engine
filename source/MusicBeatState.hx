@@ -18,11 +18,11 @@ import android.AndroidControls;
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
-//import K;
+import CustomFadeTransition;
 #end
 
 class MusicBeatState extends FlxUIState
-{
+{ 
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -160,7 +160,7 @@ class MusicBeatState extends FlxUIState
 
 	override function update(elapsed:Float)
 	{
-	if CustomFadeTransition.finishedTrans == true {
+	if (CustomFadeTransition.finishedTrans == true) {
 	CustomFadeTransition.finishedTrans = false;
 	FlxG.switchState(curState)
 	}
