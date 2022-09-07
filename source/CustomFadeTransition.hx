@@ -10,6 +10,7 @@ import flixel.util.FlxColor;
 
 class CustomFadeTransition extends FlxSubState
 {
+  public static var finishedTrans = false;
 	var shader:DiamondTransShader;
 	var rect:FlxSprite;
 	var tween:FlxTween;
@@ -56,8 +57,6 @@ class CustomFadeTransition extends FlxSubState
 			fadeIn();
 		else
 			fadeOut();
-
-		closeCallback = _closeCallback;
 	}
 
 	function __fade(from:Float, to:Float, reverse:Bool)
@@ -72,6 +71,7 @@ class CustomFadeTransition extends FlxSubState
 			ease: FlxEase.linear,
 			onComplete: function(_)
 			{
+			finishedTrans = true;
 				trace("finished");
 				if (finishCallback != null)
 				{
@@ -95,9 +95,11 @@ class CustomFadeTransition extends FlxSubState
 		__fade(0.0, 1.0, false);
 	}
 
-	function _closeCallback()
-	{
-		if (tween != null)
+	override function destroy() {
+		if(leTween != null) {
+			finishCallback();
 			tween.cancel();
+		}
+		super.destroy();
 	}
 }
