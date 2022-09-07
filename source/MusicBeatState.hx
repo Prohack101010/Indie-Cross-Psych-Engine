@@ -145,7 +145,6 @@ class MusicBeatState extends FlxUIState
 	}
 
 	override function create() {
-		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
 		if (disableNextTransIn)
 		{
@@ -165,10 +164,6 @@ class MusicBeatState extends FlxUIState
 			fadeIn();
 		}
 
-		if(!skip) {
-			openSubState(new CustomFadeTransition(0.7, true));
-		}
-		FlxTransitionableState.skipNextTransOut = false;
 	}
 	
 	#if (VIDEOS_ALLOWED && windows)
