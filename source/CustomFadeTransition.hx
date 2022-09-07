@@ -71,7 +71,7 @@ class CustomFadeTransition extends FlxSubState
 			ease: FlxEase.linear,
 			onComplete: function(_)
 			{
-//			finishedTrans = true;
+			finishedTrans = true;
 				trace("finished");
 				if (finishCallback != null)
 				{
