@@ -163,7 +163,7 @@ class MusicBeatState extends FlxUIState
 	{
 	if (CustomFadeTransition.finishedTrans == true) {
 	CustomFadeTransition.finishedTrans = false;
-	FlxG.switchState(curNextState);
+//	FlxG.switchState(curNextState);
 	}
 		//everyStep();
 		var oldStep:Int = curStep;
@@ -209,20 +209,20 @@ class MusicBeatState extends FlxUIState
 			leState.openSubState(new CustomFadeTransition(0.5, false));
 		}
 			if(nextState == FlxG.state) {
-//				CustomFadeTransition.finishCallback = function() {
-//					FlxG.resetState();
-//				};
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.resetState();
+				};
 				//trace('resetted');
 			} else {
-//				CustomFadeTransition.finishCallback = function() {
-//					FlxG.switchState(nextState);
+				CustomFadeTransition.finishCallback = function() {
+					FlxG.switchState(nextState);
 				};
 				trace('changed state');
 			}
 			return;
 		}
 		FlxTransitionableState.skipNextTransIn = false;
-//		FlxG.switchState(nextState);
+		FlxG.switchState(nextState);
 	}
 
 	public static function resetState() {
