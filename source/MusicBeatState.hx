@@ -23,6 +23,7 @@ import CustomFadeTransition;
 
 class MusicBeatState extends FlxUIState
 { 
+  public var curNextState:FlxState;
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -162,7 +163,7 @@ class MusicBeatState extends FlxUIState
 	{
 	if (CustomFadeTransition.finishedTrans == true) {
 	CustomFadeTransition.finishedTrans = false;
-	FlxG.switchState(curState);
+	FlxG.switchState(curNextState);
 	}
 		//everyStep();
 		var oldStep:Int = curStep;
@@ -201,7 +202,7 @@ class MusicBeatState extends FlxUIState
 
 	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
-		public var curState = nextState;
+		curNextState = nextState;
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
