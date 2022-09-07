@@ -96,7 +96,7 @@ class CustomFadeTransition extends FlxSubState
 	}
 
 	override function destroy() {
-		if(leTween != null) {
+		if(tween != null) {
 			finishCallback();
 			tween.cancel();
 		}
