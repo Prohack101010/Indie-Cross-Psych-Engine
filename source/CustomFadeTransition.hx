@@ -25,7 +25,7 @@ class CustomFadeTransition extends FlxSubState
 		super();
 
 		this.duration = duration;
-this.static.finishCallback = finishCallback;
+//this.static.finishCallback = finishCallback;
 		this.fi = isTransIn;
 	if(nextCamera != null) {
 			this.cameras = [nextCamera];
