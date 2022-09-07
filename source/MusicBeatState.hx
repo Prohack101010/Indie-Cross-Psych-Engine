@@ -162,7 +162,7 @@ class MusicBeatState extends FlxUIState
 	{
 	if (CustomFadeTransition.finishedTrans == true) {
 	CustomFadeTransition.finishedTrans = false;
-	FlxG.switchState(curState)
+	FlxG.switchState(curState);
 	}
 		//everyStep();
 		var oldStep:Int = curStep;
