@@ -15,7 +15,7 @@ class CustomFadeTransition extends FlxSubState
 	var rect:FlxSprite;
 	var tween:FlxTween;
 	public static var nextCamera:FlxCamera;
-	public static var finishCallback:Void->Void;
+	public static var finishCallback;
 	var duration:Float;
 
 	var fi:Bool = true;
