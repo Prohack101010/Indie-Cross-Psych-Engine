@@ -22,17 +22,7 @@ import flixel.util.FlxDestroyUtil;
 #end
 
 class MusicBeatState extends FlxUIState
-{
-		public static var curState:Dynamic = FlxG.state;
-		public static var leState:MusicBeatState = curState;
-	public static var disableNextTransIn:Bool = false;
-	public static var disableNextTransOut:Bool = false;
-
-	public static var enableTransIn:Bool = true;
-	public static var enableTransOut:Bool = true;
-
-	public static var transOutRequested:Bool = false;
-	public static var finishedTransOut:Bool = false;
+{;
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -145,24 +135,12 @@ class MusicBeatState extends FlxUIState
 	}
 
 	override function create() {
+	var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
-		if (disableNextTransIn)
-		{
-			enableTransIn = false;
-			disableNextTransIn = false;
+      if(!skip) {
+			openSubState(new CustomFadeTransition(0.5, true));
 		}
-
-		if (disableNextTransOut)
-		{
-			enableTransOut = false;
-			disableNextTransOut = false;
-		}
-
-		if (enableTransIn)
-		{
-			trace("transIn");
-			fadeIn();
-		}
+		FlxTransitionableState.skipNextTransOut = false;
 
 	}
 	
