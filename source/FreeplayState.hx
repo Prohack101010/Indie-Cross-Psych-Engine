@@ -499,7 +499,7 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
-				  Conductor.changeBPM(song.bpm)
+				  Conductor.changeBPM(song.bpm);
 	new FlxTimer().start(0.5, function(tmr:FlxTimer){
 	if (allowInstPrev) {
 			if(instPlaying != curSelected)
