@@ -14,6 +14,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
 import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
@@ -22,7 +23,8 @@ import WeekData;
 import sys.FileSystem;
 #end
 import openfl.filters.ShaderFilter;
-import Shaders;
+import Shaders
+import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
 import Song;
@@ -37,16 +39,17 @@ class FreeplayState extends MusicBeatState
   public var shaderUpdates:Array<Float->Void> = [];
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
-  var chromVal:Int = 0;
+  var chromVal:Float = 0;
   public var FlxTimer:FlxTimerManager;
   var allowInstPrev:Bool = false;
 	var songs:Array<SongMetadata> = [];
-
+public static var SONG:SwagSong = null;
 	var selector:FlxText;
 	private static var curSelected:Int = 0;
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
-
+	public var camHUD:FlxCamera;
+	public var camGame:FlxCamera;
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -255,37 +258,20 @@ class FreeplayState extends MusicBeatState
 public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
 
         switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud':
+            case 'camHUD':
                     camHUDShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camHUDShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camHUD.setFilters(newCamEffects);
-            case 'camother' | 'other':
-                    camOtherShaders.push(effect);
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camOtherShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camOther.setFilters(newCamEffects);
-            case 'camgame' | 'game':
+            case 'camGame':
                     camGameShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camGameShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camGame.setFilters(newCamEffects);
-            default:
-                if(modchartSprites.exists(cam)) {
-                    Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
-                } else if(modchartTexts.exists(cam)) {
-                    Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
-                } else {
-                    var OBJ = Reflect.getProperty(PlayState.instance,cam);
-                    Reflect.setProperty(OBJ,"shader", effect.shader);
-                }  
-
         }
 
   }
@@ -375,7 +361,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-	Shaders.setChrome(chromVal);
+	Shaders.ChromaticAberrationEffect.setChrome(chromVal);
 	for (i in shaderUpdates){
 			i(elapsed);
 		}
@@ -614,7 +600,8 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 	public function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
-				  Conductor.changeBPM(Song.bpm);
+			SONG = Song.loadFromJson(songs[curSelected].songName);
+				  Conductor.changeBPM(SONG);
 	new FlxTimer().start(0.5, function(tmr:FlxTimer){
 	if (allowInstPrev) {
 			if(instPlaying != curSelected)
