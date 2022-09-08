@@ -22,11 +22,13 @@ import WeekData;
 import sys.FileSystem;
 #end
 import flixel.util.FlxTimer;
-
+import Conductor
+import Song;
 using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
+  var chromVal:Int = 0;
   public var FlxTimer:FlxTimerManager;
   var allowInstPrev:Bool = false;
 	var songs:Array<SongMetadata> = [];
@@ -368,9 +370,6 @@ class FreeplayState extends MusicBeatState
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices)
-//					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-				else
 					vocals = new FlxSound();
 
 				FlxG.sound.list.add(vocals);
@@ -437,7 +436,38 @@ class FreeplayState extends MusicBeatState
 		}
 		super.update(elapsed);
 	}
+	override function beatHit()
+	{
+		super.beatHit();
+			bopOnBeat();
+	}
+	function bopOnBeat()
+	{
+		if (allowInstPrev == true)
+		{
+			FlxG.camera.zoom += 0.015;
+			camZoom = FlxTween.tween(FlxG.camera, {zoom: defaultZoom}, 0.1);
+			if (SongMetadata.songName == 'bad-time'
+				&& curBeat % 2 == 0
+				&& !ClientPref.flashing)
+			{
+				FlxG.camera.shake(0.015, 0.1);
+			}
 
+			if (FreeplaySelectState.curSelectedNightmare == true && ClientPrefs.Shaders)
+			{/*
+				if (chromVal == 0)
+				{
+					chromVal = FlxG.random.float(0.03, 0.10);
+					FlxTween.tween(this, {chromVal: 0}, FlxG.random.float(0.05, 0.2), {ease: FlxEase.expoOut}); // added easing to it, dunno if it looks better
+				}
+			*/}
+//			else
+		/*	{
+				FlxTween.tween(this, {chromVal: 0}, FlxG.random.float(0.05, 0.2), {ease: FlxEase.expoOut});
+			}*/
+		}
+	}
 	public static function destroyFreeplayVocals() {
 		if(vocals != null) {
 			vocals.stop();
@@ -469,6 +499,7 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
+				  Conductor.changeBPM(song.bpm)
 	new FlxTimer().start(0.5, function(tmr:FlxTimer){
 	if (allowInstPrev) {
 			if(instPlaying != curSelected)
