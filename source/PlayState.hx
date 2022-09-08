@@ -1328,7 +1328,7 @@ class PlayState extends MusicBeatState
 	}
 
 public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
-
+if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
                     camHUDShaders.push(effect);
@@ -1361,7 +1361,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
                     Reflect.setProperty(OBJ,"shader", effect.shader);
                 }
         }
-
+}
   }
 
   public function removeShaderFromCamera(cam:String,effect:ShaderEffect){ 
@@ -4754,7 +4754,11 @@ public function startVideo(name:String) {
 				}
 
 				if(unlock) {
-					Achievements.giveAchievement(achievementName);
+				Achievements.giveAchievement(achieve, function() {
+				if(endingSong && !inCutscene) {
+					endSong();
+				}
+			});
 					return achievementName;
 				}
 			}
