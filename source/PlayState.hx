@@ -4628,7 +4628,9 @@ public function startVideo(name:String) {
 		#end
 		return returnVal;
 	}
-
+public static function setChromaticValue(amt:Int) {
+  Shaders.setChrome(amt)
+}
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
 		for (i in 0...luaArray.length) {
