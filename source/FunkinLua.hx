@@ -1607,7 +1607,9 @@ PlayState.instance.krChange(amt, force);
 				}
 			}
 		});
-
+		Lua_helper.add_callback(lua, "setChrome", function(value:Int) {
+PlayState.instance.setChromaticValue(value);
+		});
 		Lua_helper.add_callback(lua, "getTextString", function(tag:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
