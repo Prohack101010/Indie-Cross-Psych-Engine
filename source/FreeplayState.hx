@@ -28,6 +28,7 @@ using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
+  	var camZoom:FlxTween;
   var chromVal:Int = 0;
   public var FlxTimer:FlxTimerManager;
   var allowInstPrev:Bool = false;
@@ -218,7 +219,7 @@ class FreeplayState extends MusicBeatState
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
-
+		camZoom = FlxTween.tween(this, {}, 0);
 		#if android
 		addVirtualPad(LEFT_FULL, A_B_C_X_Y_Z);
 		//virtualPad.y = -26;
@@ -441,15 +442,15 @@ class FreeplayState extends MusicBeatState
 		super.beatHit();
 			bopOnBeat();
 	}
-	function bopOnBeat()
+	public function bopOnBeat()
 	{
 		if (allowInstPrev == true)
 		{
 			FlxG.camera.zoom += 0.015;
 			camZoom = FlxTween.tween(FlxG.camera, {zoom: defaultZoom}, 0.1);
-			if (SongMetadata.songName == 'bad-time'
+			if (songs[curSelected].songName == 'bad-time'
 				&& curBeat % 2 == 0
-				&& !ClientPref.flashing)
+				&& !ClientPrefs.flashing)
 			{
 				FlxG.camera.shake(0.015, 0.1);
 			}
@@ -499,7 +500,7 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
-				  Conductor.changeBPM(song.bpm);
+				  Conductor.changeBPM(Song.bpm);
 	new FlxTimer().start(0.5, function(tmr:FlxTimer){
 	if (allowInstPrev) {
 			if(instPlaying != curSelected)
