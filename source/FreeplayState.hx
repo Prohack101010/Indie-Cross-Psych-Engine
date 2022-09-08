@@ -31,6 +31,7 @@ using StringTools;
 class FreeplayState extends MusicBeatState
 {
       public var shader_chromatic_abberation:ChromaticAberrationEffect;
+public var shaderUpdates:Array<Float->Void> = [];
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
   var chromVal:Int = 0;
@@ -114,7 +115,6 @@ class FreeplayState extends MusicBeatState
 		}*/
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
-		public var shaderUpdates:Array<Float->Void> = [];
 	public var camGameShaders:Array<ShaderEffect> = [];
 	public var camHUDShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
