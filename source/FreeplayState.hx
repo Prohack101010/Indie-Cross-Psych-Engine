@@ -22,7 +22,7 @@ import WeekData;
 import sys.FileSystem;
 #end
 import flixel.util.FlxTimer;
-import Conductor
+import Conductor;
 import Song;
 using StringTools;
 
