@@ -26,6 +26,7 @@ using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
+  var allowInstPrev:Bool = false;
 	var songs:Array<SongMetadata> = [];
 
 	var selector:FlxText;
@@ -194,10 +195,10 @@ class FreeplayState extends MusicBeatState
 
 		#if PRELOAD_ALL
 			#if android
-			var leText:String = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
+			var leText:String = "Press X to enable/disable instrument preview / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
 			var size:Int = 16;
 			#else
-			var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+			var leText:String = "Press SPACE to enable/disable instrument preview / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
 			var size:Int = 16;
 			#end
 		#else
@@ -355,7 +356,9 @@ class FreeplayState extends MusicBeatState
 		}
 		else if(space)
 		{
-			if(instPlaying != curSelected)
+		if (allowInstPrev == false) { 
+		  allowInstPrev = true;
+		if(instPlaying != curSelected)
 			{
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
@@ -364,7 +367,7 @@ class FreeplayState extends MusicBeatState
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+//					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 				else
 					vocals = new FlxSound();
 
@@ -373,10 +376,17 @@ class FreeplayState extends MusicBeatState
 				vocals.play();
 				vocals.persist = true;
 				vocals.looped = true;
-				vocals.volume = 0.7;
+				vocals.volume = 0;
 				instPlaying = curSelected;
 				#end
 			}
+
+		}
+		if (allowInstPrev == true) {
+		  allowInstPrev = false;
+   		  destroyFreeplayVocals();
+				FlxG.sound.playMusic('freakyMenu', 1);
+		}
 		}
 
 		else if (accepted)
@@ -457,6 +467,31 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
+	new FlxTimer().start(0.5, function(tmr:FlxTimer){
+	if (allowInstPrev) {
+			if(instPlaying != curSelected)
+			{
+				#if PRELOAD_ALL
+				destroyFreeplayVocals();
+				FlxG.sound.music.volume = 0;
+				Paths.currentModDirectory = songs[curSelected].folder;
+				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				if (PlayState.SONG.needsVoices)
+//					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+				else
+					vocals = new FlxSound();
+				FlxG.sound.list.add(vocals);
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+				vocals.play();
+				vocals.persist = true;
+				vocals.looped = true;
+				vocals.volume = 0;
+				instPlaying = curSelected;
+				#end
+			}
+	}
+      });
 		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;
