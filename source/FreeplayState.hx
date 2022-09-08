@@ -21,6 +21,8 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
+import openfl.filters.ShaderFilter;
+import Shaders;
 import flixel.util.FlxTimer;
 import Conductor;
 import Song;
@@ -28,7 +30,9 @@ using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
-  	var camZoom:FlxTween;
+      public var shader_chromatic_abberation:ChromaticAberrationEffect;
+  var defaultZoom:Float = 1;
+	var camZoom:FlxTween;
   var chromVal:Int = 0;
   public var FlxTimer:FlxTimerManager;
   var allowInstPrev:Bool = false;
@@ -58,6 +62,8 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
+	shader_chromatic_abberation = new ChromaticAberrationEffect();
+	addShaderToCamera(camHUD, new ChromaticAberrationEffect(0)); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -106,6 +112,19 @@ class FreeplayState extends MusicBeatState
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}*/
+		camGame = new FlxCamera();
+		camHUD = new FlxCamera();
+		public var shaderUpdates:Array<Float->Void> = [];
+	public var camGameShaders:Array<ShaderEffect> = [];
+	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camOtherShaders:Array<ShaderEffect> = [];
+
+		camHUD.bgColor.alpha = 0;
+
+		FlxG.cameras.reset(camGame);
+		FlxG.cameras.add(camHUD, false);
+
+		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -134,6 +153,10 @@ class FreeplayState extends MusicBeatState
 				//songText.updateHitbox();
 				//trace(songs[i].songName + ' new scale: ' + textScale);
 			}
+
+		scoreText.cameras = [camHUD];
+		scoreBG.cameras = [camHUD];
+		diffText.cameras = [camHUD];
 
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
@@ -228,6 +251,92 @@ class FreeplayState extends MusicBeatState
 		super.create();
 	}
 
+public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
+
+        switch(cam.toLowerCase()) {
+            case 'camhud' | 'hud':
+                    camHUDShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camHUDShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camHUD.setFilters(newCamEffects);
+            case 'camother' | 'other':
+                    camOtherShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camOtherShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camOther.setFilters(newCamEffects);
+            case 'camgame' | 'game':
+                    camGameShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camGameShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camGame.setFilters(newCamEffects);
+            default:
+                if(modchartSprites.exists(cam)) {
+                    Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
+                } else if(modchartTexts.exists(cam)) {
+                    Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
+                } else {
+                    var OBJ = Reflect.getProperty(PlayState.instance,cam);
+                    Reflect.setProperty(OBJ,"shader", effect.shader);
+                }  
+
+        }
+
+  }
+
+  public function removeShaderFromCamera(cam:String,effect:ShaderEffect){ 
+
+        switch(cam.toLowerCase()) {
+            case 'camhud' | 'hud': 
+    camHUDShaders.remove(effect);
+    var newCamEffects:Array<BitmapFilter>=[];
+    for(i in camHUDShaders){
+      newCamEffects.push(new ShaderFilter(i.shader));
+    }
+    camHUD.setFilters(newCamEffects);
+            case 'camother' | 'other': 
+                    camOtherShaders.remove(effect);
+                    var newCamEffects:Array<BitmapFilter>=[];
+                    for(i in camOtherShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camOther.setFilters(newCamEffects);
+            default: 
+                camGameShaders.remove(effect);
+                var newCamEffects:Array<BitmapFilter>=[];
+                for(i in camGameShaders){
+                  newCamEffects.push(new ShaderFilter(i.shader));
+                }
+                camGame.setFilters(newCamEffects);
+        }
+
+  }
+
+  public function clearShaderFromCamera(cam:String){
+
+
+        switch(cam.toLowerCase()) {
+            case 'camhud' | 'hud': 
+                camHUDShaders = [];
+                var newCamEffects:Array<BitmapFilter>=[];
+                camHUD.setFilters(newCamEffects);
+            case 'camother' | 'other': 
+                camOtherShaders = [];
+                var newCamEffects:Array<BitmapFilter>=[];
+                camOther.setFilters(newCamEffects);
+            default: 
+                camGameShaders = [];
+                var newCamEffects:Array<BitmapFilter>=[];
+                camGame.setFilters(newCamEffects);
+        }
+
+  } 
+
 	override function closeSubState() {
 		changeSelection(0, false);
 		persistentUpdate = true;
@@ -265,6 +374,10 @@ class FreeplayState extends MusicBeatState
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
+	Shaders.setChrome(chromVal);
+	for (i in shaderUpdates){
+			i(elapsed);
+		}
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -456,17 +569,17 @@ class FreeplayState extends MusicBeatState
 			}
 
 			if (FreeplaySelectState.curSelectedNightmare == true && ClientPrefs.Shaders)
-			{/*
+			{
 				if (chromVal == 0)
 				{
 					chromVal = FlxG.random.float(0.03, 0.10);
 					FlxTween.tween(this, {chromVal: 0}, FlxG.random.float(0.05, 0.2), {ease: FlxEase.expoOut}); // added easing to it, dunno if it looks better
 				}
-			*/}
-//			else
-		/*	{
+			}
+			else
+			{
 				FlxTween.tween(this, {chromVal: 0}, FlxG.random.float(0.05, 0.2), {ease: FlxEase.expoOut});
-			}*/
+			}
 		}
 	}
 	public static function destroyFreeplayVocals() {
@@ -498,7 +611,7 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 	}
 
-	function changeSelection(change:Int = 0, playSound:Bool = true)
+	public function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
 				  Conductor.changeBPM(Song.bpm);
 	new FlxTimer().start(0.5, function(tmr:FlxTimer){
