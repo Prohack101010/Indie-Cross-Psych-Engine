@@ -4755,7 +4755,7 @@ public function setChromaticValue(amt:Int) {
 						}
 				}
 
-				if(unlock) {
+				if(unlock && achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
 				if(endingSong && !inCutscene) {
 					endSong();
