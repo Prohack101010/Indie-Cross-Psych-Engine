@@ -361,7 +361,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-	Shaders.ChromaticAberrationEffect.setChrome(chromVal);
+	ChromaticAberrationEffect.setChrome(chromVal);
 	for (i in shaderUpdates){
 			i(elapsed);
 		}
