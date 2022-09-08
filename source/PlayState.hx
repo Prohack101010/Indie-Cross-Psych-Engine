@@ -4722,11 +4722,32 @@ public function setChromaticValue(amt:Int) {
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
 							{
 								case 'cuphead':
-									if(achievementName == 'cuphead_nomiss') unlock = true;
+									if(achievementName == 'cuphead_nomiss') 				var achieve:String = checkForAchievement(['cuphead_nomiss']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 								case 'sans':
-									if(achievementName == 'sans_nomiss') unlock = true;
+									if(achievementName == 'sans_nomiss'				var achieve:String = checkForAchievement(['sans_nomiss']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 								case 'bendy':
-									if(achievementName == 'bendy_nomiss') unlock = true;
+									if(achievementName == 'bendy_nomiss') var achieve:String = checkForAchievement(['bendy_nomiss']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 							}
 						}
 					case 'debugger':
@@ -4735,36 +4756,71 @@ public function setChromaticValue(amt:Int) {
 						} 
 					case 'pacifist':
 						if(Paths.formatToSongPath(SONG.song) == 'final-stretch' && !usedPractice && isStoryMode) {
-							unlock = true;
+				var achieve:String = checkForAchievement(['pacifist']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 						} 
 					case 'genocide':
 						if(Paths.formatToSongPath(SONG.song) == 'burning-in-hell' && !usedPractice && isStoryMode) {
-							unlock = true;
+				var achieve:String = checkForAchievement(['genocide']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 						} 
 					case 'nmCup':
 						if(Paths.formatToSongPath(SONG.song) == 'devils-gambit' && !usedPractice) {
-							unlock = true;
+				var achieve:String = checkForAchievement(['nmCup']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 						}
 					case 'nmSans':
 						if(Paths.formatToSongPath(SONG.song) == 'bad-time' && !usedPractice) {
-							unlock = true;
+				var achieve:String = checkForAchievement(['nmSans']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 						} 
 					case 'nmBendy':
 						if(Paths.formatToSongPath(SONG.song) == 'despair' && !usedPractice) {
-							unlock = true;
+				var achieve:String = checkForAchievement(['nmBendy']);
+				if (achieve != null) {
+					Achievements.giveAchievement(achieve, function() {
+						if(endingSong && !inCutscene) {
+							endSong();
+						}
+					}); 
+				}
 						}
 				}
 
-				if(unlock) {
+/*				if(unlock) {
 			if(achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
 				if(endingSong && !inCutscene) {
 					endSong();
 				}
 				}
-			});
+			}); 
 					return achievementName;
-				}
+				}*/
 			}
 		}
 		return null;
