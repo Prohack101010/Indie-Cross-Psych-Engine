@@ -4762,9 +4762,9 @@ public function setChromaticValue(amt:Int) {
 					endSong();
 				}
 				}
-			}
+			});
 					return achievementName;
-				});
+				}
 			}
 		}
 		return null;
