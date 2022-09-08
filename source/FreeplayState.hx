@@ -21,11 +21,13 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
+import flixel.util.FlxTimer;
 
 using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
+  public var FlxTimer:FlxTimerManager;
   var allowInstPrev:Bool = false;
 	var songs:Array<SongMetadata> = [];
 
