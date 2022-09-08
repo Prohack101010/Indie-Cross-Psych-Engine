@@ -4629,7 +4629,7 @@ public function startVideo(name:String) {
 		return returnVal;
 	}
 public function setChromaticValue(amt:Int) {
-  Shaders.setChrome(amt);
+  Shaders.ChromaticAberrationShader.setChrome(amt);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
@@ -4755,14 +4755,16 @@ public function setChromaticValue(amt:Int) {
 						}
 				}
 
-				if(unlock && achieve != null) {
+				if(unlock) {
+			if(achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
 				if(endingSong && !inCutscene) {
 					endSong();
 				}
-			});
-					return achievementName;
 				}
+			}
+					return achievementName;
+				});
 			}
 		}
 		return null;
