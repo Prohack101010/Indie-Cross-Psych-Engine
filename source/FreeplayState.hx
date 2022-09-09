@@ -69,9 +69,11 @@ public static var SONG:SwagSong = null;
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
-		public var shader(get, never):ShaderFilter;
 
-	inline function get_shader():ShaderFilter
+
+//		public var shader(get, never):ShaderFilter;
+
+//	inline function get_shader():ShaderFilter
 		return ChromaticAberrationEffect.shader;
 
 	override function create()
