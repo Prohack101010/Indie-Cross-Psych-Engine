@@ -3470,7 +3470,7 @@ public function startVideo(name:String) {
 		seenCutscene = false;
 
 		#if ACHIEVEMENTS_ALLOWED
-		var achieve:String = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist','genocide', 'nmCup', 'nmSans']);
+		achieve = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist','genocide', 'nmCup', 'nmSans']);
 
 			if(achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
@@ -4822,13 +4822,7 @@ public function setChromaticValue(amt:Float) {
 				}
 
 /*				if(unlock) {
-			if(achieve != null) {
-				Achievements.giveAchievement(achieve, function() {
-				if(endingSong && !inCutscene) {
-					endSong();
-				}
-				}
-			}); 
+					Achievements.unlockAchievement(achievementName);
 					return achievementName;
 				}*/
 			}
@@ -4839,4 +4833,5 @@ public function setChromaticValue(amt:Float) {
 
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
+ }
 }
