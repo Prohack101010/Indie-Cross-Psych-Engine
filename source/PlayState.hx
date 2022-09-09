@@ -4722,7 +4722,8 @@ public function setChromaticValue(amt:Int) {
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
 							{
 								case 'cuphead':
-									if(achievementName == 'cuphead_nomiss') 				var achieve:String = checkForAchievement(['cuphead_nomiss']);
+									if(achievementName == 'cuphead_nomiss')
+						var achieve:String = checkForAchievement(['cuphead_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4731,7 +4732,8 @@ public function setChromaticValue(amt:Int) {
 					}); 
 				}
 								case 'sans':
-									if(achievementName == 'sans_nomiss'				var achieve:String = checkForAchievement(['sans_nomiss']);
+									if(achievementName == 'sans_nomiss' 
+						var achieve:String = checkForAchievement(['sans_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4740,7 +4742,8 @@ public function setChromaticValue(amt:Int) {
 					}); 
 				}
 								case 'bendy':
-									if(achievementName == 'bendy_nomiss') var achieve:String = checkForAchievement(['bendy_nomiss']);
+									if(achievementName == 'bendy_nomiss') 
+							var achieve:String = checkForAchievement(['bendy_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
