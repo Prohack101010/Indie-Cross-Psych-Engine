@@ -3470,7 +3470,7 @@ public function startVideo(name:String) {
 		seenCutscene = false;
 
 		#if ACHIEVEMENTS_ALLOWED
-		achieve = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist','genocide', 'nmCup', 'nmSans']);
+		var achieve:String = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist','genocide', 'nmCup', 'nmSans']);
 
 			if(achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
