@@ -24,7 +24,7 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
-import openfl.filters.ShaderFilte;
+import openfl.filters.ShaderFilter;
 import Shaders;
 import Shaders.ChromaticAberrationShader;
 import openfl.filters.BitmapFilter;
@@ -268,13 +268,6 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camHud.setFilters(newCamEffects);
-            case 'camGame':
-                    camGameShaders.push(effect);
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camGameShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camGame.setFilters(newCamEffects);
         }
 
   }
