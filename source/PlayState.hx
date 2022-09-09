@@ -4733,39 +4733,36 @@ public function setChromaticValue(amt:Float) {
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
 							{
 								case 'cuphead':
-									if(achievementName == 'cuphead_nomiss') {
-unlock = true; 
-				}
+									if(achievementName == 'cuphead_nomiss') unlock = true;
 								case 'sans':
-						if(achievementName == 'sans_nomiss') {
-unlock = true;
-				}
+									if(achievementName == 'sans_nomiss') unlock = true;
 								case 'bendy':
-									if(achievementName == 'bendy_nomiss') {
-unlock = true;
+									if(achievementName == 'bendy_nomiss') unlock = true;
+							}
 						}
+					case 'debugger':
+						if(Paths.formatToSongPath(SONG.song) == 'test' && !usedPractice) {
+							unlock = true;
+						} 
 					case 'pacifist':
 						if(Paths.formatToSongPath(SONG.song) == 'final-stretch' && !usedPractice && isStoryMode) {
-unlock = true;
+							unlock = true;
 						} 
 					case 'genocide':
 						if(Paths.formatToSongPath(SONG.song) == 'burning-in-hell' && !usedPractice && isStoryMode) {
-				achieve = checkForAchievement(['genocide']);
-unlock = true;
+							unlock = true;
 						} 
 					case 'nmCup':
 						if(Paths.formatToSongPath(SONG.song) == 'devils-gambit' && !usedPractice) {
-unlock = true;
+							unlock = true;
 						}
 					case 'nmSans':
 						if(Paths.formatToSongPath(SONG.song) == 'bad-time' && !usedPractice) {
-				achieve = checkForAchievement(['nmSans']);{
-unlock = true;
+							unlock = true;
 						} 
 					case 'nmBendy':
 						if(Paths.formatToSongPath(SONG.song) == 'despair' && !usedPractice) {
-				achieve = checkForAchievement(['nmBendy']);
-unlock = true;
+							unlock = true;
 						}
 				}
 
