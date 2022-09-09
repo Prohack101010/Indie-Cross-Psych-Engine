@@ -453,6 +453,8 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		  allowInstPrev = true;
 		if(instPlaying != curSelected)
 			{
+			SONG = Song.loadFromJson(songs[curSelected].songName);
+				  Conductor.changeBPM(SONG);
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
