@@ -121,6 +121,7 @@ class PlayState extends MusicBeatState
 	public var gfGroup:FlxSpriteGroup;
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
+	public var addedKrBa:Bool = false;
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
@@ -716,6 +717,7 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 		if(curStage == 'hall' || curStage == 'hallDark' || curStage == 'nightmareHall') {
+		  addKamaBar();
 				krTween(health);
 		}
 		if(curStage == 'spooky') {
@@ -1043,15 +1045,7 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		add(healthBar);
 		healthBarBG.sprTracker = healthBar;
-				krBar = new FlxBar(healthBar.x, healthBar.y, LEFT_TO_RIGHT, Std.int(healthBar.width), Std.int(healthBar.height), this,
-				'kr', 0,2); 
-				krBar.scrollFactor.set(0, 0);
-				krBar.createFilledBar(FlxColor.RED, 0xFFff00ff);
-				krBar.cameras = [camHUD];
-		krBar.visible = !ClientPrefs.hideHud;
-		krBar.alpha = ClientPrefs.healthBarAlpha;
-		add(krBar);
-		
+
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		iconP1.y = healthBar.y - 75;
 		iconP1.visible = !ClientPrefs.hideHud;
@@ -1243,6 +1237,20 @@ class PlayState extends MusicBeatState
 		CustomFadeTransition.nextCamera = camOther;
 	}
 
+public function addKamaBar(){
+  addedKrBar = true;
+		krBar = new FlxBar(healthBar.x, healthBar.y, LEFT_TO_RIGHT, Std.int(healthBar.width), Std.int(healthBar.height), this,
+				'kr', 0,2); 
+				krBar.scrollFactor.set(0, 0);
+				krBar.createFilledBar(FlxColor.RED, 0xFFff00ff);
+				krBar.cameras = [camHUD];
+		krBar.visible = !ClientPrefs.hideHud;
+		krBar.alpha = ClientPrefs.healthBarAlpha;
+	krBar.scale.x = 0.95;
+	krBar.scale.y = 2;
+		add(krBar);
+}
+
 	function set_songSpeed(value:Float):Float
 	{
 		if(generatedMusic)
@@ -1297,8 +1305,10 @@ class PlayState extends MusicBeatState
 	}
 	public function updatesansbars() {
 		if (kr > shownHealth)
+		healthloss = 0;
 			healthBar.color = 0xFFff00ff;
 		if (kr <= shownHealth) {
+		healthloss = ClientPrefs.getGameplaySetting('healthloss', 1);
 			healthBar.color = 0xFFFFFFFF;
 			kr = health;
 		}
@@ -2568,6 +2578,7 @@ public function startVideo(name:String) {
 				boyfriendIdleTime = 0;
 			}
 		}
+		if (addedKrBar == true) {
 		if (krBar !=null)
 		{
 			if (kr<health) {
@@ -2583,7 +2594,7 @@ public function startVideo(name:String) {
 				kr -= elapsed / 5.5;
 			}
 		}
-
+}
 		super.update(elapsed);
 
 		if(ratingName == '?') {
@@ -4732,7 +4743,7 @@ public function setChromaticValue(amt:Int) {
 					}); 
 				}
 								case 'sans':
-									if(achievementName == 'sans_nomiss' 
+						if(achievementName == 'sans_nomiss')
 						var achieve:String = checkForAchievement(['sans_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
