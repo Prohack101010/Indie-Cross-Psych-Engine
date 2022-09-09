@@ -24,8 +24,9 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
-import openfl.filters.ShaderFilter;
+import openfl.filters.ShaderFilte;
 import Shaders;
+import Shaders.ChromaticAberrationShader;
 import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
@@ -293,24 +294,13 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
   }
 
   public function clearShaderFromCamera(cam:String){
-
-
         switch(cam.toLowerCase()) {
             case 'camhud': 
                 camHudShaders = [];
                 var newCamEffects:Array<BitmapFilter>=[];
                 camHud.setFilters(newCamEffects);
-            case 'camother' | 'other': 
-                camOtherShaders = [];
-                var newCamEffects:Array<BitmapFilter>=[];
-                camOther.setFilters(newCamEffects);
-            default: 
-                camGameShaders = [];
-                var newCamEffects:Array<BitmapFilter>=[];
-                camGame.setFilters(newCamEffects);
-        }
-
-  } 
+   }
+  }
 
 	override function closeSubState() {
 		changeSelection(0, false);
@@ -349,10 +339,6 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-	Shaders.ChromaticAberrationEffect.setChrome(chromVal);
-	for (i in shaderUpdates){
-			i(elapsed);
-		}
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -454,7 +440,8 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 		if(instPlaying != curSelected)
 			{
 			SONG = Song.loadFromJson(songs[curSelected].songName);
-				  Conductor.changeBPM(SONG);
+		Conductor.mapBPMChanges(SONG);
+				Conductor.changeBPM(SONG.bpm);
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
@@ -525,7 +512,11 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
-		super.update(elapsed);
+		super.update(elapsed)
+	Shaders.ChromaticAberrationShader.setChrome(chromVal);
+	for (i in shaderUpdates){
+			i(elapsed);
+		}
 	}
 	override function beatHit()
 	{
@@ -591,7 +582,8 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	public function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
 			SONG = Song.loadFromJson(songs[curSelected].songName);
-				  Conductor.changeBPM(SONG);
+				Conductor.mapBPMChanges(SONG);
+				Conductor.changeBPM(SONG.bpm);
 	new FlxTimer().start(0.5, function(tmr:FlxTimer){
 	if (allowInstPrev) {
 			if(instPlaying != curSelected)
