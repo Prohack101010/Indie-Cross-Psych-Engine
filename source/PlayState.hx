@@ -62,7 +62,7 @@ import sys.FileSystem;
 import vlc.MP4Handler;
 #end
 import Shaders;
-import Shaders.ChromaticAberrationShader;
+import Shaders.ChromaticAberrationEffect;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
 
@@ -72,10 +72,10 @@ class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
-		public var ChromaticAberrationShader(get, never):ShaderFilter;
+		public var shader(get, never):ShaderFilter;
 
-	inline function get_ChromaticAberrationShader():ShaderFilter
-		return ChromaticAberrationEffect.ChromaticAberrationShader;
+	inline function get_shader():ShaderFilter
+		return ChromaticAberrationEffect.shader;
 	public static var ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
@@ -4643,7 +4643,7 @@ public function startVideo(name:String) {
 		return returnVal;
 	}
 public function setChromaticValue(amt:Float) {
- Shaders.ChromaticAberrationShader.setChrome(amt);
+ Shaders.ChromaticAberrationEffect.setChrome(amt);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
