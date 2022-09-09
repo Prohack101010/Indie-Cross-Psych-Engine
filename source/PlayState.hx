@@ -4799,7 +4799,7 @@ public function setChromaticValue(amt:Float) {
 						}
 					case 'nmSans':
 						if(Paths.formatToSongPath(SONG.song) == 'bad-time' && !usedPractice) {
-				achieve: checkForAchievement(['nmSans']);
+				achieve = checkForAchievement(['nmSans']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
