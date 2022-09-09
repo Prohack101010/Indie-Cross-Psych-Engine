@@ -9,6 +9,7 @@ import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
+import Song.SwagSong;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
@@ -34,13 +35,13 @@ using StringTools;
 class FreeplayState extends MusicBeatState
 {
 	public var camGameShaders:Array<ShaderEffect> = [];
-	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camHudShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
   public var shader_chromatic_abberation:ChromaticAberrationEffect;
   public var shaderUpdates:Array<Float->Void> = [];
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
-  var chromVal:Float = 0;
+  public var chromVal:Float = 0;
   public var FlxTimer:FlxTimerManager;
   var allowInstPrev:Bool = false;
 	var songs:Array<SongMetadata> = [];
@@ -49,7 +50,7 @@ public static var SONG:SwagSong = null;
 	private static var curSelected:Int = 0;
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
-	public var camHUD:FlxCamera;
+	public var camHud:FlxCamera;
 	public var camGame:FlxCamera;
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -71,7 +72,7 @@ public static var SONG:SwagSong = null;
 	override function create()
 	{
 	shader_chromatic_abberation = new ChromaticAberrationEffect();
-	addShaderToCamera(camHUD, new ChromaticAberrationEffect(0)); 
+	addShaderToCamera('camHud', new ChromaticAberrationEffect(0)); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -121,13 +122,13 @@ public static var SONG:SwagSong = null;
 			}
 		}*/
 		camGame = new FlxCamera();
-		camHUD = new FlxCamera();
+		camHud = new FlxCamera();
 
 
-		camHUD.bgColor.alpha = 0;
+		camHud.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camHud, false);
 
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
@@ -159,9 +160,9 @@ public static var SONG:SwagSong = null;
 				//trace(songs[i].songName + ' new scale: ' + textScale);
 			}
 
-		scoreText.cameras = [camHUD];
-		scoreBG.cameras = [camHUD];
-		diffText.cameras = [camHUD];
+		scoreText.cameras = [camHud];
+		scoreBG.cameras = [camHud];
+		diffText.cameras = [camHud];
 
 			Paths.currentModDirectory = songs[i].folder;
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
@@ -259,13 +260,13 @@ public static var SONG:SwagSong = null;
 public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
 
         switch(cam.toLowerCase()) {
-            case 'camHUD':
-                    camHUDShaders.push(effect);
+            case 'camHud':
+                    camHudShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camHUDShaders){
+                    for(i in camHudShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
-                    camHUD.setFilters(newCamEffects);
+                    camHud.setFilters(newCamEffects);
             case 'camGame':
                     camGameShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
@@ -280,27 +281,13 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
   public function removeShaderFromCamera(cam:String,effect:ShaderEffect){ 
 
         switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud': 
-    camHUDShaders.remove(effect);
+            case 'camhud': 
+    camHudShaders.remove(effect);
     var newCamEffects:Array<BitmapFilter>=[];
-    for(i in camHUDShaders){
+    for(i in camHudShaders){
       newCamEffects.push(new ShaderFilter(i.shader));
     }
-    camHUD.setFilters(newCamEffects);
-            case 'camother' | 'other': 
-                    camOtherShaders.remove(effect);
-                    var newCamEffects:Array<BitmapFilter>=[];
-                    for(i in camOtherShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camOther.setFilters(newCamEffects);
-            default: 
-                camGameShaders.remove(effect);
-                var newCamEffects:Array<BitmapFilter>=[];
-                for(i in camGameShaders){
-                  newCamEffects.push(new ShaderFilter(i.shader));
-                }
-                camGame.setFilters(newCamEffects);
+    camHud.setFilters(newCamEffects);
         }
 
   }
@@ -309,10 +296,10 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 
 
         switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud': 
-                camHUDShaders = [];
+            case 'camhud': 
+                camHudShaders = [];
                 var newCamEffects:Array<BitmapFilter>=[];
-                camHUD.setFilters(newCamEffects);
+                camHud.setFilters(newCamEffects);
             case 'camother' | 'other': 
                 camOtherShaders = [];
                 var newCamEffects:Array<BitmapFilter>=[];
