@@ -4834,4 +4834,3 @@ public function setChromaticValue(amt:Float) {
 	var curLight:Int = 0;
 	var curLightEvent:Int = 0;
  }
-}
