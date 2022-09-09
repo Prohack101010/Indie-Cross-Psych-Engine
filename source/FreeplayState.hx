@@ -512,7 +512,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
-		super.update(elapsed)
+		super.update(elapsed);
 	Shaders.ChromaticAberrationShader.setChrome(chromVal);
 	for (i in shaderUpdates){
 			i(elapsed);
