@@ -26,7 +26,7 @@ import sys.FileSystem;
 #end
 import openfl.filters.ShaderFilter;
 import Shaders;
-import Shaders.ChromaticAberrationShader;
+import Shaders.ChromaticAberrationEffect;
 import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
@@ -69,10 +69,10 @@ public static var SONG:SwagSong = null;
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
-		public var ChromaticAberrationShader(get, never):ShaderFilter;
+		public var shader(get, never):ShaderFilter;
 
-	inline function get_ChromaticAberrationShader():ShaderFilter
-		return ChromaticAberrationEffect.ChromaticAberrationShader;
+	inline function get_shader():ShaderFilter
+		return ChromaticAberrationEffect.shader;
 
 	override function create()
 	{
