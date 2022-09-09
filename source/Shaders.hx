@@ -70,7 +70,7 @@ class ChromaticAberrationShader extends FlxShader
 
 			gl_FragColor = toUse;
 		}')
-	public function new()
+	public static function new()
 	{
 		super();
 	}
@@ -78,15 +78,15 @@ class ChromaticAberrationShader extends FlxShader
 
 class ChromaticAberrationEffect extends Effect
 {
-	public var shader:ChromaticAberrationShader;
-  public function new(offset:Float = 0.00){
+	public static var shader:ChromaticAberrationShader;
+  public static function new(offset:Float = 0.00){
 	shader = new ChromaticAberrationShader();
     shader.rOffset.value = [offset];
     shader.gOffset.value = [0.0];
     shader.bOffset.value = [-offset];
   }
 	
-	public function setChrome(chromeOffset:Float)
+	public static function setChrome(chromeOffset:Float)
 	{
 		shader.rOffset.value = [chromeOffset];
 		shader.gOffset.value = [0.0];
