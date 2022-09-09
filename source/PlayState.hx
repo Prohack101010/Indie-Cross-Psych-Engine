@@ -62,6 +62,7 @@ import sys.FileSystem;
 import vlc.MP4Handler;
 #end
 import Shaders;
+import Shaders.ChromaticAberrationShader;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
 
@@ -3469,8 +3470,7 @@ public function startVideo(name:String) {
 		seenCutscene = false;
 
 		#if ACHIEVEMENTS_ALLOWED
-		var achieve:String = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist',
-				'genocide', 'nmCup', 'nmSans', 'debugger']);
+		var achieve:String = checkForAchievement(['cuphead_nomiss', 'sans_nomiss', 'bendy_nomiss', 'pacifist','genocide', 'nmCup', 'nmSans']);
 
 			if(achieve != null) {
 				Achievements.giveAchievement(achieve, function() {
@@ -4764,10 +4764,6 @@ public function setChromaticValue(amt:Float) {
 				}
 							}
 						}
-					case 'debugger':
-						if(Paths.formatToSongPath(SONG.song) == 'test' && !usedPractice) {
-							unlock = true;
-						} 
 					case 'pacifist':
 						if(Paths.formatToSongPath(SONG.song) == 'final-stretch' && !usedPractice && isStoryMode) {
 				var achieve:String = checkForAchievement(['pacifist']);
