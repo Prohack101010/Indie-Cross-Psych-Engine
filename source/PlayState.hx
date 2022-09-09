@@ -72,10 +72,10 @@ class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
-		public var shader(get, never):ShaderFilter;
+//		public var shader(get, never):ShaderFilter;
 
-	inline function get_shader():ShaderFilter
-		return ChromaticAberrationEffect.shader;
+//	inline function get_shader():ShaderFilter
+//		return ChromaticAberrationEffect.shader;
 	public static var ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
