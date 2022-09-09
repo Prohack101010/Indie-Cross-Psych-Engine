@@ -120,18 +120,17 @@ class MasterEditorMenu extends MusicBeatState
 		{
 			switch(options[curSelected]) {
 				case 'Character Editor':
-					MusicBeatState.switchState(new CharacterEditorState());
+					LoadingState.loadAndSwitchState(new CharacterEditorState(Character.DEFAULT_CHARACTER, false));
 				case 'Week Editor':
 					MusicBeatState.switchState(new WeekEditorState());
 				case 'Menu Character Editor':
 					MusicBeatState.switchState(new MenuCharacterEditorState());
 				case 'Dialogue Portrait Editor':
-					MusicBeatState.switchState(new DialogueCharacterEditorState());
+					LoadingState.loadAndSwitchState(new DialogueCharacterEditorState(), false);
 				case 'Dialogue Editor':
-					MusicBeatState.switchState(new DialogueEditorState());
+					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
 				case 'Chart Editor'://felt it would be cool maybe
-					MusicBeatState.switchState(new ChartingState());
-					MusicBeatState.switchState(new ChartingState());
+					LoadingState.loadAndSwitchState(new ChartingState(), false);
                                 case 'mods menu':
 					MusicBeatState.switchState(new ModsMenuState()); //idk why but ye just add it
 			}
