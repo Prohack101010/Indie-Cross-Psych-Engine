@@ -74,7 +74,7 @@ public static var SONG:SwagSong = null;
 //		public var shader(get, never):ShaderFilter;
 
 //	inline function get_shader():ShaderFilter
-		return ChromaticAberrationEffect.shader;
+//		return ChromaticAberrationEffect.shader;
 
 	override function create()
 	{
