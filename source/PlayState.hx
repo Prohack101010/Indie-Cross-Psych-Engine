@@ -4734,7 +4734,7 @@ public function setChromaticValue(amt:Float) {
 							{
 								case 'cuphead':
 									if(achievementName == 'cuphead_nomiss')
-						var achieve:String = checkForAchievement(['cuphead_nomiss']);
+						achieve = checkForAchievement(['cuphead_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4744,7 +4744,7 @@ public function setChromaticValue(amt:Float) {
 				}
 								case 'sans':
 						if(achievementName == 'sans_nomiss')
-						var achieve:String = checkForAchievement(['sans_nomiss']);
+						achieve = checkForAchievement(['sans_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4754,7 +4754,7 @@ public function setChromaticValue(amt:Float) {
 				}
 								case 'bendy':
 									if(achievementName == 'bendy_nomiss') 
-							var achieve:String = checkForAchievement(['bendy_nomiss']);
+							achieve = checkForAchievement(['bendy_nomiss']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4766,7 +4766,7 @@ public function setChromaticValue(amt:Float) {
 						}
 					case 'pacifist':
 						if(Paths.formatToSongPath(SONG.song) == 'final-stretch' && !usedPractice && isStoryMode) {
-				var achieve:String = checkForAchievement(['pacifist']);
+				achieve = checkForAchievement(['pacifist']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4777,7 +4777,7 @@ public function setChromaticValue(amt:Float) {
 						} 
 					case 'genocide':
 						if(Paths.formatToSongPath(SONG.song) == 'burning-in-hell' && !usedPractice && isStoryMode) {
-				var achieve:String = checkForAchievement(['genocide']);
+				achieve = checkForAchievement(['genocide']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4788,7 +4788,7 @@ public function setChromaticValue(amt:Float) {
 						} 
 					case 'nmCup':
 						if(Paths.formatToSongPath(SONG.song) == 'devils-gambit' && !usedPractice) {
-				var achieve:String = checkForAchievement(['nmCup']);
+				achieve = checkForAchievement(['nmCup']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4799,7 +4799,7 @@ public function setChromaticValue(amt:Float) {
 						}
 					case 'nmSans':
 						if(Paths.formatToSongPath(SONG.song) == 'bad-time' && !usedPractice) {
-				var achieve:String = checkForAchievement(['nmSans']);
+				achieve: checkForAchievement(['nmSans']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
@@ -4810,7 +4810,7 @@ public function setChromaticValue(amt:Float) {
 						} 
 					case 'nmBendy':
 						if(Paths.formatToSongPath(SONG.song) == 'despair' && !usedPractice) {
-				var achieve:String = checkForAchievement(['nmBendy']);
+				achieve = checkForAchievement(['nmBendy']);
 				if (achieve != null) {
 					Achievements.giveAchievement(achieve, function() {
 						if(endingSong && !inCutscene) {
