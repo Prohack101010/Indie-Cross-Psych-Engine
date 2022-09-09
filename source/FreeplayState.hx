@@ -23,7 +23,7 @@ import WeekData;
 import sys.FileSystem;
 #end
 import openfl.filters.ShaderFilter;
-import Shaders
+import Shaders;
 import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
