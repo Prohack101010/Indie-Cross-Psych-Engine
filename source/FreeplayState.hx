@@ -3,6 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+import flixel.FlxCamera;
 import editors.ChartingState;
 import flash.text.TextField;
 import flixel.FlxG;
@@ -361,7 +362,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
-	ChromaticAberrationEffect.setChrome(chromVal);
+	Shaders.ChromaticAberrationEffect.setChrome(chromVal);
 	for (i in shaderUpdates){
 			i(elapsed);
 		}
