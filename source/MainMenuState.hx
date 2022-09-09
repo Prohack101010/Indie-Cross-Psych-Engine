@@ -280,7 +280,7 @@ class MainMenuState extends MusicBeatState
 			case 'freeplay':
 				MusicBeatState.switchState(new FreeplaySelectState());
 			case 'options':
-				MusicBeatState.switchState(new options.OptionsState());
+				LoadingState.loadAndSwitchState(new options.OptionsState());
 						FlxG.sound.playMusic(Paths.music('settin'), 1, true);
 			case 'credits':
 				MusicBeatState.switchState(new CreditsState());	
