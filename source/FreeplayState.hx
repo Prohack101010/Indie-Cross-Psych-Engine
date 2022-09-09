@@ -69,6 +69,10 @@ public static var SONG:SwagSong = null;
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+		public var ChromaticAberrationShader(get, never):ShaderFilter;
+
+	inline function get_ChromaticAberrationShader():ShaderFilter
+		return ChromaticAberrationEffect.ChromaticAberrationShader;
 
 	override function create()
 	{
@@ -506,7 +510,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
-	shader_chromatic_abberationr.setChrome(chromVal);
+	ChromaticAberrationEffect.setChrome(chromVal);
 	for (i in shaderUpdates){
 			i(elapsed);
 		}
