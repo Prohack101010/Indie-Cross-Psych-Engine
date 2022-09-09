@@ -506,7 +506,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
-	Shaders.ChromaticAberrationShader.setChrome(chromVal);
+	shader_chromatic_abberationr.setChrome(chromVal);
 	for (i in shaderUpdates){
 			i(elapsed);
 		}
