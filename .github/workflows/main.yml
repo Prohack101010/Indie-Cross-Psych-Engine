@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: androidBuild
+name: android
 
 # Controls when the action will run. 
 on:
@@ -16,8 +16,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  Compiling apk:
-    name: Compiling apk
+  CompilingApk:
+    name: CompilingApk
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,8 +29,13 @@ jobs:
         with:
           ndk-version: r21e
 
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v2.0.2
+        uses: android-actions/setup-android@v2
 
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1.1.5
@@ -40,25 +45,20 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
-          haxelib install lime 7.9.0 --quiet
-          haxelib install openfl 9.1.0 --quiet
-          haxelib install lime-samples --quiet
-          haxelib install openfl-samples --quiet
-          haxelib install actuate --quiet
-          haxelib install box2d --quiet
-          haxelib install layout --quiet
-          haxelib install systools --quiet
-          haxelib install flixel-demos --quiet
-          haxelib install flixel-templates --quiet
-          haxelib --never install flixel 4.11.0 --quiet
-          haxelib install flixel-tools --quiet
+          haxelib --quiet install lime 7.9.0
+          haxelib --quiet install openfl 9.1.0
+          haxelib --quiet install flixel
+          haxelib --quiet --never run lime setup
+          haxelib --quiet install hscript
+          haxelib --quiet install flixel-ui
+          haxelib --quiet install flixel-addons
           haxelib install flixel-ui --quiet
           haxelib install hscript --quiet
           haxelib install flixel-addons --quiet
           haxelib install hxCodec --quiet
           haxelib git linc_luajit https://github.com/MAJigsaw77/linc_luajit.git
           haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git
+          haxelib run lime setup flixel
 
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -72,6 +72,7 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
           haxelib set lime 7.9.0
           haxelib set openfl 9.1.0
+          haxelib list
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
