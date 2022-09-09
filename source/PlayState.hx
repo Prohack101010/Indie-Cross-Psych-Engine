@@ -121,7 +121,7 @@ class PlayState extends MusicBeatState
 	public var gfGroup:FlxSpriteGroup;
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
-	public var addedKrBa:Bool = false;
+	public var addedKrBar:Bool = false;
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
@@ -1305,10 +1305,10 @@ public function addKamaBar(){
 	}
 	public function updatesansbars() {
 		if (kr > shownHealth)
-		healthloss = 0;
+		healthLoss = 0;
 			healthBar.color = 0xFFff00ff;
 		if (kr <= shownHealth) {
-		healthloss = ClientPrefs.getGameplaySetting('healthloss', 1);
+		healthLoss = ClientPrefs.getGameplaySetting('healthloss', 1);
 			healthBar.color = 0xFFFFFFFF;
 			kr = health;
 		}
@@ -4640,7 +4640,7 @@ public function startVideo(name:String) {
 		return returnVal;
 	}
 public function setChromaticValue(amt:Int) {
-  ChromaticAberrationShader.setChrome(amt);
+  Shaders.ChromaticAberrationShader.setChrome(amt);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
