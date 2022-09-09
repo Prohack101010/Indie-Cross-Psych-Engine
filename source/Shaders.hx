@@ -86,7 +86,7 @@ class ChromaticAberrationEffect extends Effect
     shader.bOffset.value = [-offset];
   }
 	
-	public function setChrome(chromeOffset:Float):Void
+	public function setChrome(chromeOffset:Float)
 	{
 		shader.rOffset.value = [chromeOffset];
 		shader.gOffset.value = [0.0];
