@@ -1,4 +1,8 @@
 package;
+import Shaders.BloomHandler;
+import Shaders.ChromaHandler;
+import Shaders.BrightHandler
+import openfl.filters.ShaderFilter;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -244,11 +248,10 @@ class MusicBeatState extends FlxUIState
 	public function beatHit():Void
 	{
 		//do literally nothing dumbass
-	}
-	/* BRIGHT SHADER
-	public var brightShader(get, never):BitmapFilter;
+	}	// BRIGHT SHADER
+	public var brightShader(get, never):ShaderFilter;
 
-	inline function get_brightShader():BitmapFilter
+	inline function get_brightShader():ShaderFilter
 		return BrightHandler.brightShader;
 
 	public function setBrightness(brightness:Float):Void
@@ -256,5 +259,29 @@ class MusicBeatState extends FlxUIState
 
 	public function setContrast(contrast:Float):Void
 		BrightHandler.setContrast(contrast);
-		*/
+
+	// CHROMATIC SHADER
+	public var chromaticAberration(get, never):ShaderFilter;
+
+	inline function get_chromaticAberration():ShaderFilter
+		return ChromaHandler.chromaticAberration;
+
+	public function setChrome(daChrome:Float):Void
+		ChromaHandler.setChrome(daChrome);
+
+	// BLOOM SHADER
+	public var bloomShader(get, never):ShaderFilter;
+
+	inline function get_bloomShader():ShaderFilter
+		return BloomHandler.bloomShader;
+
+	public function setThreshold(value:Float)
+		BloomHandler.setThreshold(value);
+
+	public function setIntensity(value:Float)
+		BloomHandler.setIntensity(value);
+
+	public function setBlurSize(value:Float)
+		BloomHandler.setBlurSize(value);
+
 }
