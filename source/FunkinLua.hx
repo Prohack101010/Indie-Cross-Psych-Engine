@@ -10,7 +10,7 @@ import flixel.FlxG;
 import flixel.addons.effects.FlxTrail;
 import flixel.input.keyboard.FlxKey;
 import flixel.tweens.FlxTween;
-import flixel.tweens.misc;
+import flixel.tweens.misc.NumTween;
 import flixel.tweens.FlxEase;
 import flixel.text.FlxText;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -1828,8 +1828,8 @@ PlayState.instance.setChromaticValue(value);
 
 		});
 
-		Lua_helper.add_callback(lua, "doChromaticTweem", function(changeTo:Float, duration:Float) {
-tween(PlayState.chromVal, {PlayState.chromVal:changeTo}, duration);
+		Lua_helper.add_callback(lua, "doChromaticTween", function(changeTo:Float, duration:Float) {
+NumTween.tween(this, {PlayState.chromVal:changeTo}, duration);
 		});
 
 		call('onCreate', []);
