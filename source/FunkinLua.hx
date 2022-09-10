@@ -94,7 +94,7 @@ class FunkinLua {
 		accessedProps = new Map<String, Dynamic>();
 		#end
 //shaders thing
-    set('ChromVal', PlayState.ChromVal);
+    set('setChromVal', PlayState.chromVal);
 		// Lua shit
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
@@ -1824,7 +1824,7 @@ PlayState.instance.setChromaticValue(value);
 
 		Lua_helper.add_callback(lua, "addBrightnessShader", function(brightness:Float, speed:Float, magnitude:Float) {
 
-			PlayState.instance.brightSetup(brightness, speed, magnitud);
+			PlayState.instance.brightSetup(brightness, speed, magnitude);
 
 		});
 
