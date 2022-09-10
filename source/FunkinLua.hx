@@ -1828,10 +1828,6 @@ PlayState.instance.setChromaticValue(value);
 
 		});
 
-		Lua_helper.add_callback(lua, "doChromaticTween", function(changeTo:Float, duration:Float) {
-NumTween.tween(this, {PlayState.chromVal:changeTo}, duration);
-		});
-
 		call('onCreate', []);
 		#end
 	}
