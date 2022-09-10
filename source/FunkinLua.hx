@@ -93,7 +93,7 @@ class FunkinLua {
 		accessedProps = new Map<String, Dynamic>();
 		#end
 //shaders thing
-    set('ChromVal', PlayState.ChromVal)
+    set('ChromVal', PlayState.ChromVal);
 		// Lua shit
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
