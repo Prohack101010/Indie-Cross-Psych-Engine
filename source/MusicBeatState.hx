@@ -1,7 +1,7 @@
 package;
 import Shaders.BloomHandler;
 import Shaders.ChromaHandler;
-import Shaders.BrightHandler
+import Shaders.BrightHandler;
 import openfl.filters.ShaderFilter;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
