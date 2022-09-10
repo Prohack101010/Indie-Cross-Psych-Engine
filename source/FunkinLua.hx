@@ -1829,7 +1829,7 @@ PlayState.instance.setChromaticValue(value);
 		});
 
 		Lua_helper.add_callback(lua, "doChromaticTweem", function(changeTo:Float, duration:Float) {
-FlxTween.tween(this, {PlayState.chromVal: changeTo}, duration);
+tween(this, {PlayState.chromVal: changeTo}, duration);
 		});
 
 		call('onCreate', []);
