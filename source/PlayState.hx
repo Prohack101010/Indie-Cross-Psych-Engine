@@ -62,7 +62,6 @@ import sys.FileSystem;
 import vlc.MP4Handler;
 #end
 import Shaders;
-import Shaders.ChromaticAberrationEffect;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
 
