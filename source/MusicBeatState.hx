@@ -24,7 +24,7 @@ import flixel.util.FlxDestroyUtil;
 #end
 
 class MusicBeatState extends FlxUIState
-{ 
+{
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -240,8 +240,7 @@ class MusicBeatState extends FlxUIState
 	public function beatHit():Void
 	{
 		//do literally nothing dumbass
-	
-		// BRIGHT SHADER
+	}	// BRIGHT SHADER
 	public var brightShader(get, never):ShaderFilter;
 
 	inline function get_brightShader():ShaderFilter
