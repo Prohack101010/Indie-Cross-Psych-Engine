@@ -26,20 +26,14 @@ import sys.FileSystem;
 #end
 import openfl.filters.ShaderFilter;
 import Shaders;
-import Shaders.ChromaticAberrationEffect;
 import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
 import Song;
 using StringTools;
 
-class FreeplayState extends MusicBeatState
-{
-	public var camGameShaders:Array<ShaderEffect> = [];
-	public var camHudShaders:Array<ShaderEffect> = [];
-	public var camOtherShaders:Array<ShaderEffect> = [];
-  public var shader_chromatic_abberation:ChromaticAberrationEffect;
-  public var shaderUpdates:Array<Float->Void> = [];
+class FreeplayState extends MusicBeatState {
+	var filters:Array<BitmapFilter> = [];
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
   public var chromVal:Float = 0;
@@ -70,16 +64,8 @@ public static var SONG:SwagSong = null;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-
-//		public var shader(get, never):ShaderFilter;
-
-//	inline function get_shader():ShaderFilter
-//		return ChromaticAberrationEffect.shader;
-
 	override function create()
 	{
-	shader_chromatic_abberation = new ChromaticAberrationEffect();
-	addShaderToCamera('camHud', new ChromaticAberrationEffect(0)); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -91,7 +77,6 @@ public static var SONG:SwagSong = null;
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
 
@@ -128,6 +113,9 @@ public static var SONG:SwagSong = null;
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}*/
+		FlxG.game.filtersEnabled = true;
+		filters.push(chromaticAberration);
+		FlxG.game.setFilters(filters);
 		camGame = new FlxCamera();
 		camHud = new FlxCamera();
 
@@ -263,43 +251,6 @@ public static var SONG:SwagSong = null;
 
 		super.create();
 	}
-
-public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
-
-        switch(cam.toLowerCase()) {
-            case 'camHud':
-                    camHudShaders.push(effect);
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camHudShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camHud.setFilters(newCamEffects);
-        }
-
-  }
-
-  public function removeShaderFromCamera(cam:String,effect:ShaderEffect){ 
-
-        switch(cam.toLowerCase()) {
-            case 'camhud': 
-    camHudShaders.remove(effect);
-    var newCamEffects:Array<BitmapFilter>=[];
-    for(i in camHudShaders){
-      newCamEffects.push(new ShaderFilter(i.shader));
-    }
-    camHud.setFilters(newCamEffects);
-        }
-
-  }
-
-  public function clearShaderFromCamera(cam:String){
-        switch(cam.toLowerCase()) {
-            case 'camhud': 
-                camHudShaders = [];
-                var newCamEffects:Array<BitmapFilter>=[];
-                camHud.setFilters(newCamEffects);
-   }
-  }
 
 	override function closeSubState() {
 		changeSelection(0, false);
@@ -512,10 +463,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
-	ChromaticAberrationEffect.setChrome(chromVal);
-	for (i in shaderUpdates){
-			i(elapsed);
-		}
+				setChrome(chromVal);
 	}
 	override function beatHit()
 	{
