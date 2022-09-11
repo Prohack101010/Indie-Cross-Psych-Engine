@@ -231,7 +231,7 @@ public static var SONG:SwagSong = null;
 		cupTea.screenCenter();
 		cupTea.scrollFactor.set();
 		cupTea.alpha = 0.0001;
-		cupTea.cameras = [camHUD];
+		cupTea.cameras = [camHud];
 
 		#if PRELOAD_ALL
 			#if android
