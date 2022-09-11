@@ -35,7 +35,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
-
+import openfl.display.BlendMode;
 using StringTools;
 typedef TitleData =
 {
@@ -51,6 +51,7 @@ typedef TitleData =
 }
 class TitleState extends MusicBeatState
 {
+	var resizeConstant:Float = 1.196;
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
@@ -279,7 +280,7 @@ class TitleState extends MusicBeatState
 		indieBG.updateHitbox();
 		add(indieBG);
 
-		cup = new FlxSprite(-120, -45);
+		cup = new FlxSprite(0, 0);
 		cup.frames = Paths.getSparrowAtlas('titel/CupCircle');
 		cup.antialiasing = ClientPrefs.globalAntialiasing;
 		cup.animation.addByPrefix('wtf', 'c', 24, true);
@@ -287,9 +288,12 @@ class TitleState extends MusicBeatState
 		cup.updateHitbox();
 		cup.angle = 0;
 		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
+		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
+		cup.x -= 300;
+		cup.blend = BlendMode.ADD; 
 		add(cup);
 
-		sans = new FlxSprite(399, - 70);
+		sans = new FlxSprite(0, 0);
 		sans.frames = Paths.getSparrowAtlas('titel/SansCircle');
 		sans.antialiasing = ClientPrefs.globalAntialiasing;
 		sans.animation.addByPrefix('bump', 'c', 24, false);
@@ -297,9 +301,12 @@ class TitleState extends MusicBeatState
 		sans.updateHitbox();
 		sans.angle = 0;
 		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
+		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
+		sans.y -= 170;
+		sans.blend = BlendMode.ADD;
 		add(sans);
 
-		bendy = new FlxSprite(660, 70);
+		bendy = new FlxSprite(0, 0);
 		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
 		bendy.antialiasing = ClientPrefs.globalAntialiasing;
 		bendy.animation.addByPrefix('bump', 'c', 24, false);
@@ -307,21 +314,24 @@ class TitleState extends MusicBeatState
 		bendy.updateHitbox();
 		bendy.angle = 0;
 		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
+		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
+		bendy.x += 300;
+		sans.blend = BlendMode.ADD;
 		add(bendy); 
 
-		logoBl = new FlxSprite(-80, 0);
+		logoBl = new FlxSprite();
 		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
-		
+		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
-
+    logoBl.blend = BlendMode.ADD;
+		logoBl.x -= 285;
+		logoBl.y -= 25;
 		swagShader = new ColorSwap();
-		BFdance = new FlxSprite(760, 220);
-
+		BFdance = new FlxSprite(690, 180);
+		BFdance.blend = BlendMode.ADD;
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
 		switch(easterEgg.toUpperCase())
 		{
@@ -350,6 +360,7 @@ class TitleState extends MusicBeatState
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!! me: ok
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
 				BFdance.animation.addByPrefix('dance', 'BF idle dance',  24, false);
+				BFdance.setGraphicSize(Std.int(BFdance.width / resizeConstant));
 				if (curBeat % 1 == 0) {
 					BFdance.animation.play('dance', true);
 				}
@@ -361,19 +372,19 @@ class TitleState extends MusicBeatState
 		add(logoBl);
 		logoBl.shader = swagShader.shader;
  
-		Play = new FlxSprite(760, 620);
+		Play = new FlxSprite(titleText.x + 50, titleText.y + 10);
 		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
 		Play.antialiasing = ClientPrefs.globalAntialiasing;
 		Play.animation.addByPrefix('bump', 'c', 24, false);
 		Play.animation.play('bump');
 		Play.updateHitbox();
 
-		titleText = new FlxSprite(735, 600);
+		titleText = new FlxSprite(660, 570);
 		#if MODS_ALLOWED
 		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/titel/Playbutton.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "mods/images/titel/Playbuttom.png";
+			path = SUtil.getPath() + "mods/images/titel/Playbutton.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
@@ -385,6 +396,7 @@ class TitleState extends MusicBeatState
 		
 		titleText.frames = Paths.getSparrowAtlas('titel/Playbutton');
 		#end
+		titleText.setGraphicSize(Std.int(titleText.width / 1.1));
 		titleText.animation.addByPrefix('idle', "Button", 24);
 		titleText.antialiasing = ClientPrefs.globalAntialiasing;
 		titleText.animation.play('idle');
@@ -607,27 +619,34 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if(logoBl != null) 
+		if (indieBG != null)
+		{
+			indieBG.animation.play('bump', true);
+		}
+		if (logoBl != null)
+		{
 			logoBl.animation.play('bump', true);
-
-		if(BFdance != null)
-				BFdance.animation.play('dance');
+		}
+		if (BFdance != null)
+		{
+			BFdance.animation.play('dance', true);
+		}
 		if(!closedState) {
 			sickBeats++;
 			switch (sickBeats)
 			{
 				case 1:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
+					createCoolText(['Indie Cross Psych Engine by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 3:
 					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
+					addMoreText('An Undertale Fan', 15);
+					addMoreText('Zoe', 15);
+					addMoreText('Imposterdesus', 15);
 					#else
 					addMoreText('present');
 					#end
@@ -642,10 +661,10 @@ class TitleState extends MusicBeatState
 					#if PSYCH_WATERMARKS
 					createCoolText(['Not associated', 'with'], -40);
 					#else
-					createCoolText(['In association', 'with'], -40);
+					createCoolText(['Original Mod Belongs To', 'with'], -40);
 					#end
 				case 7:
-					addMoreText('newgrounds', -40);
+					addMoreText('brightfyre', -40);
 					ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
@@ -667,13 +686,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 13:
-					addMoreText('Friday');
+					addMoreText('dickhead');
 				// credTextShit.visible = true;
 				case 14:
-					addMoreText('Night');
+					addMoreText('snans');
 				// credTextShit.text += '\nNight';
 				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('ink pen'); // credTextShit.text += '\nFunkin';
 
 				case 16:
 					skipIntro();
