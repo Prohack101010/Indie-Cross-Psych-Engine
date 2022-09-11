@@ -85,11 +85,11 @@ class PauseSubState extends MusicBeatSubstate
 		requestedScrollSound = null;
 		requestedAcceptSound = 'bendySelect';
 		default
-		requestedPauseSong = Paths.formatToSongPath(ClientPrefs.pauseMusic);
+		requestedPauseSong = ClientPrefs.pauseMusic;
 		requestedScrollSound = 'scrollMenu';
 		requestedAcceptSound = 'confirmMenu'; 
 }
-			pauseMusic.loadEmbedded(Paths.music(requestedPauseSong), true, true);
+			pauseMusic.loadEmbedded(Paths.music(Paths.formatToSongPath(requestedPauseSong)), true, true);
 		}
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
