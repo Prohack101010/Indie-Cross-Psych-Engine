@@ -224,10 +224,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 		FlxG.sound.play(Paths.sound(requestedAcceptSound), 1);
 		var da:Int = curSelected;
-		if (custom != null)
-		{
-			da = custom;
-		}
+			da = 0;
 		for (i in 0...grpMenuShit.members.length)
 		{
 			if (i == da)
