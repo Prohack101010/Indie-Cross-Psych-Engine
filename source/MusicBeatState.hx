@@ -165,10 +165,6 @@ class MusicBeatState extends FlxUIState
 
 	override function update(elapsed:Float)
 	{
-	if (CustomFadeTransition.finishedTrans == true) {
-	CustomFadeTransition.finishedTrans = false;
-//	FlxG.switchState(curNextState);
-	}
 		//everyStep();
 		var oldStep:Int = curStep;
 
