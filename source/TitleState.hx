@@ -36,6 +36,7 @@ import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
 import openfl.display.BlendMode;
+import openfl.system.System;
 using StringTools;
 typedef TitleData =
 {
@@ -51,7 +52,7 @@ typedef TitleData =
 }
 class TitleState extends MusicBeatState
 {
-	var resizeConstant:Float = 1.196;
+	public var resizeConstant:Float = 1.196;
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
