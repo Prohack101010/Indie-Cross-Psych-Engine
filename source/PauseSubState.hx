@@ -68,7 +68,7 @@ class PauseSubState extends MusicBeatSubstate
 		difficultyChoices.push('BACK');
 
 
-		pauseMusic = new FlxSound()
+		pauseMusic = new FlxSound();
 //		switch (PlayState.curStage) {
 		if (Paths.formatToSongPath(PlayState.SONG.song) == cupSongs) { 
 		requestedPauseSong = 'cupPause';
