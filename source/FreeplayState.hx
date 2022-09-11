@@ -33,6 +33,7 @@ import Song;
 using StringTools;
 
 class FreeplayState extends MusicBeatState {
+  	var cupTea:FlxSprite;
 	var filters:Array<BitmapFilter> = [];
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
@@ -220,7 +221,17 @@ public static var SONG:SwagSong = null;
 
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
-		add(textBG);
+		add(textBG)
+
+		cupTea = new FlxSprite();
+		cupTea.frames = Paths.getSparrowAtlas('the_thing2.0');
+		cupTea.animation.addByPrefix('start', "BOO instance 1", 24, false);
+		cupTea.setGraphicSize(Std.int((FlxG.width / FlxG.camera.zoom) * 1.1), Std.int((FlxG.height / FlxG.camera.zoom) * 1.1));
+		cupTea.updateHitbox();
+		cupTea.screenCenter();
+		cupTea.scrollFactor.set();
+		cupTea.alpha = 0.0001;
+		cupTea.cameras = [camHUD];
 
 		#if PRELOAD_ALL
 			#if android
@@ -422,6 +433,12 @@ public static var SONG:SwagSong = null;
 
 		else if (accepted)
 		{
+					if (songs[curSelected].songName == 'devils-gambit' || songs[curSelected].songName == 'satanic-funkin' || songs[curSelected].songName == 'snake-eyes' || songs[curSelected].songName == 'technicolor-tussle' || songs[curSelected].songName == 'knockout') {
+		cupTea.alpha = 1;
+		cupTea.animation.play('start', true);
+		FlxG.sound.play(Paths.sound('boing');
+		FlxTransitionableState.skipNextTransIn = true;
+					}
 			persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
