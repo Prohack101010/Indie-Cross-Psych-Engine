@@ -2457,7 +2457,7 @@ setChrome(chromVal);
 				}
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 			if (PauseSubState.addSoundOnPause){
-			FlxG.sound.play(Paths.sound(bendyClose));
+			FlxG.sound.play(Paths.sound('bendyClose'));
 			}
 			
 				//}
