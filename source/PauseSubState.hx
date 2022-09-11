@@ -18,12 +18,13 @@ import flixel.util.FlxTimer;
 
 class PauseSubState extends MusicBeatSubstate
 {
-  var font:String = PlayState.scoreTxt.font;
+  public static var font:String = PlayState.scoreTxt.font;
 	var daTime:Float = 0.5;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	public static var cupSongs:String = ['snake-eyes', 'technicolor-tussle', 'knockout', 'satanic-funkin', 'devils-gambit'];
-  public static var sansSongs:String = ['whoopee', 'sansational', 'final-stretch', 'burning-in-hell', 'bad-time', 'bad-to-the-bone', 'bonedoggle'];
-	public static var bendySongs:String = ['imminent-demise', 'terrible-sin', 'last-reel', 'nightmare-run', 'freaky-machine', 'ritual', 'despair'];
+	public static var addSoundOnPause:Bool = false;
+//	public static var cupSongs:String = ['snake-eyes', 'technicolor-tussle', 'knockout', 'satanic-funkin', 'devils-gambit'];
+//  public static var sansSongs:String = ['whoopee', 'sansational', 'final-stretch', 'burning-in-hell', 'bad-time', 'bad-to-the-bone', 'bonedoggle'];
+//	public static var bendySongs:String = ['imminent-demise', 'terrible-sin', 'last-reel', 'nightmare-run', 'freaky-machine', 'ritual', 'despair'];
 	var menuItems:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume','options', 'Restart Song', 'Change Mechanics Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
 	var difficultyChoices = [];
@@ -69,26 +70,27 @@ class PauseSubState extends MusicBeatSubstate
 
 
 		pauseMusic = new FlxSound();
-//		switch (PlayState.curStage) {
-		if (Paths.formatToSongPath(PlayState.SONG.song) == cupSongs) { 
+		switch (PlayState.curStage) {
+		case 'field' | 'field-rain' | 'devil' | 'cupNightmare':
 		requestedPauseSong = 'cupPause';
 		requestedScrollSound = 'cupSelect';
 		requestedAcceptSound = 'cupSelect';
-		} else if (Paths.formatToSongPath(PlayState.SONG.song) == sansSongs) {
+		case 'hall' | 'hallDark' | 'nightmareHall' | 'papyrus stage':
 		requestedPauseSong = 'sansPause';
 		requestedScrollSound = 'sansScroll';
 		requestedAcceptSound = 'sansSelect';
-		} else if (Paths.formatToSongPath(PlayState.SONG.song) == bendySongs) {
+		case 'factory' | 'NMB' |'no' | 'RUN' | 'ritual':
+		addSoundOnPause = true;
 		requestedPauseSong = 'bendyPause';
 		requestedScrollSound = null;
 		requestedAcceptSound = 'bendySelect';
-		} else {
+		default
 		requestedPauseSong = Paths.formatToSongPath(ClientPrefs.pauseMusic);
 		requestedScrollSound = 'scrollMenu';
 		requestedAcceptSound = 'confirmMenu'; 
 }
 			pauseMusic.loadEmbedded(Paths.music(requestedPauseSong), true, true);
-		
+		}
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
@@ -130,7 +132,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		var chartingText:FlxText = new FlxText(20, 15 + 101, 0, "CHARTING MODE", 32);
 		chartingText.scrollFactor.set();
-		chartingText.setFormat(Paths.font(), 32);
+		chartingText.setFormat(Paths.font(font), 32);
 		chartingText.x = FlxG.width - (chartingText.width + 20);
 		chartingText.y = FlxG.height - (chartingText.height + 20);
 		chartingText.updateHitbox();
