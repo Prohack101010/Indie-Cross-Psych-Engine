@@ -289,7 +289,7 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		Paths.clearStoredMemory();
-
+PauseSubState.isInPlayState = true;
 		// for lua
 		instance = this;
 
@@ -2505,6 +2505,7 @@ setChrome(chromVal);
 			paused = true;
 			cancelMusicFadeTween();
 			MusicBeatState.switchState(new CharacterEditorState(SONG.player2));
+			PauseSubState.isInPlayState = false;
 		}
 
 		if (startingSong)
@@ -2742,6 +2743,7 @@ setChrome(chromVal);
 		paused = true;
 		cancelMusicFadeTween();
 		MusicBeatState.switchState(new ChartingState());
+		PauseSubState.isInPlayState = false;
 		chartingMode = true;
 
 		#if desktop
@@ -3351,7 +3353,7 @@ setChrome(chromVal);
 						CustomFadeTransition.nextCamera = null;
 					}
 					MusicBeatState.switchState(new StoryMenuState());
-
+PauseSubState.isInPlayState = false;
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
@@ -3410,6 +3412,7 @@ setChrome(chromVal);
 					CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new FreeplayState());
+				PauseSubState.isInPlayState = false;
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
 			}
