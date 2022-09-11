@@ -95,6 +95,9 @@ class FunkinLua {
 		#end
 //shaders thing
     set('setChromVal', PlayState.chromVal);
+    set('magnitude',PlayState.brightMagnitude);
+    set('speed', PlayState.brightSpeed);
+    set('brightVal', PlayState.defaultBrightVal);
 		// Lua shit
 		set('Function_Stop', Function_Stop);
 		set('Function_Continue', Function_Continue);
