@@ -137,7 +137,7 @@ class OptionsState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
   		}
 		 if (PauseSubState.isInPlayState) {
-		MusicBeatState.switchState(new PlayState)
+		MusicBeatState.switchState(new PlayState);
 		FlxG.sound.music.volume = 0; //remove the options song i think
 		 }
 		}
