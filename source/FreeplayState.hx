@@ -387,6 +387,7 @@ public static var SONG:SwagSong = null;
 		{
 		if (allowInstPrev == false) { 
 		  allowInstPrev = true;
+		  FlxG.sound.play(Paths.sound('confirmMenu'));
 		if(instPlaying != curSelected)
 			{
 			SONG = Song.loadFromJson(songs[curSelected].songName);
@@ -412,6 +413,7 @@ public static var SONG:SwagSong = null;
 
 		}
 		if (allowInstPrev == true) {
+		  FlxG.sound.play(Paths.sound('cancelMenu'));
 		  allowInstPrev = false;
    		  destroyFreeplayVocals();
 				FlxG.sound.playMusic('freakyMenu', 1);
