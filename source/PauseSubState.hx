@@ -29,9 +29,9 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItemsOG:Array<String> = ['Resume','options', 'Restart Song', 'Change Mechanics Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
-  public var requestedPauseMusic:String = '';
-  public var requestedScrollSound:String = '';
-  public var requestedAcceptSound:String = '';
+  var requestedPauseSong:String = '';
+  var requestedScrollSound:String = '';
+  var requestedAcceptSound:String = '';
 	var pauseMusic:FlxSound;
 	var practiceText:FlxText;
 	var skipTimeText:FlxText;
@@ -72,24 +72,24 @@ class PauseSubState extends MusicBeatSubstate
 		pauseMusic = new FlxSound();
 		switch (PlayState.curStage) {
 		case 'field' | 'field-rain' | 'devil' | 'cupNightmare':
-		requestedPauseMusic = 'cupPause';
+		requestedPauseSong = 'cupPause';
 		requestedScrollSound = 'cupSelect';
 		requestedAcceptSound = 'cupSelect';
 		case 'hall' | 'hallDark' | 'nightmareHall' | 'papyrus stage':
-		requestedPauseMusic = 'sansPause';
+		requestedPauseSong = 'sansPause';
 		requestedScrollSound = 'sansScroll';
 		requestedAcceptSound = 'sansSelect';
 		case 'factory' | 'NMB' |'no' | 'RUN' | 'ritual':
 		addSoundOnPause = true;
-		requestedPauseMusic = 'bendyPause';
+		requestedPauseSong = 'bendyPause';
 		requestedScrollSound = null;
 		requestedAcceptSound = 'bendySelect';
-		default
-		requestedPauseMusic = 'breakfast';
+		default:
+		requestedPauseSong = ClientPrefs.pauseMusic;
 		requestedScrollSound = 'scrollMenu';
 		requestedAcceptSound = 'confirmMenu'; 
 }
-			pauseMusic.loadEmbedded(Paths.music(Paths.formatToSongPath(requestedPauseMusic)), true, true);
+			pauseMusic.loadEmbedded(Paths.music(Paths.formatToSongPath(requestedPauseSong), true, true);
 		}
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
