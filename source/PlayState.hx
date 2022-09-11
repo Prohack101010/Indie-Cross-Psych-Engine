@@ -69,6 +69,7 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	var krBar:FlxBar; 
 	public static var brightMagnitude:Float = 0;
 	public static var brightSpeed:Float = 0;
 	public static var defaultBrightVal:Float = 0;
@@ -714,8 +715,8 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 		if(curStage == 'hall' || curStage == 'hallDark' || curStage == 'nightmareHall') {
-		  addKamaBar();
-				krTween(health);
+//		  addKarmaBar();
+//				krTween(health);
 		}
 		if(curStage == 'spooky') {
 			add(halloweenWhite);
@@ -920,7 +921,7 @@ class PlayState extends MusicBeatState
 		timeBarBG.scrollFactor.set();
 		timeBarBG.alpha = 0;
 		timeBarBG.visible = showTime;
-		timeBarBG.color = FlxColor.BLACK;
+		timeBarBG.color = FlxColor.GRAY;
 		timeBarBG.xAdd = -4;
 		timeBarBG.yAdd = -4;
 		add(timeBarBG);
@@ -1244,9 +1245,9 @@ class PlayState extends MusicBeatState
 		CustomFadeTransition.nextCamera = camOther;
 	}
 
-public function addKamaBar(){
+public function addKarmaBar()
+{
   addedKrBar = true;
-  	var krBar:FlxBar; 
 		krBar = new FlxBar(healthBar.x, healthBar.y, LEFT_TO_RIGHT, Std.int(healthBar.width), Std.int(healthBar.height), this,
 				'kr', 0,2); 
 				krBar.scrollFactor.set(0, 0);
