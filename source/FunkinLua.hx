@@ -1533,7 +1533,7 @@ class FunkinLua {
 				PlayState.instance.krChange(amt, force);
 }); 
 		Lua_helper.add_callback(lua, "addKarmaBar", function() {
-				PlayState.instance.addKarmaBar();
+				#808080PlayState.instance.addKarmaBar();
 		});
 		// LUA TEXTS
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
