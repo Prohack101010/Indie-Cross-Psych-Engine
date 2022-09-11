@@ -85,7 +85,7 @@ class PauseSubState extends MusicBeatSubstate
 		requestedScrollSound = null;
 		requestedAcceptSound = 'bendySelect';
 		default
-		requestedPauseSong = ClientPrefs.pauseMusic;
+		requestedPauseSong = 'breakfast';
 		requestedScrollSound = 'scrollMenu';
 		requestedAcceptSound = 'confirmMenu'; 
 }
