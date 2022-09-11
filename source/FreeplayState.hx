@@ -125,7 +125,7 @@ public static var SONG:SwagSong = null;
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHud, false);
 
-		FlxG.cameras.setDefaultDrawTarget(camGame, true);
+//		FlxG.cameras.setDefaultDrawTarget(camGame, true);
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
