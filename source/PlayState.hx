@@ -170,7 +170,6 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
-	var krBar:FlxBar;
 	var kr = 0.0;
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -1247,6 +1246,7 @@ class PlayState extends MusicBeatState
 
 public function addKamaBar(){
   addedKrBar = true;
+  	var krBar:FlxBar; 
 		krBar = new FlxBar(healthBar.x, healthBar.y, LEFT_TO_RIGHT, Std.int(healthBar.width), Std.int(healthBar.height), this,
 				'kr', 0,2); 
 				krBar.scrollFactor.set(0, 0);
