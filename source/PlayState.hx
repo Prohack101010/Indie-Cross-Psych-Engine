@@ -234,7 +234,7 @@ class PlayState extends MusicBeatState
 	public var songScore:Int = 0;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
-	public var scoreTxt:FlxText;
+	public static var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
 
@@ -2456,6 +2456,10 @@ setChrome(chromVal);
 					vocals.pause();
 				}
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			if (PauseSubState.addSoundOnPause){
+			FlxG.sound.play(Paths.sound(bendyClose));
+			}
+			
 				//}
 		
 				#if desktop
