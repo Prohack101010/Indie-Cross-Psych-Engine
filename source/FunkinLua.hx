@@ -1527,12 +1527,13 @@ class FunkinLua {
 			#end
 		});
 		Lua_helper.add_callback(lua, "krTween", function(amt:Float) {
-PlayState.instance.krTween(amt);
-		});
+				PlayState.instance.krTween(amt);
+});
 		Lua_helper.add_callback(lua, "krChange", function(amt:Float, force:Bool = false) {
-
-PlayState.instance.krChange(amt, force);
-
+				PlayState.instance.krChange(amt, force);
+}); 
+		Lua_helper.add_callback(lua, "addKarmaBar", function() {
+				PlayState.instance.addKarmaBar();
 		});
 		// LUA TEXTS
 		Lua_helper.add_callback(lua, "makeLuaText", function(tag:String, text:String, width:Int, x:Float, y:Float) {
