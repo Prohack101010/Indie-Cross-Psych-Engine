@@ -24,6 +24,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import PauseSubState;
 
 using StringTools;
 
@@ -130,9 +131,15 @@ class OptionsState extends MusicBeatState
 		}
 
 		if (controls.BACK) {
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+		if (!PauseSubState.isInPlayState) {
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 1, true);
 			MusicBeatState.switchState(new MainMenuState());
+  		}
+		 if (PauseSubState.isInPlayState) {
+		MusicBeatState.switchState(new PlayState)
+		FlxG.sound.music.volume = 0; //remove the options song i think
+		 }
 		}
 
 		if (controls.ACCEPT) {
