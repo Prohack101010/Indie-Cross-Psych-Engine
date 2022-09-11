@@ -20,9 +20,9 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var daTime:Float = 0.5;
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	public static var cupSongs:Array<String> = ['snake-eyes', 'technicolor-tussle', 'knockout', 'satanic-funkin', 'devils-gambit'];
-  public static var sansSongs:Array<String> = ['whoopee', 'sansational', 'final-stretch', 'burning-in-hell', 'bad-time', 'bad-to-the-bone', 'bonedoggle'];
-	public static var bendySongs:Array<String> = ['imminent-demise', 'terrible-sin', 'last-reel', 'nightmare-run', 'freaky-machine', 'ritual', 'despair'];
+	public static var cupSongs:String = ['snake-eyes', 'technicolor-tussle', 'knockout', 'satanic-funkin', 'devils-gambit'];
+  public static var sansSongs:String = ['whoopee', 'sansational', 'final-stretch', 'burning-in-hell', 'bad-time', 'bad-to-the-bone', 'bonedoggle'];
+	public static var bendySongs:String = ['imminent-demise', 'terrible-sin', 'last-reel', 'nightmare-run', 'freaky-machine', 'ritual', 'despair'];
 	var menuItems:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume','options', 'Restart Song', 'Change Mechanics Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
 	var difficultyChoices = [];
@@ -67,7 +67,8 @@ class PauseSubState extends MusicBeatSubstate
 		difficultyChoices.push('BACK');
 
 
-		pauseMusic = new FlxSound();
+		pauseMusic = new FlxSound()
+//		switch (PlayState.curStage) {
 		if (Paths.formatToSongPath(PlayState.SONG.song) == cupSongs) { 
 		requestedPauseSong = 'cupPause';
 		requestedScrollSound = 'cupSelect';
