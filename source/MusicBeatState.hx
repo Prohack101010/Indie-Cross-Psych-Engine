@@ -24,7 +24,7 @@ import flixel.util.FlxDestroyUtil;
 #end
 
 class MusicBeatState extends FlxUIState
-{
+{ 
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -45,7 +45,7 @@ class MusicBeatState extends FlxUIState
 	public function addVirtualPad(DPad:FlxDPadMode, Action:FlxActionMode)
 	{
 		virtualPad = new FlxVirtualPad(DPad, Action);
-		virtualPad.alpha = 0.6;
+		virtualPad.alpha = 0.7;
 		add(virtualPad);
 
 		controls.setVirtualPadUI(virtualPad, DPad, Action);
@@ -65,7 +65,6 @@ class MusicBeatState extends FlxUIState
 	public function addAndroidControls()
 	{
 		androidControls = new AndroidControls();
-
 		switch (AndroidControls.getMode())
 		{
 			case 0 | 1 | 2: // RIGHT_FULL | LEFT_FULL | CUSTOM
@@ -86,7 +85,7 @@ class MusicBeatState extends FlxUIState
 
 		androidControls.cameras = [camControls];
 		androidControls.visible = false;
-		androidControls.alpha = 0.6;
+		androidControls.alpha = 0.7;
 		add(androidControls);
 	}
 
@@ -137,7 +136,6 @@ class MusicBeatState extends FlxUIState
 		}
 		#end
 	}
-
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
@@ -147,6 +145,7 @@ class MusicBeatState extends FlxUIState
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 	}
+
 	
 	#if (VIDEOS_ALLOWED && windows)
 	override public function onFocus():Void
@@ -224,7 +223,7 @@ class MusicBeatState extends FlxUIState
 
 	public static function resetState() {
 		MusicBeatState.switchState(FlxG.state);
-	}
+	} 
 
 	public static function getState():MusicBeatState {
 		var curState:Dynamic = FlxG.state;
@@ -241,11 +240,9 @@ class MusicBeatState extends FlxUIState
 	public function beatHit():Void
 	{
 		//do literally nothing dumbass
-	}
+	
 		// BRIGHT SHADER
-
 	public var brightShader(get, never):ShaderFilter;
-
 
 	inline function get_brightShader():ShaderFilter
 		return BrightHandler.brightShader;
@@ -279,4 +276,5 @@ class MusicBeatState extends FlxUIState
 
 	public function setBlurSize(value:Float)
 		BloomHandler.setBlurSize(value);
+
 }
