@@ -69,6 +69,9 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	public var brightMagnitude:Float = 0;
+	public var brightSpeed:Float = 0;
+	public var defaultBrightVal:Float =
   public static var chromVal:Float = 0;
 	var filters:Array<BitmapFilter> = [];
 	public static var STRUM_X = 42;
