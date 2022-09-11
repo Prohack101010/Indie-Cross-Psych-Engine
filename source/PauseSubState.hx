@@ -68,15 +68,15 @@ class PauseSubState extends MusicBeatSubstate
 
 
 		pauseMusic = new FlxSound();
-		if (Paths.formatToSongPath(SONG.song) == cupSongs) { 
+		if (Paths.formatToSongPath(PlayState.SONG.song) == cupSongs) { 
 		requestedPauseSong = 'cupPause';
 		requestedScrollSound = 'cupSelect';
 		requestedAcceptSound = 'cupSelect';
-		} else if (Paths.formatToSongPath(SONG.song) == sansSongs) {
+		} else if (Paths.formatToSongPath(PlayState.SONG.song) == sansSongs) {
 		requestedPauseSong = 'sansPause';
 		requestedScrollSound = 'sansScroll';
 		requestedAcceptSound = 'sansSelect';
-		} else if (Paths.formatToSongPath(SONG.song) == bendySongs) {
+		} else if (Paths.formatToSongPath(PlayState.SONG.song) == bendySongs) {
 		requestedPauseSong = 'bendyPause';
 		requestedScrollSound = null;
 		requestedAcceptSound = 'bendySelect';
