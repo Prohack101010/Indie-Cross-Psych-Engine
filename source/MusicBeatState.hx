@@ -139,16 +139,16 @@ class MusicBeatState extends FlxUIState
 		}
 		#end
 	}
-
 	override function create() {
-	var skip:Bool = FlxTransitionableState.skipNextTransOut;
+		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
-      if(!skip) {
+
+		if(!skip) {
 			openSubState(new CustomFadeTransition(0.7, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
-
 	}
+
 	
 	#if (VIDEOS_ALLOWED && windows)
 	override public function onFocus():Void
@@ -203,12 +203,10 @@ class MusicBeatState extends FlxUIState
 
 	public static function switchState(nextState:FlxState) {
 		// Custom made Trans in
-		curNextState = nextState;
 		var curState:Dynamic = FlxG.state;
 		var leState:MusicBeatState = curState;
 		if(!FlxTransitionableState.skipNextTransIn) {
-			leState.openSubState(new CustomFadeTransition(0.7, false));
-
+			leState.openSubState(new CustomFadeTransition(0.6, false));
 			if(nextState == FlxG.state) {
 				CustomFadeTransition.finishCallback = function() {
 					FlxG.resetState();
@@ -218,7 +216,7 @@ class MusicBeatState extends FlxUIState
 				CustomFadeTransition.finishCallback = function() {
 					FlxG.switchState(nextState);
 				};
-				trace('changed state');
+				//trace('changed state');
 			}
 			return;
 		}
