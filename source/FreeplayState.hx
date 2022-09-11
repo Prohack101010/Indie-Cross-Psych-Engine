@@ -436,7 +436,7 @@ public static var SONG:SwagSong = null;
 					if (songs[curSelected].songName == 'devils-gambit' || songs[curSelected].songName == 'satanic-funkin' || songs[curSelected].songName == 'snake-eyes' || songs[curSelected].songName == 'technicolor-tussle' || songs[curSelected].songName == 'knockout') {
 		cupTea.alpha = 1;
 		cupTea.animation.play('start', true);
-		FlxG.sound.play(Paths.sound('boing');
+		FlxG.sound.play(Paths.sound('boing'));
 		FlxTransitionableState.skipNextTransIn = true;
 					}
 			persistentUpdate = false;
