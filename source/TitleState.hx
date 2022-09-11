@@ -146,7 +146,6 @@ class TitleState extends MusicBeatState
 
 		// DEBUG BULLSHIT
 
-		swagShader = new ColorSwap();
 		super.create();
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
@@ -222,7 +221,6 @@ class TitleState extends MusicBeatState
 	var sans:FlxSprite;
 	var indieBG:FlxSprite;
 	var angle:Float;
-	var swagShader:ColorSwap = null;
 
 	function startIntro()
 	{
@@ -290,7 +288,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
 		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
 		cup.x -= 300;
-		cup.blend = BlendMode.ADD; 
+		cup.blend = ADD; 
 		add(cup);
 
 		sans = new FlxSprite(0, 0);
@@ -303,7 +301,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
 		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		sans.y -= 170;
-		sans.blend = BlendMode.ADD;
+		sans.blend = ADD;
 		add(sans);
 
 		bendy = new FlxSprite(0, 0);
@@ -316,7 +314,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
 		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
 		bendy.x += 300;
-		sans.blend = BlendMode.ADD;
+		sans.blend = ADD;
 		add(bendy); 
 
 		logoBl = new FlxSprite();
@@ -326,12 +324,11 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-    logoBl.blend = BlendMode.ADD;
+    logoBl.blend = ADD;
 		logoBl.x -= 285;
 		logoBl.y -= 25;
-		swagShader = new ColorSwap();
 		BFdance = new FlxSprite(690, 180);
-		BFdance.blend = BlendMode.ADD;
+		BFdance.blend = ADD;
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
 		switch(easterEgg.toUpperCase())
 		{
@@ -368,9 +365,7 @@ class TitleState extends MusicBeatState
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
 		
 		add(BFdance);
-		BFdance.shader = swagShader.shader;
 		add(logoBl);
-		logoBl.shader = swagShader.shader;
  
 		Play = new FlxSprite(titleText.x + 50, titleText.y + 10);
 		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
@@ -427,7 +422,7 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
+		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('brightFyre'));
 		add(ngSpr);
 		ngSpr.visible = false;
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
@@ -570,12 +565,6 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		}
 
-		if(swagShader != null)
-		{
-			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
-			if(controls.UI_RIGHT) swagShader.hue += elapsed * 0.1;
-		}
-
 		super.update(elapsed);
 	}
 
@@ -621,15 +610,15 @@ class TitleState extends MusicBeatState
 
 		if (indieBG != null)
 		{
-			indieBG.animation.play('bump', true);
+			indieBG.animation.play('bump');
 		}
 		if (logoBl != null)
 		{
-			logoBl.animation.play('bump', true);
+			logoBl.animation.play('bump');
 		}
 		if (BFdance != null)
 		{
-			BFdance.animation.play('dance', true);
+			BFdance.animation.play('dance');
 		}
 		if(!closedState) {
 			sickBeats++;
@@ -659,12 +648,12 @@ class TitleState extends MusicBeatState
 				// credTextShit.screenCenter();
 				case 5:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
+					createCoolText(['Original Mod Belongs To'], -40);
 					#else
-					createCoolText(['Original Mod Belongs To', 'with'], -40);
+					createCoolText(['Original Mod Belongs To'], -40);
 					#end
 				case 7:
-					addMoreText('brightfyre', -40);
+					addMoreText('the guy that spent 500+ hour', -40);
 					ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
