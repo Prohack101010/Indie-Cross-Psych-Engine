@@ -69,11 +69,11 @@ public static var SONG:SwagSong = null;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-function addShaderToCamera(cam:String,effect:ShaderEffect){
+function addChromaticAberrationToCamera(cam:String){
 if (ClientPrefs.Shaders){
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-                    camHudShaders.push(ChromaticAberration);
+                    camHudShaders.push(new ChromaticAberration(0));
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camHudShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
@@ -95,7 +95,7 @@ if (ClientPrefs.Shaders){
 	override function create()
 	{
   shader_chromatic_abberation = new ChromaticAberrationEffect();
-  addShaderToCamera('camHud', new ChromaticAberrationEffect(chromVal)); 
+  addChromaticAberrationToCamera('camHud'); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -140,7 +140,7 @@ if (ClientPrefs.Shaders){
 		{
 			if(initSonglist[i] != null && initSonglist[i].length > 0) {
 				var songArray:Array<String> = initSonglist[i].split(":");
-				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
+				ong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}*/
 		camGame = new FlxCamera();
@@ -511,7 +511,7 @@ if (ClientPrefs.Shaders){
 for (i in shaderUpdates){
 			i(elapsed);
 		}
-			ChromaticAberration.setChrome(chromVal);
+			ChromaticAberration.setChrome(hromVal);
 	}
 	override function beatHit()
 	{
