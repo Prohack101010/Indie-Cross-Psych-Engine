@@ -26,7 +26,7 @@ import sys.FileSystem;
 #end
 import openfl.filters.ShaderFilter;
 import Shaders;
-import Shaders.Effect;
+import ChromaticAberration;
 import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
@@ -73,14 +73,14 @@ function addShaderToCamera(cam:String,effect:ShaderEffect){
 if (ClientPrefs.Shaders){
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-                    camHudShaders.push(effect);
+                    camHudShaders.push(ChromaticAberration);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camHudShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camHud.setFilters(newCamEffects);
             case 'camgame' | 'game':
-                    camGameShaders.push(effect);
+                    camGameShaders.push(ChromaticAberration);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camGameShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
@@ -511,7 +511,7 @@ if (ClientPrefs.Shaders){
 for (i in shaderUpdates){
 			i(elapsed);
 		}
-			Effect.setValue(ChromaticAberrationShader,'variable', chromVal);
+			ChromaticAberration.setChrome(chromVal);
 	}
 	override function beatHit()
 	{
