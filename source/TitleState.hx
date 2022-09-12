@@ -35,7 +35,6 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
-import openfl.display.BlendMode;
 import openfl.system.System;
 using StringTools;
 typedef TitleData =
@@ -289,7 +288,6 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
 		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
 		cup.x -= 300;
-		cup.blend = ADD; 
 		add(cup);
 
 		sans = new FlxSprite(0, 0);
@@ -302,7 +300,6 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
 		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		sans.y -= 170;
-		sans.blend = ADD;
 		add(sans);
 
 		bendy = new FlxSprite(0, 0);
@@ -315,21 +312,18 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
 		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
 		bendy.x += 300;
-		bendy.blend = ADD;
 		add(bendy); 
 
-		logoBl = new FlxSprite();
+		logoBl = new FlxSprite(0,0);
 		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
 		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-    logoBl.blend = ADD;
 		logoBl.x -= 285;
 		logoBl.y -= 25;
 		BFdance = new FlxSprite(690, 180);
-		BFdance.blend = ADD;
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
 		switch(easterEgg.toUpperCase())
 		{
@@ -368,11 +362,13 @@ class TitleState extends MusicBeatState
 		add(BFdance);
 		add(logoBl);
  
-		Play = new FlxSprite(titleText.x + 50, titleText.y + 10);
+		Play = new FlxSprite(0,0);
 		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
 		Play.antialiasing = ClientPrefs.globalAntialiasing;
 		Play.animation.addByPrefix('bump', 'c', 24, false);
 		Play.animation.play('bump');
+		Play.x = titleText.x + 50;
+		Play.y = titleText.y + 10;
 		Play.updateHitbox();
 
 		titleText = new FlxSprite(660, 570);
