@@ -516,7 +516,7 @@ function addShaderToCamera(cam:String,effect:ShaderEffect){
 		super.update(elapsed);
 for (i in shaderUpdates){
 			i(elapsed);
-			Effect.setValue(ChromaticAberrationEffect,'shader' value);
+			Effect.setValue(ChromaticAberrationEffect,'shader', chromVal);
 		}
 				setChrome(chromVal);
 	}
