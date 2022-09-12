@@ -1341,7 +1341,7 @@ public function addKarmaBar()
 		healthBar.updateBar();
 	}
 public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
-
+if (ClientPrefs.Shadera) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
                     camHUDShaders.push(effect);
@@ -1375,7 +1375,7 @@ public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM A
                 }  
 
         }
-
+}
   }
 
   public function removeShaderFromCamera(cam:String,effect:ShaderEffect){ 
