@@ -4,6 +4,7 @@ import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
 #end
+import openfl.filters.BitmapFilter;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -4550,7 +4551,7 @@ PauseSubState.isInPlayState = false;
 		return returnVal;
 	}
 public function setChromaticValue(value:Float) {
-    Effect.setValue(ChromaticAberrationEffect,'shader' value);
+    Effect.setValue(ChromaticAberrationEffect,'shader', value);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
