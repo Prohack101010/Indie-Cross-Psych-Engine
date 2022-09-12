@@ -315,7 +315,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
 		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
 		bendy.x += 300;
-		sans.blend = ADD;
+		bendy.blend = ADD;
 		add(bendy); 
 
 		logoBl = new FlxSprite();
