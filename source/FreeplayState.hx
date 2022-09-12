@@ -26,6 +26,7 @@ import sys.FileSystem;
 #end
 import openfl.filters.ShaderFilter;
 import Shaders;
+import Shaders.Effect;
 import openfl.filters.BitmapFilter;
 import flixel.util.FlxTimer;
 import Conductor;
@@ -33,8 +34,8 @@ import Song;
 using StringTools;
 
 class FreeplayState extends MusicBeatState {
-  	var cupTea:FlxSprite;
-	var filters:Array<BitmapFilter> = [];
+    public var shader_chromatic_abberation:ChromaticAberrationEffect;
+	var cupTea:FlxSprite;
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
   public var chromVal:Float = 0;
@@ -60,13 +61,47 @@ public static var SONG:SwagSong = null;
 	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
-
+  public var shaderUpdates:Array<Float->Void> = [];
+	public var camGameShaders:Array<ShaderEffect> = [];
+	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camOtherShaders:Array<ShaderEffect> = [];
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+function addShaderToCamera(cam:String,effect:ShaderEffect){
+
+        switch(cam.toLowerCase()) {
+            case 'camhud' | 'hud':
+                    camHUDShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camHUDShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camHUD.setFilters(newCamEffects);
+            case 'camother' | 'other':
+                    camOtherShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camOtherShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camOther.setFilters(newCamEffects);
+            case 'camgame' | 'game':
+                    camGameShaders.push(effect);
+                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+                    for(i in camGameShaders){
+                      newCamEffects.push(new ShaderFilter(i.shader));
+                    }
+                    camGame.setFilters(newCamEffects);
+
+
+        }
+
+  }
+
 	override function create()
 	{
+  shader_chromatic_abberation = new ChromaticAberrationEffect();
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -114,9 +149,6 @@ public static var SONG:SwagSong = null;
 				addSong(songArray[0], 0, songArray[1], Std.parseInt(songArray[2]));
 			}
 		}*/
-		FlxG.game.filtersEnabled = true;
-		filters.push(chromaticAberration);
-		FlxG.game.setFilters(filters);
 		camGame = new FlxCamera();
 		camHud = new FlxCamera();
 
@@ -482,6 +514,10 @@ public static var SONG:SwagSong = null;
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
+for (i in shaderUpdates){
+			i(elapsed);
+			Effect.setValue(ChromaticAberrationEffect,'shader' value);
+		}
 				setChrome(chromVal);
 	}
 	override function beatHit()
