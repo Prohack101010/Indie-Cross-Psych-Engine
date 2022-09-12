@@ -4551,7 +4551,7 @@ PauseSubState.isInPlayState = false;
 		return returnVal;
 	}
 public function setChromaticValue(value:Float) {
-    Effect.setValue(ChromaticAberrationEffect,'shader', value);
+    Effect.setValue(ChromaticAberrationEffect,'variable', value);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
