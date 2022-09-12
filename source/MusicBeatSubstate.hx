@@ -1,7 +1,4 @@
 package;
-import Shaders.ChromaHandler;
-import Shaders.BrightHandler;
-import openfl.filters.ShaderFilter;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
