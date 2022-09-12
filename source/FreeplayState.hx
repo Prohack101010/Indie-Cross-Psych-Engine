@@ -75,7 +75,7 @@ if (ClientPrefs.Shaders){
             case 'camhud' | 'hud':
                     camHudShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camHusShaders){
+                    for(i in camHudShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camHud.setFilters(newCamEffects);
@@ -95,7 +95,7 @@ if (ClientPrefs.Shaders){
 	override function create()
 	{
   shader_chromatic_abberation = new ChromaticAberrationEffect();
-  addShaderToCamera(camera, new ChromaticAberrationEffect(chromVal)); 
+  addShaderToCamera('camHud', new ChromaticAberrationEffect(chromVal)); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -511,7 +511,7 @@ if (ClientPrefs.Shaders){
 for (i in shaderUpdates){
 			i(elapsed);
 		}
-			Effect.setValue(ChromaticAberrationEffect,'shader', chromVal);
+			Effect.setValue(ChromaticAberrationShader,'variable', chromVal);
 	}
 	override function beatHit()
 	{
