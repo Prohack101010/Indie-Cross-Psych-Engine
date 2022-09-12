@@ -63,29 +63,22 @@ public static var SONG:SwagSong = null;
 	private var iconArray:Array<HealthIcon> = [];
   public var shaderUpdates:Array<Float->Void> = [];
 	public var camGameShaders:Array<ShaderEffect> = [];
-	public var camHUDShaders:Array<ShaderEffect> = [];
+	public var camHudShaders:Array<ShaderEffect> = [];
 	public var camOtherShaders:Array<ShaderEffect> = [];
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
 function addShaderToCamera(cam:String,effect:ShaderEffect){
-
+if (ClientPrefs.Shaders){
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-                    camHUDShaders.push(effect);
+                    camHudShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camHUDShaders){
+                    for(i in camHusShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
-                    camHUD.setFilters(newCamEffects);
-            case 'camother' | 'other':
-                    camOtherShaders.push(effect);
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camOtherShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camOther.setFilters(newCamEffects);
+                    camHud.setFilters(newCamEffects);
             case 'camgame' | 'game':
                     camGameShaders.push(effect);
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
@@ -96,12 +89,13 @@ function addShaderToCamera(cam:String,effect:ShaderEffect){
 
 
         }
-
+      }
   }
 
 	override function create()
 	{
   shader_chromatic_abberation = new ChromaticAberrationEffect();
+  addShaderToCamera(camera, new ChromaticAberrationEffect(chromVal)); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 		
@@ -516,9 +510,8 @@ function addShaderToCamera(cam:String,effect:ShaderEffect){
 		super.update(elapsed);
 for (i in shaderUpdates){
 			i(elapsed);
-			Effect.setValue(ChromaticAberrationEffect,'shader', chromVal);
 		}
-				setChrome(chromVal);
+			Effect.setValue(ChromaticAberrationEffect,'shader', chromVal);
 	}
 	override function beatHit()
 	{
