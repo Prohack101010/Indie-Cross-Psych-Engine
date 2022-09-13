@@ -41,7 +41,7 @@ class SUtil
 				/**
 				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
 				 */
-				Lib.application.current.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
+				Application.current.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
 					+ 'Press Ok to see what happens',
 					'Permissions?');
 			}
@@ -68,7 +68,7 @@ class SUtil
 			else if ((FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
 				&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
 			{
-				Lib.pplication.current.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
+				Lib.application.current.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
 					'Error!');
 				System.exit(1);
 			}
