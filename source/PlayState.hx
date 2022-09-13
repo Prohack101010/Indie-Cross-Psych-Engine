@@ -25,6 +25,7 @@ import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import ChromaticAberration;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
@@ -1341,70 +1342,33 @@ public function addKarmaBar()
 			
 		healthBar.updateBar();
 	}
-public function addShaderToCamera(cam:String,effect:ShaderEffect){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
+public function addChromaticAberrationToCamera(cam:String){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
 if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-                    camHUDShaders.push(effect);
+                    camHUDShaders.push(new ChromaticAberration(0));
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camHUDShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camHUD.setFilters(newCamEffects);
             case 'camother' | 'other':
-                    camOtherShaders.push(effect);
+                    camOtherShaders.push(new ChromaticAberration(0));
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camOtherShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camOther.setFilters(newCamEffects);
             case 'camgame' | 'game':
-                    camGameShaders.push(effect);
+                    camGameShaders.push(new ChromaticAberratio(0));
                     var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
                     for(i in camGameShaders){
                       newCamEffects.push(new ShaderFilter(i.shader));
                     }
                     camGame.setFilters(newCamEffects);
-            default:
-                if(modchartSprites.exists(cam)) {
-                    Reflect.setProperty(modchartSprites.get(cam),"shader",effect.shader);
-                } else if(modchartTexts.exists(cam)) {
-                    Reflect.setProperty(modchartTexts.get(cam),"shader",effect.shader);
-                } else {
-                    var OBJ = Reflect.getProperty(PlayState.instance,cam);
-                    Reflect.setProperty(OBJ,"shader", effect.shader);
-                }  
 
         }
 }
-  }
-
-  public function removeShaderFromCamera(cam:String,effect:ShaderEffect){ 
-
-        switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud': 
-    camHUDShaders.remove(effect);
-    var newCamEffects:Array<BitmapFilter>=[];
-    for(i in camHUDShaders){
-      newCamEffects.push(new ShaderFilter(i.shader));
-    }
-    camHUD.setFilters(newCamEffects);
-            case 'camother' | 'other': 
-                    camOtherShaders.remove(effect);
-                    var newCamEffects:Array<BitmapFilter>=[];
-                    for(i in camOtherShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camOther.setFilters(newCamEffects);
-            default: 
-                camGameShaders.remove(effect);
-                var newCamEffects:Array<BitmapFilter>=[];
-                for(i in camGameShaders){
-                  newCamEffects.push(new ShaderFilter(i.shader));
-                }
-                camGame.setFilters(newCamEffects);
-        }
-
   }
 
   public function clearShaderFromCamera(cam:String){
@@ -4551,7 +4515,7 @@ PauseSubState.isInPlayState = false;
 		return returnVal;
 	}
 public function setChromaticValue(value:Float) {
-    Effect.setValue(ChromaticAberrationEffect,'variable', value);
+    ChromaticAberration.setChrome(value);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
