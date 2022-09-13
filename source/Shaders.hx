@@ -1,31 +1,15 @@
 package;
 
-import flixel.system.FlxAssets.FlxShader;
+import openfl.filters.ShaderFilter;
 
-class Shaders extends FlxShader
+class Shaders
 {
-	@:glFragmentSource('
-		#pragma header
+	public static var chromaticAberration:ShaderFilter = new ShaderFilter(new ChromaticAberration());
 
-		uniform float rOffset;
-		uniform float gOffset;
-		uniform float bOffset;
-
-		void main()
-		{
-			vec4 col1 = texture2D(bitmap, openfl_TextureCoordv.st - vec2(rOffset, 0.0));
-			vec4 col2 = texture2D(bitmap, openfl_TextureCoordv.st - vec2(gOffset, 0.0));
-			vec4 col3 = texture2D(bitmap, openfl_TextureCoordv.st - vec2(bOffset, 0.0));
-			vec4 toUse = texture2D(bitmap, openfl_TextureCoordv);
-			toUse.r = col1.r;
-			toUse.g = col2.g;
-			toUse.b = col3.b;
-			//float someshit = col4.r + col4.g + col4.b;
-
-			gl_FragColor = toUse;
-		}')
-	public function new()
+	public static function setChrome(chromeOffset:Float):Void
 	{
-		super();
+		chromaticAberration.shader.data.rOffset.value = [chromeOffset];
+		chromaticAberration.shader.data.gOffset.value = [0.0];
+		chromaticAberration.shader.data.bOffset.value = [chromeOffset * -1];
 	}
 }
