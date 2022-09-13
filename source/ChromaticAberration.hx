@@ -3,7 +3,7 @@ package;
 import openfl.filters.ShaderFilter;
 import Shaders
 
-class ChromaticAberration extend Shaders
+class ChromaticAberration extends Shaders
 {
 	public static var chromaticAberration:ShaderFilter = new ShaderFilter(new ChromaticAberration());
  	public function new(){
