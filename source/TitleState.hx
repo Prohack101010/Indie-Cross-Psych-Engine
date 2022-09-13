@@ -36,6 +36,7 @@ import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
 import openfl.system.System;
+import openfl.display.BlendMode;
 using StringTools;
 typedef TitleData =
 {
@@ -302,18 +303,6 @@ class TitleState extends MusicBeatState
 		sans.y -= 170;
 		add(sans);
 
-		bendy = new FlxSprite(0, 0);
-		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
-		bendy.antialiasing = ClientPrefs.globalAntialiasing;
-		bendy.animation.addByPrefix('bump', 'c', 24, false);
-		bendy.animation.play('bump');
-		bendy.updateHitbox();
-		bendy.angle = 0;
-		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
-		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
-		bendy.x += 300;
-		add(bendy); 
-
 		logoBl = new FlxSprite(0,0);
 		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
 		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
@@ -321,6 +310,7 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
+		logoBl.blend = ADD;
 		logoBl.x -= 285;
 		logoBl.y -= 25;
 		BFdance = new FlxSprite(690, 180);
@@ -358,9 +348,21 @@ class TitleState extends MusicBeatState
 				}
 		}
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
-		
+		BFdance.blend = ADD;
 		add(BFdance);
 		add(logoBl);
+
+		bendy = new FlxSprite(0, 0); //bendy circle should be above bf 
+		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
+		bendy.antialiasing = ClientPrefs.globalAntialiasing;
+		bendy.animation.addByPrefix('bump', 'c', 24, false);
+		bendy.animation.play('bump');
+		bendy.updateHitbox();
+		bendy.angle = 0;
+		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
+		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
+		bendy.x += 300;
+		add(bendy);  
  
 		Play = new FlxSprite(0,0);
 		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
