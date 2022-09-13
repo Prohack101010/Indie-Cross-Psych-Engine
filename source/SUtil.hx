@@ -11,7 +11,6 @@ import flixel.FlxG;
 import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
-import lime.app.Application;
 import openfl.Lib;
 import openfl.events.UncaughtErrorEvent;
 import openfl.utils.Assets;
@@ -42,13 +41,13 @@ class SUtil
 				/**
 				 * Basically for now i can't force the app to stop while its requesting a android permission, so this makes the app to stop while its requesting the specific permission
 				 */
-				Application.current.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
+				Lib.application.current.window.alert('If you accepted the permissions you are all good!' + "\nIf you didn't then expect a crash"
 					+ 'Press Ok to see what happens',
 					'Permissions?');
 			}
 			else
 			{
-				Application.current.window.alert('Please grant the game storage permissions in app settings' + '\nPress Ok to close the app', 'Permissions?');
+				Lib.application.current.window.alert('Please grant the game storage permissions in app settings' + '\nPress Ok to close the app', 'Permissions?');
 				System.exit(1);
 			}
 		}
@@ -61,7 +60,7 @@ class SUtil
 
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
-				Application.current.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.",
+				Lib.application.current.window.alert("Whoops, seems like you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.",
 					'Error!');
 				FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
 				System.exit(1);
@@ -69,7 +68,7 @@ class SUtil
 			else if ((FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
 				&& (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods')))
 			{
-				Application.current.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
+				Lib.pplication.current.window.alert("Why did you create two files called assets and mods instead of copying the folders from the .APK?, expect a crash.",
 					'Error!');
 				System.exit(1);
 			}
@@ -77,28 +76,28 @@ class SUtil
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
-					Application.current.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.",
+					Lib.application.current.window.alert("Whoops, seems like you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.",
 						'Error!');
 					FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
 					System.exit(1);
 				}
 				else if (FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.isDirectory(SUtil.getPath() + 'assets'))
 				{
-					Application.current.window.alert("Why did you create a file called assets instead of copying the assets directory from the .APK?, expect a crash.",
+					Lib.application.current.window.alert("Why did you create a file called assets instead of copying the assets directory from the .APK?, expect a crash.",
 						'Error!');
 					System.exit(1);
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
 				{
-					Application.current.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.",
+					Lib.application.current.window.alert("Whoops, seems like you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.",
 						'Error!');
 					FlxG.openURL('https://youtu.be/zjvkTmdWvfU');
 					System.exit(1);
 				}
 				else if (FileSystem.exists(SUtil.getPath() + 'mods') && !FileSystem.isDirectory(SUtil.getPath() + 'mods'))
 				{
-					Application.current.window.alert("Why did you create a file called mods instead of copying the mods directory from the .APK?, expect a crash.",
+					Lib.application.current.window.alert("Why did you create a file called mods instead of copying the mods directory from the .APK?, expect a crash.",
 						'Error!');
 					System.exit(1);
 				}
@@ -162,7 +161,7 @@ class SUtil
 			#end
 
 			Sys.println(errMsg);
-			Application.current.window.alert(errMsg, 'Error!');
+			Lib.application.current.window.alert(errMsg, 'Error!');
 
 			System.exit(1);
 		});
