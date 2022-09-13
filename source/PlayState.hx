@@ -1345,8 +1345,8 @@ if (ClientPrefs.Shaders) {
 		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
 		camOther.setFilters([ChromaticAberration.chromaticAberration]);
             case 'camgame' | 'game':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
-		camGame.setFilters([ChromaticAberration.chromaticAberration]);
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration(0)]);
+		camGame.setFilters([ChromaticAberration.chromaticAberration(0)]);
         }
 }
   }
@@ -2758,9 +2758,6 @@ public function startVideo(name:String) {
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
-		for (i in shaderUpdates){
-			i(elapsed);
-		}
 	}
 
 	function openChartEditor()
