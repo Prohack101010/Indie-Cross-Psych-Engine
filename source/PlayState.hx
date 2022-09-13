@@ -1339,14 +1339,14 @@ public function addChromaticAberrationToCamera(cam:String){
 if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
-		camHUD.setFilters([ChromaticAberration.chromaticAberration]);
+		FlxG.camera.setFilters([Shaders.chromaticAberration]);
+		camHUD.setFilters([Shaders.chromaticAberration]);
             case 'camother' | 'other':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
-		camOther.setFilters([ChromaticAberration.chromaticAberration]);
+		FlxG.camera.setFilters([Shaders.chromaticAberration]);
+		camOther.setFilters([Shaders.chromaticAberration]);
             case 'camgame' | 'game':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration(0)]);
-		camGame.setFilters([ChromaticAberration.chromaticAberration(0)]);
+		FlxG.camera.setFilters([Shaders.chromaticAberration]);
+		camGame.setFilters([Shaders.chromaticAberration]);
         }
 }
   }
