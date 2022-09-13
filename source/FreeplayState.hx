@@ -34,7 +34,6 @@ import Song;
 using StringTools;
 
 class FreeplayState extends MusicBeatState {
-    public var shader_chromatic_abberation:ChromaticAberrationEffect;
 	var cupTea:FlxSprite;
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
@@ -61,35 +60,24 @@ public static var SONG:SwagSong = null;
 	private var curPlaying:Bool = false;
 
 	private var iconArray:Array<HealthIcon> = [];
-  public var shaderUpdates:Array<Float->Void> = [];
-	public var camGameShaders:Array<ShaderEffect> = [];
-	public var camHudShaders:Array<ShaderEffect> = [];
-	public var camOtherShaders:Array<ShaderEffect> = [];
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
-function addChromaticAberrationToCamera(cam:String){
-if (ClientPrefs.Shaders){
+public function addChromaticAberrationToCamera(cam:String){
+if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-                    camHudShaders.push(new ChromaticAberration(0));
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camHudShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camHud.setFilters(newCamEffects);
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
+		camHud.setFilters([ChromaticAberration.chromaticAberration]);
+            case 'camother' | 'other':
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
+		camOther.setFilters([ChromaticAberration.chromaticAberration]);
             case 'camgame' | 'game':
-                    camGameShaders.push(ChromaticAberration);
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camGameShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camGame.setFilters(newCamEffects);
-
-
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
+		camGame.setFilters([ChromaticAberration.chromaticAberration]);
         }
-      }
+}
   }
 
 	override function create()
