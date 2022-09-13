@@ -1,7 +1,7 @@
 package;
 
 import openfl.filters.ShaderFilter;
-import Shaders
+import Shaders;
 
 class ChromaticAberration extends Shaders
 {
