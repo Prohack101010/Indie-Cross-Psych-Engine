@@ -28,6 +28,7 @@ import openfl.filters.ShaderFilter;
 import Shaders;
 import ChromaticAberration;
 import openfl.filters.BitmapFilter;
+import openfl.filters.ShaderFilter;
 import flixel.util.FlxTimer;
 import Conductor;
 import Song;
@@ -68,11 +69,11 @@ public function addChromaticAberrationToCamera(cam:String){
 if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration(0)]);
-		camHud.setFilters([ChromaticAberration.chromaticAberration(0)]);
+		FlxG.camera.setFilters([Shaders.chromaticAberration]);
+		camHud.setFilters([ChromaticAberration.chromaticAberration]);
             case 'camgame' | 'game':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration(0)]);
-		camGame.setFilters([ChromaticAberration.chromaticAberration(0)]);
+		FlxG.camera.setFilters([Shaders.chromaticAberration]);
+		camGame.setFilters([Shaders.chromaticAberration]);
         }
 }
   }
@@ -492,7 +493,7 @@ if (ClientPrefs.Shaders) {
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
-			ChromaticAberration.setChrome(chromVal);
+			Shaders.setChrome(chromVal);
 	}
 	override function beatHit()
 	{
