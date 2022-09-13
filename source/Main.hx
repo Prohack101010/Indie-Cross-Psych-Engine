@@ -1,29 +1,17 @@
 package;
 
+import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
 import openfl.Assets;
 import openfl.Lib;
-import openfl.display.FPS;
+import FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
-
-//crash handler stuff
-import lime.app.Application;
-import openfl.events.UncaughtErrorEvent;
-import haxe.CallStack;
-import haxe.io.Path;
-#if desktop
-import Discord.DiscordClient;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
-#end
-
-using StringTools;
 
 class Main extends Sprite
 {
@@ -46,6 +34,7 @@ class Main extends Sprite
 
 	public function new()
 	{
+		SUtil.uncaughtErrorHandler();
 		super();
 
 		if (stage != null)
@@ -66,6 +55,10 @@ class Main extends Sprite
 		}
 
 		setupGame();
+		var timer = new haxe.Timer(1);
+		timer.run = function() {
+		coloring();
+		if (fpsVar.textColor == 0) fpsVar.textColor = -4775566;} // needs to be done because textcolor becomes black for a frame
 	}
 
 	private function setupGame():Void
@@ -82,11 +75,17 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		SUtil.check();
+		#if !debug
+		initialState = TitleState;
+		#end
 	
+		SUtil.check();
 		ClientPrefs.loadDefaultKeys();
+		// fuck you, persistent caching stays ON during sex
+		FlxGraphic.defaultPersist = true;
+		// the reason for this is we're going to be handling our own cache smartly
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
-
+		
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
@@ -95,54 +94,49 @@ class Main extends Sprite
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
 		toastManager = new ToastHandler();
-		addChild(toastManager);
 
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
 
-	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
-	// very cool person for real they don't get enough credit for their work
-	function onCrash(e:UncaughtErrorEvent):Void
+	// Chroma Effect (12 Colors)
+	var array:Array<FlxColor> = [
+		FlxColor.fromRGB(216, 34, 83),
+		FlxColor.fromRGB(255, 38, 0),
+		FlxColor.fromRGB(255, 80, 0),
+		FlxColor.fromRGB(255, 147, 0),
+		FlxColor.fromRGB(255, 199, 0),
+		FlxColor.fromRGB(255, 255, 0),
+		FlxColor.fromRGB(202, 255, 0),
+		FlxColor.fromRGB(0, 255, 0),
+		FlxColor.fromRGB(0, 146, 146),
+		FlxColor.fromRGB(0, 0, 255),
+		FlxColor.fromRGB(82, 40, 204),
+		FlxColor.fromRGB(150, 33, 146)
+	];
+	var skippedFrames = 0;
+	var currentColor = 0;
+
+	// Event Handlers
+	public function coloring():Void
 	{
-		var errMsg:String = "";
-		var path:String;
-		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
-
-		dateNow = dateNow.replace(" ", "_");
-		dateNow = dateNow.replace(":", "'");
-
-		path = SUtil.getPath() + "crash/" + "PsychEngine_" + dateNow + ".txt";
-
-		for (stackItem in callStack)
-		{
-			switch (stackItem)
-			{
-				case FilePos(s, file, line, column):
-					errMsg += file + " (line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
-			}
+		// Hippity, Hoppity, your code is now my property (from KadeEngine and from a fork)
+		if (ClientPrefs.rainbowFps) {
+		if (currentColor >= array.length)
+			currentColor = 0;
+		currentColor = Math.round(FlxMath.lerp(0, array.length, skippedFrames / ClientPrefs.framerate));
+		(cast(Lib.current.getChildAt(0), Main)).changeFPSColor(array[currentColor]);
+		currentColor++;
+		skippedFrames++;
+		if (skippedFrames > ClientPrefs.framerate)
+			skippedFrames = 0;
 		}
-
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/jigsaw-4277821/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
-
-		if (!FileSystem.exists(SUtil.getPath() + "crash/"))
-			FileSystem.createDirectory(SUtil.getPath() + "crash/");
-
-		File.saveContent(path, errMsg + "\n");
-
-		Sys.println(errMsg);
-		Sys.println("Crash dump saved in " + Path.normalize(path));
-
-		Application.current.window.alert(errMsg, "Error!");
-		#if desktop
-		DiscordClient.shutdown();
-		Sys.exit(1);
+		else fpsVar.textColor = FlxColor.fromRGB(255, 255, 255);
 	}
-	#end
+	public function changeFPSColor(color:FlxColor)
+	{
+		fpsVar.textColor = color;
+	}
 }
