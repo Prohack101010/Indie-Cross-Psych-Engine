@@ -4487,7 +4487,7 @@ PauseSubState.isInPlayState = false;
 		return returnVal;
 	}
 public function setChromaticValue(value:Float) {
-    ChromaticAberration.setChrome(value);
+    Shaders.setChrome(value);
 }
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
