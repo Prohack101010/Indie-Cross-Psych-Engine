@@ -1821,10 +1821,10 @@ PlayState.instance.setChromaticValue(value);
 		
 		//Shader stuff, some shaders not tested yet.
 		Lua_helper.add_callback(lua, "addChromaticAbberationShader", function(camera:String, chromeOffset:Float = 0.005) {
-			PlayState.instance.addShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
+			PlayState.instance.addChromaticAberrationToCamera(camera);
 
 		});
-				Lua_helper.add_callback(lua, "addScanlineShader", function(camera:String, lockAlpha:Bool=false) {
+/*				Lua_helper.add_callback(lua, "addScanlineShader", function(camera:String, lockAlpha:Bool=false) {
 
 			PlayState.instance.addShaderToCamera(camera, new ScanlineEffect(lockAlpha));
 
@@ -1870,7 +1870,7 @@ PlayState.instance.setChromaticValue(value);
 		Lua_helper.add_callback(lua, "addBloomShader", function(camera:String, intensity:Float = 0.35, blurSize:Float=1.0/512.0) {
 
 			PlayState.instance.addShaderToCamera(camera, new BloomEffect(blurSize, intensity));
-		});
+		});*/
 
 		Lua_helper.add_callback(lua, "removeShaders", function(camera:String) {
 			PlayState.instance.clearShaderFromCamera(camera);
