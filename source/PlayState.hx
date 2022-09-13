@@ -65,7 +65,7 @@ import vlc.MP4Handler;
 import Shaders;
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
-
+import openfl.filters.ColorMatrixFilter; 
 using StringTools;
 
 class PlayState extends MusicBeatState
@@ -93,7 +93,6 @@ class PlayState extends MusicBeatState
 	public var modchartSprites:Map<String, ModchartSprite> = new Map<String, ModchartSprite>();
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
-  public var shader_chromatic_abberation:ChromaticAberration; 
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 	public var modchartSaves:Map<String, FlxSave> = new Map<String, FlxSave>();
 
@@ -196,11 +195,6 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
-  public var shaderUpdates:Array<Float->Void> = [];
-	public var camGameShaders:Array<ShaderEffect> = [];
-	public var camHUDShaders:Array<ShaderEffect> = [];
-	public var camOtherShaders:Array<ShaderEffect> = [];
-
 	
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -318,7 +312,6 @@ PauseSubState.isInPlayState = true;
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
-		shader_chromatic_abberation = new ChromaticAberrationEffect();
 
 		krTweenObj = FlxTween.tween(this, {}, 0);
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -331,6 +324,7 @@ PauseSubState.isInPlayState = true;
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camOther);
+		FlxG.camera.setFilters([])
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxCamera.defaultCameras = [camGame];
@@ -1341,45 +1335,28 @@ public function addKarmaBar()
 			
 		healthBar.updateBar();
 	}
-public function addChromaticAberrationToCamera(cam:String){//STOLE FROM ANDROMEDA AND PSYCH ENGINE 0.5.1 WITH SHADERS
+public function addChromaticAberrationToCamera(cam:String){
 if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-                    camHUDShaders.push(new ChromaticAberration(0));
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camHUDShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camHUD.setFilters(newCamEffects);
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
+		camHUD.setFilters([ChromaticAberration.chromaticAberration]);
             case 'camother' | 'other':
-                    camOtherShaders.push(new ChromaticAberration(0));
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camOtherShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camOther.setFilters(newCamEffects);
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
+		camOther.setFilters([ChromaticAberration.chromaticAberration]);
             case 'camgame' | 'game':
-                    camGameShaders.push(new ChromaticAberratio(0));
-                    var newCamEffects:Array<BitmapFilter>=[]; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
-                    for(i in camGameShaders){
-                      newCamEffects.push(new ShaderFilter(i.shader));
-                    }
-                    camGame.setFilters(newCamEffects);
-
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
+		camGame.setFilters([ChromaticAberration.chromaticAberration]);
         }
 }
   }
 
   public function clearShaderFromCamera(cam:String){
-
-
         switch(cam.toLowerCase()) {
-            case 'camhud' | 'hud': 
-                camHUDShaders = [];
+            case 'camhud' | 'hud':
                 var newCamEffects:Array<BitmapFilter>=[];
                 camHUD.setFilters(newCamEffects);
-            case 'camother' | 'other': 
-                camOtherShaders = [];
+            case 'camother' | 'other':
                 var newCamEffects:Array<BitmapFilter>=[];
                 camOther.setFilters(newCamEffects);
             default: 
