@@ -70,7 +70,7 @@ if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
 		FlxG.camera.setFilters([Shaders.chromaticAberration]);
-		camHud.setFilters([ChromaticAberration.chromaticAberration]);
+		camHud.setFilters([Shaders.chromaticAberration]);
             case 'camgame' | 'game':
 		FlxG.camera.setFilters([Shaders.chromaticAberration]);
 		camGame.setFilters([Shaders.chromaticAberration]);
