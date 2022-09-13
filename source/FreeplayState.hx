@@ -94,7 +94,7 @@ if (ClientPrefs.Shaders){
 
 	override function create()
 	{
-  shader_chromatic_abberation = new ChromaticAberrationEffect();
+  shader_chromatic_abberation = new ChromaticAberration();
   addChromaticAberrationToCamera('camHud'); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
