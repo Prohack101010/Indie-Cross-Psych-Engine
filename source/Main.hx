@@ -122,18 +122,8 @@ class Main extends Sprite
 	// Event Handlers
 	public function coloring():Void
 	{
-		// Hippity, Hoppity, your code is now my property (from KadeEngine and from a fork)
-		if (ClientPrefs.rainbowFps) {
-		if (currentColor >= array.length)
-			currentColor = 0;
-		currentColor = Math.round(FlxMath.lerp(0, array.length, skippedFrames / ClientPrefs.framerate));
-		(cast(Lib.current.getChildAt(0), Main)).changeFPSColor(array[currentColor]);
-		currentColor++;
-		skippedFrames++;
-		if (skippedFrames > ClientPrefs.framerate)
-			skippedFrames = 0;
-		}
-		else fpsVar.textColor = FlxColor.fromRGB(255, 255, 255);
+		// Hippity, Hoppity, your code is now my property (from KadeEngine and from a fork) // fuck you randomxdp :)
+		fpsVar.textColor = FlxColor.fromRGB(255, 255, 255);
 	}
 	public function changeFPSColor(color:FlxColor)
 	{
