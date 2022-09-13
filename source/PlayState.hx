@@ -324,7 +324,7 @@ PauseSubState.isInPlayState = true;
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
 		FlxG.cameras.add(camOther);
-		FlxG.camera.setFilters([])
+		FlxG.camera.setFilters([]);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
 		FlxCamera.defaultCameras = [camGame];
