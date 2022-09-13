@@ -68,21 +68,17 @@ public function addChromaticAberrationToCamera(cam:String){
 if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
-		camHud.setFilters([ChromaticAberration.chromaticAberration]);
-            case 'camother' | 'other':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
-		camOther.setFilters([ChromaticAberration.chromaticAberration]);
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration(0)]);
+		camHud.setFilters([ChromaticAberration.chromaticAberration(0)]);
             case 'camgame' | 'game':
-		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration]);
-		camGame.setFilters([ChromaticAberration.chromaticAberration]);
+		FlxG.camera.setFilters([ChromaticAberration.chromaticAberration(0)]);
+		camGame.setFilters([ChromaticAberration.chromaticAberration(0)]);
         }
 }
   }
 
 	override function create()
 	{
-  shader_chromatic_abberation = new ChromaticAberration();
   addChromaticAberrationToCamera('camHud'); 
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
@@ -496,10 +492,7 @@ if (ClientPrefs.Shaders) {
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
-for (i in shaderUpdates){
-			i(elapsed);
-		}
-			ChromaticAberration.setChrome(hromVal);
+			ChromaticAberration.setChrome(chromVal);
 	}
 	override function beatHit()
 	{
