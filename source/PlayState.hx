@@ -1359,8 +1359,7 @@ if (ClientPrefs.Shaders) {
             case 'camother' | 'other':
                 var newCamEffects:Array<BitmapFilter>=[];
                 camOther.setFilters(newCamEffects);
-            default: 
-                camGameShaders = [];
+            default:
                 var newCamEffects:Array<BitmapFilter>=[];
                 camGame.setFilters(newCamEffects);
         }
