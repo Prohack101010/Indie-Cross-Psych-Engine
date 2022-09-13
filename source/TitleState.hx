@@ -289,6 +289,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
 		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
 		cup.x -= 300;
+		cup.blend = ADD;
 		add(cup);
 
 		sans = new FlxSprite(0, 0);
@@ -301,6 +302,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
 		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		sans.y -= 170;
+		sans.blend = ADD; 
 		add(sans);
 
 		logoBl = new FlxSprite(0,0);
@@ -362,6 +364,7 @@ class TitleState extends MusicBeatState
 		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
 		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
 		bendy.x += 300;
+		bendy.blend = ADD;
 		add(bendy);  
  
 		Play = new FlxSprite(0,0);
@@ -396,6 +399,7 @@ class TitleState extends MusicBeatState
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		// titleText.screenCenter(X);
+		titleText.blend = ADD;
 		add(titleText);
 		add(Play);
 
