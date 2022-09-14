@@ -21,8 +21,7 @@ class Main extends Sprite
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
-	public static var toastManager:ToastHandler; 
-
+	public static var toastManager:ToastHandler;
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
@@ -77,6 +76,9 @@ class Main extends Sprite
 		#end
 	
 		ClientPrefs.loadDefaultKeys();
+		// fuck you, persistent caching stays ON during sex
+		FlxGraphic.defaultPersist = true;
+		// the reason for this is we're going to be handling our own cache smartly
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
@@ -87,6 +89,8 @@ class Main extends Sprite
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
 		toastManager = new ToastHandler();
+		addChild(toastManager);
+
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
