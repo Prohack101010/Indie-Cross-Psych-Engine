@@ -11,16 +11,19 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
+import flixel.FlxSubState;
 import flixel.FlxBasic;
 #if android
 import android.AndroidControls;
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
+import CustomFadeTransition;
 #end
 
 class MusicBeatState extends FlxUIState
-{
+{ 
+  public static var curNextState:FlxState;
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 
@@ -142,14 +145,14 @@ class MusicBeatState extends FlxUIState
 		FlxTransitionableState.skipNextTransOut = false;
 	}
 
-	
+
 	#if (VIDEOS_ALLOWED && windows)
 	override public function onFocus():Void
 	{
 		FlxVideo.onFocus();
 		super.onFocus();
 	}
-	
+
 	override public function onFocusLost():Void
 	{
 		FlxVideo.onFocusLost();
@@ -237,4 +240,5 @@ class MusicBeatState extends FlxUIState
 	{
 		//do literally nothing dumbass
 	}
+
 }
