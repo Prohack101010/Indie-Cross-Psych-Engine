@@ -48,6 +48,7 @@
 	<define name="LUA_ALLOWED" unless="web" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
 	<define name="VIDEOS_ALLOWED" /> if="web || android || desktop" />
+	<define name="CRASH_HANDLER" unless="web" />
 	<define name="PSYCH_WATERMARKS" /> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<!-- <define name="TITLE_SCREEN_EASTER_EGG" /> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build --> <!-- Edit: i forgot the port is unofficial lmao --> -->
 
@@ -155,8 +156,8 @@
         <haxedef name="HXCPP_GC_BIG_BLOCKS"/>
 
 	<!-- Akways enable Null Object Reference check -->
-	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
-	<haxedef name="HXCPP_STACK_LINE" if="release" />
+	<haxedefname="HXCPP_CHECK_POINTER" unless="web" />
+	<haxedef name="HXCPP_STACK_LINE" unless="web" />
 
 	<!-- Android stuff: thanks Yoshi Engine -->
 	<android permission="android.permission.ACCESS_NETWORK_STATE"/>
