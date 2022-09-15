@@ -86,7 +86,7 @@ class SUtil
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 	}
 
-	/*public static function onCrash(e:UncaughtErrorEvent):Void
+	public static function onCrash(e:UncaughtErrorEvent):Void
 	{
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
@@ -120,7 +120,7 @@ class SUtil
 
 		SUtil.applicationAlert("Uncaught Error :(!", errMsg);
 		System.exit(0);
-	}*/
+	}
 
 	private static function applicationAlert(title:String, description:String)
 	{
