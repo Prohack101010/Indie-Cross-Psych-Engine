@@ -35,8 +35,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
-import openfl.system.System;
-import openfl.display.BlendMode;
+
 using StringTools;
 typedef TitleData =
 {
@@ -52,7 +51,6 @@ typedef TitleData =
 }
 class TitleState extends MusicBeatState
 {
-	public var resizeConstant:Float = 1.196;
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
@@ -135,6 +133,7 @@ class TitleState extends MusicBeatState
 			http.request();
 		}
 		#end
+
 		FlxG.game.focusLostFramerate = 60;
 		FlxG.sound.muteKeys = muteKeys;
 		FlxG.sound.volumeDownKeys = volumeDownKeys;
@@ -147,6 +146,7 @@ class TitleState extends MusicBeatState
 
 		// DEBUG BULLSHIT
 
+		swagShader = new ColorSwap();
 		super.create();
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
@@ -194,6 +194,11 @@ class TitleState extends MusicBeatState
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
+		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
+			MusicBeatState.switchState(new FlashingState());
+		} else {
 			#if desktop
 			if (!DiscordClient.isInitialized)
 			{
@@ -208,11 +213,11 @@ class TitleState extends MusicBeatState
 			{
 				startIntro();
 			});
+		}
 		#end
 	}
 
 	var logoBl:FlxSprite;
-	var scaleDir:Int = 1;
 	var BFdance:FlxSprite;
 	var danceLeft:Bool = false;
 	var Play:FlxSprite;
@@ -222,6 +227,7 @@ class TitleState extends MusicBeatState
 	var sans:FlxSprite;
 	var indieBG:FlxSprite;
 	var angle:Float;
+	var swagShader:ColorSwap = null;
 
 	function startIntro()
 	{
@@ -257,39 +263,24 @@ class TitleState extends MusicBeatState
 
 		Conductor.changeBPM(117);
 		persistentUpdate = true;
-
-		var bg:FlxSprite = new FlxSprite();
-		
-		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none"){
-			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
-		}else{
-			bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		}
-		
-		// bg.antialiasing = ClientPrefs.globalAntialiasing;
-		// bg.setGraphicSize(Std.int(bg.width * 0.6));
-		// bg.updateHitbox();
-		add(bg);
-
 		indieBG = new FlxSprite(0, 0);
 		indieBG.frames = Paths.getSparrowAtlas('titel/Bg');
 		indieBG.antialiasing = ClientPrefs.globalAntialiasing;
-		indieBG.animation.addByPrefix('bump', 'ddddd', 24, false);
+		indieBG.animation.addByPrefix('bump', 'ddddd', 24, true);
 		indieBG.animation.play('bump');
 		indieBG.updateHitbox();
 		add(indieBG);
-
 		cup = new FlxSprite(0, 0);
 		cup.frames = Paths.getSparrowAtlas('titel/CupCircle');
 		cup.antialiasing = ClientPrefs.globalAntialiasing;
 		cup.animation.addByPrefix('wtf', 'c', 24, true);
-		cup.animation.play('wtt');
+		cup.animation.play('wtf');
 		cup.updateHitbox();
 		cup.angle = 0;
 		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
-		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
+		//cup.setGraphicSize(Std.int(cup.width / resizeConstant));
 		cup.x -= 300;
-		cup.blend = ADD;
+		//cup.blend = ADD;
 		add(cup);
 
 		sans = new FlxSprite(0, 0);
@@ -300,22 +291,24 @@ class TitleState extends MusicBeatState
 		sans.updateHitbox();
 		sans.angle = 0;
 		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
-		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
+		//sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		sans.y -= 170;
-		sans.blend = ADD; 
+		//sans.blend = ADD;
 		add(sans);
 
-		logoBl = new FlxSprite(0,0);
+		logoBl = new FlxSprite(-80, 0);
 		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
-		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
+		
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		logoBl.blend = ADD;
-		logoBl.x -= 285;
-		logoBl.y -= 25;
-		BFdance = new FlxSprite(690, 180);
+		// logoBl.screenCenter();
+		// logoBl.color = FlxColor.BLACK;
+
+		swagShader = new ColorSwap();
+		BFdance = new FlxSprite(760, 220);
+
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
 		switch(easterEgg.toUpperCase())
 		{
@@ -341,18 +334,16 @@ class TitleState extends MusicBeatState
 			default:
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!! me: ok
+			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
-				BFdance.animation.addByPrefix('dance', 'BF idle dance',  24, false);
-				BFdance.setGraphicSize(Std.int(BFdance.width / resizeConstant));
-				if (curBeat % 1 == 0) {
-					BFdance.animation.play('dance', true);
-				}
+				BFdance.animation.addByPrefix('bop', 'BF idle dance', 24, false);
 		}
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
-		BFdance.blend = ADD;
+		
 		add(BFdance);
+		BFdance.shader = swagShader.shader;
 		add(logoBl);
+		logoBl.shader = swagShader.shader;
 
 		bendy = new FlxSprite(0, 0); //bendy circle should be above bf 
 		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
@@ -362,46 +353,42 @@ class TitleState extends MusicBeatState
 		bendy.updateHitbox();
 		bendy.angle = 0;
 		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
-		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
+		//bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
 		bendy.x += 300;
-		bendy.blend = ADD;
-		add(bendy);  
+		//bendy.blend = ADD;
+		add(bendy); 
  
-		Play = new FlxSprite(0,0);
+		Play = new FlxSprite(800, 600);
 		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
 		Play.antialiasing = ClientPrefs.globalAntialiasing;
 		Play.animation.addByPrefix('bump', 'c', 24, false);
 		Play.animation.play('bump');
-		Play.x = titleText.x + 50;
-		Play.y = titleText.y + 10;
 		Play.updateHitbox();
+		add(Play); 
 
-		titleText = new FlxSprite(660, 570);
+		titleText = new FlxSprite(800, 600);
 		#if MODS_ALLOWED
-		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/titel/Playbutton.png";
+		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/title/Playbutton.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "mods/images/titel/Playbutton.png";
+			path = SUtil.getPath() + "mods/images/title/Playbuttom.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "assets/images/titel/Playbutton.png";
+			path = SUtil.getPath() + "assets/images/title/Playbutton.png";
 		}
 		//trace(path, FileSystem.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		
-		titleText.frames = Paths.getSparrowAtlas('titel/Playbutton');
+		titleText.frames = Paths.getSparrowAtlas('title/Playbutton');
 		#end
-		titleText.setGraphicSize(Std.int(titleText.width / 1.1));
 		titleText.animation.addByPrefix('idle', "Button", 24);
 		titleText.antialiasing = ClientPrefs.globalAntialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		// titleText.screenCenter(X);
-		titleText.blend = ADD;
 		add(titleText);
-		add(Play);
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
@@ -425,7 +412,7 @@ class TitleState extends MusicBeatState
 
 		credTextShit.visible = false;
 
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('brightFyre'));
+		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
 		add(ngSpr);
 		ngSpr.visible = false;
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
@@ -498,7 +485,8 @@ class TitleState extends MusicBeatState
 		{
 			if(pressedEnter)
 			{
-				FlxG.camera.flash(FlxColor.WHITE, 1); //VAI
+
+				FlxG.camera.flash(FlxColor.WHITE, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;
@@ -568,6 +556,12 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		}
 
+		if(swagShader != null)
+		{
+			if(controls.UI_LEFT) swagShader.hue -= elapsed * 0.1;
+			if(controls.UI_RIGHT) swagShader.hue += elapsed * 0.1;
+		}
+
 		super.update(elapsed);
 	}
 
@@ -611,34 +605,29 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if (indieBG != null)
-		{
-			indieBG.animation.play('bump');
+		if(logoBl != null) 
+			logoBl.animation.play('bump', true);
+
+		if(BFdance != null) {
+				BFdance.animation.play('bop');
 		}
-		if (logoBl != null)
-		{
-			logoBl.animation.play('bump');
-		}
-		if (BFdance != null)
-		{
-			BFdance.animation.play('dance');
-		}
+
 		if(!closedState) {
 			sickBeats++;
 			switch (sickBeats)
 			{
 				case 1:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Indie Cross Psych Engine by'], 15);
+					createCoolText(['Psych Engine by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 3:
 					#if PSYCH_WATERMARKS
-					addMoreText('An Undertale Fan', 15);
-					addMoreText('Zoe', 15);
-					addMoreText('Imposterdesus', 15);
+					addMoreText('Shadow Mario', 15);
+					addMoreText('RiverOaken', 15);
+					addMoreText('shubs', 15);
 					#else
 					addMoreText('present');
 					#end
@@ -651,12 +640,12 @@ class TitleState extends MusicBeatState
 				// credTextShit.screenCenter();
 				case 5:
 					#if PSYCH_WATERMARKS
-					createCoolText(['Original Mod Belongs To'], -40);
+					createCoolText(['Not associated', 'with'], -40);
 					#else
-					createCoolText(['Original Mod Belongs To'], -40);
+					createCoolText(['In association', 'with'], -40);
 					#end
 				case 7:
-					addMoreText('the guy that spent 500+ hour', -40);
+					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
@@ -678,13 +667,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 13:
-					addMoreText('dickhead');
+					addMoreText('Friday');
 				// credTextShit.visible = true;
 				case 14:
-					addMoreText('snans');
+					addMoreText('Night');
 				// credTextShit.text += '\nNight';
 				case 15:
-					addMoreText('ink pen'); // credTextShit.text += '\nFunkin';
+					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
 
 				case 16:
 					skipIntro();
