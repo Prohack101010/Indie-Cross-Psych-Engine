@@ -70,10 +70,8 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	var krBar:FlxBar; 
-	public static var brightMagnitude:Float = 0;
-	public static var brightSpeed:Float = 0;
-	public static var defaultBrightVal:Float = 0;
+	public static var defaultGameFont:String = "bronx.otf";
+	public static var krBar:FlxBar;
   public static var chromVal:Float = 0;
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
@@ -260,7 +258,7 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
-	#if desktop
+	#if allow_discord_rpc
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
 	var detailsText:String = "";
@@ -340,7 +338,7 @@ PauseSubState.isInPlayState = true;
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 
-		#if desktop
+		#if allow_discord_rpc
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
 		if (isStoryMode)
@@ -352,8 +350,7 @@ PauseSubState.isInPlayState = true;
 			detailsText = "Freeplay";
 		}
 
-		// String for when the game is paused
-		detailsPausedText = "Paused - " + detailsText;
+		// String for wheni = "Paused - " + detailsText;
 		#end
 
 		GameOverSubstate.resetVariables();
@@ -904,7 +901,7 @@ PauseSubState.isInPlayState = true;
 		var showTime:Bool = (ClientPrefs.timeBarType != 'Disabled');
 		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.scrollFactor.set();
-		timeTxt.setFormat(Paths.font("Bronx.otf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.setFormat(Paths.font(defaultGameFont), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
 		timeTxt.visible = showTime;
@@ -1059,7 +1056,7 @@ PauseSubState.isInPlayState = true;
 		reloadHealthBarColors();
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("Bronx.otf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font(defaultGameFont), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
@@ -1071,7 +1068,7 @@ PauseSubState.isInPlayState = true;
                         remove(laneUnderlayOpponent);
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
-		botplayTxt.setFormat(Paths.font("Bronx.otf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		botplayTxt.setFormat(Paths.font(defaultGameFont), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
@@ -1216,7 +1213,7 @@ PauseSubState.isInPlayState = true;
 			CoolUtil.precacheMusic(Paths.formatToSongPath(ClientPrefs.pauseMusic));
 		}
 
-		#if desktop
+		#if allow_discord_rpc
 		// Updating Discord Rich Presence.
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
@@ -1872,7 +1869,7 @@ public function startVideo(name:String) {
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		
-		#if desktop
+		#if allow_discord_rpc
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
 		#end
@@ -2226,7 +2223,7 @@ public function startVideo(name:String) {
 			paused = false;
 			callOnLuas('onResume', []);
 
-			#if desktop
+			#if allow_discord_rpc
 			if (startTimer != null && startTimer.finished)
 			{
 				DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.noteOffset);
@@ -2243,7 +2240,7 @@ public function startVideo(name:String) {
 
 	override public function onFocus():Void
 	{
-		#if desktop
+		#if allow_discord_rpc
 		if (health > 0 && !paused)
 		{
 			if (Conductor.songPosition > 0.0)
@@ -2262,7 +2259,7 @@ public function startVideo(name:String) {
 	
 	override public function onFocusLost():Void
 	{
-		#if desktop
+		#if allow_discord_rpc
 		if (health > 0 && !paused)
 		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
@@ -2481,7 +2478,7 @@ public function startVideo(name:String) {
 			
 				//}
 		
-				#if desktop
+				#if allow_discord_rpc
 				DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 				#end
 			}
@@ -2769,7 +2766,7 @@ public function startVideo(name:String) {
 		PauseSubState.isInPlayState = false;
 		chartingMode = true;
 
-		#if desktop
+		#if allow_discord_rpc
 		DiscordClient.changePresence("Chart Editor", null, null, true);
 		#end
 	}
@@ -2799,7 +2796,7 @@ public function startVideo(name:String) {
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 				
-				#if desktop
+				#if allow_discord_rpc
 				// Game Over doesn't get his own variable because it's only used here
 				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 				#end

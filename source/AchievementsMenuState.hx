@@ -28,7 +28,7 @@ class AchievementsMenuState extends MusicBeatState
 	private var descText:FlxText;
 
 	override function create() {
-		#if desktop
+		#if allow_discord_rpc
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
 

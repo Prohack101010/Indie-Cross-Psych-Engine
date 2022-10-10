@@ -37,9 +37,9 @@ class FreeplaySelectState extends MusicBeatState
 
 	override function create()
 	{
-		#if desktop
+		#if allow_discord_rpc
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("Selecting FreePlay", null);
 		#end
 
 		transIn = FlxTransitionableState.defaultTransIn;

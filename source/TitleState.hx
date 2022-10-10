@@ -199,7 +199,7 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransOut = true;
 			//MusicBeatState.switchState(new FlashingState());
 		} else {
-			#if desktop
+			#if allow_discord_rpc
 			if (!DiscordClient.isInitialized)
 			{
 				DiscordClient.initialize();
@@ -332,8 +332,6 @@ class TitleState extends MusicBeatState
 			#end
 
 			default:
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
 				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
 				BFdance.animation.addByPrefix('bop', 'BF idle dance', 24, false);

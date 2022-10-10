@@ -1,6 +1,6 @@
 package;
 
-#if desktop
+#if allow_discord_rpc
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
 #end
@@ -17,7 +17,7 @@ class DiscordClient
 	public static var isInitialized:Bool = false;
 	public function new()
 	{
-                #if desktop
+                #if allow_discord_rpc
 		trace("Discord Client starting...");
 		DiscordRpc.start({
 			clientID: "863222024192262205",
@@ -40,14 +40,14 @@ class DiscordClient
 	
 	public static function shutdown()
 	{
-                #if desktop
+                #if allow_discord_rpc
 		DiscordRpc.shutdown();
                 #end
 	}
 	
 	static function onReady()
 	{
-                #if desktop
+                #if allow_discord_rpc
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
@@ -69,7 +69,7 @@ class DiscordClient
 
 	public static function initialize()
 	{
-                #if desktop
+                #if allow_discord_rpc
 		var DiscordDaemon = sys.thread.Thread.create(() ->
 		{
 			new DiscordClient();
@@ -81,7 +81,7 @@ class DiscordClient
 
 	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
 	{
-                #if desktop
+                #if allow_discord_rpc
 		var startTimestamp:Float = if(hasStartTimestamp) Date.now().getTime() else 0;
 
 		if (endTimestamp > 0)
