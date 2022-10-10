@@ -264,7 +264,7 @@ class DialogueEditorState extends MusicBeatState
 			characterAnimSpeed();
 		}
 
-		#if desktop
+		#if allow_discord_rpc
 		// Updating Discord Rich Presence
 		var rpcText:String = lineInputText.text;
 		if(rpcText == null || rpcText.length < 1) rpcText = '(Empty)';
