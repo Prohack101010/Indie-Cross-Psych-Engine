@@ -1,5 +1,6 @@
 package;
 
+import openfl.filters.ShaderFilter;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -19,6 +20,7 @@ import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
+import Shaders;
 
 class MusicBeatState extends FlxUIState
 {
@@ -225,4 +227,10 @@ class MusicBeatState extends FlxUIState
 	{
 		//do literally nothing dumbass
 	}
+	//chromatic shit (stolen from ic)
+	public var chromaticAberration(get, never):ShaderFilter;
+		inline function get_chromaticAberration():ShaderFilter
+		return Shaders.chromaticAberration;
+	public function setChrome(daChrome):Void 
+	Shaders.setChrome(daChrome);
 }

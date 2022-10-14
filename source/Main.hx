@@ -71,10 +71,12 @@ class Main extends Sprite
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
+        #if android
 		SUtil.doTheCheck();
+        #end
 		
 		#if !debug
-		initialState = FlashingState;
+		initialState = TitleState;
 		#end
 	
 		ClientPrefs.loadDefaultKeys();
@@ -95,5 +97,5 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 	}
-	//lime test windows --debug -D analyzer-optmize //compile command
+	//lime test windows -debug -D analyzer-optmize //compile commands
 }

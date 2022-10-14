@@ -1,7 +1,6 @@
 package;
-
+import ChromaticAberration;
 import openfl.filters.ShaderFilter;
-
 class Shaders
 {
 	public static var chromaticAberration:ShaderFilter = new ShaderFilter(new ChromaticAberration());

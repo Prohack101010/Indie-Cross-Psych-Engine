@@ -162,14 +162,14 @@ class MainMenuState extends MusicBeatState
 		sketch.y -= 200;
 		add(sketch);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
-		versionShit.setFormat("Bronx.otf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.setFormat(Paths.font("Bronx.otf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Psych Engine v0.5.2h", 12);
 		versionShit.scrollFactor.set();
-		versionShit.setFormat("Bronx.otf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.setFormat(Paths.font("Bronx.otf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
 		var IndieLogo:FlxSprite = new FlxSprite(-310, -170).loadGraphic(Paths.image('mainmenu/LOGO'));
@@ -194,7 +194,7 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 
-		#if android
+		#if mobile
 		addVirtualPad(UP_DOWN, A_B_E);
 		#end
 

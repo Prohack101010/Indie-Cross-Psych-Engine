@@ -15,6 +15,7 @@ import flixel.addons.transition.TransitionData;
 import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+import openfl.display.BlendMode;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
@@ -62,7 +63,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
-
+	var resizeConstant:Float = 1.196;
 	var curWacky:Array<String> = [];
 
 	var wackyImage:FlxSprite;
@@ -83,7 +84,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if android
+		#if mobile
 		FlxG.android.preventDefaultKeys = [BACK];
 		#end
 
@@ -263,12 +264,13 @@ class TitleState extends MusicBeatState
 
 		Conductor.changeBPM(117);
 		persistentUpdate = true;
-		indieBG = new FlxSprite(0, 0);
+		indieBG = new FlxSprite();
 		indieBG.frames = Paths.getSparrowAtlas('titel/Bg');
 		indieBG.antialiasing = ClientPrefs.globalAntialiasing;
-		indieBG.animation.addByPrefix('bump', 'ddddd', 24, true);
-		indieBG.animation.play('bump');
+		indieBG.animation.addByPrefix('bump', 'ddddd', 24, false);
+		indieBG.animation.play('bump', true);
 		indieBG.updateHitbox();
+		indieBG.screenCenter();
 		add(indieBG);
 		cup = new FlxSprite(0, 0);
 		cup.frames = Paths.getSparrowAtlas('titel/CupCircle');
@@ -277,10 +279,11 @@ class TitleState extends MusicBeatState
 		cup.animation.play('wtf');
 		cup.updateHitbox();
 		cup.angle = 0;
-		FlxTween.tween(cup, { angle:360}, 10, {type: FlxTween.LOOPING});
-		//cup.setGraphicSize(Std.int(cup.width / resizeConstant));
+		FlxTween.tween(cup, { angle:360}, 8, {type: FlxTween.LOOPING});
+		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
+		cup.blend = ADD;
+		cup.screenCenter();
 		cup.x -= 300;
-		//cup.blend = ADD;
 		add(cup);
 
 		sans = new FlxSprite(0, 0);
@@ -290,24 +293,59 @@ class TitleState extends MusicBeatState
 		sans.animation.play('bump');
 		sans.updateHitbox();
 		sans.angle = 0;
-		FlxTween.tween(sans, { angle:-360 }, 10, {type: FlxTween.LOOPING}); 
-		//sans.setGraphicSize(Std.int(sans.width / resizeConstant));
+		FlxTween.tween(sans, { angle:-360 }, 8, {type: FlxTween.LOOPING}); 
+		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
+		sans.blend = ADD;
+		sans.screenCenter();
 		sans.y -= 170;
-		//sans.blend = ADD;
 		add(sans);
 
-		logoBl = new FlxSprite(-80, 0);
+		bendy = new FlxSprite(0, 0);
+		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
+		bendy.antialiasing = ClientPrefs.globalAntialiasing;
+		bendy.animation.addByPrefix('bump', 'c', 24, false);
+		bendy.animation.play('bump');
+		bendy.updateHitbox();
+		bendy.angle = 0;
+		FlxTween.tween(bendy, { angle:360 }, 8, {type: FlxTween.LOOPING});
+		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
+		bendy.blend = ADD;
+		sans.screenCenter();
+		bendy.x += 300;
+		add(bendy); 
+
+		logoBl = new FlxSprite();
 		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
-		
+		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
+		logoBl.blend = ADD;
+		logoBl.screenCenter();
+		logoBl.x -= 285;
+		logoBl.y -= 25;
+
+		titleText = new FlxSprite(660, 570);
+		titleText.frames = Paths.getSparrowAtlas('titel/Playbutton');
+		titleText.animation.addByPrefix('idle', "Button", 24, true);
+		titleText.antialiasing = ClientPrefs.globalAntialiasing;
+		titleText.animation.play('idle', true);
+		titleText.setGraphicSize(Std.int(titleText.width / 1.1));
+		titleText.updateHitbox();
+		titleText.blend = ADD;
+		add(titleText);
+
+		Play = new FlxSprite(titleText.x + 50, titleText.y + 10);
+		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
+		Play.antialiasing = ClientPrefs.globalAntialiasing;
+		Play.animation.addByPrefix('bump', 'c', 24, false);
+		Play.animation.play('bump');
+		Play.setGraphicSize(Std.int(Play.width / 1.1));
+		add(Play); 
 
 		swagShader = new ColorSwap();
-		BFdance = new FlxSprite(760, 220);
+		BFdance = new FlxSprite(690, 180);
 
 		var easterEgg:String = FlxG.save.data.psychDevsEasterEgg;
 		switch(easterEgg.toUpperCase())
@@ -333,60 +371,15 @@ class TitleState extends MusicBeatState
 
 			default:
 			//EDIT THIS ONE IF YOU'RE MAKING A SOURCE CODE MOD!!!!
-				BFdance.frames = Paths.getSparrowAtlas('titel/BF');
-				BFdance.animation.addByPrefix('bop', 'BF idle dance', 24, false);
+		BFdance.frames = Paths.getSparrowAtlas('titel/BF');
+		BFdance.animation.addByPrefix('bop', 'BF idle dance', 24, false);
 		}
 		BFdance.antialiasing = ClientPrefs.globalAntialiasing;
-		
+		BFdance.blend = ADD;
 		add(BFdance);
 		BFdance.shader = swagShader.shader;
 		add(logoBl);
 		logoBl.shader = swagShader.shader;
-
-		bendy = new FlxSprite(0, 0); //bendy circle should be above bf 
-		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
-		bendy.antialiasing = ClientPrefs.globalAntialiasing;
-		bendy.animation.addByPrefix('bump', 'c', 24, false);
-		bendy.animation.play('bump');
-		bendy.updateHitbox();
-		bendy.angle = 0;
-		FlxTween.tween(bendy, { angle:360 }, 10, {type: FlxTween.LOOPING});
-		//bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
-		bendy.x += 300;
-		//bendy.blend = ADD;
-		add(bendy); 
- 
-		Play = new FlxSprite(800, 600);
-		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
-		Play.antialiasing = ClientPrefs.globalAntialiasing;
-		Play.animation.addByPrefix('bump', 'c', 24, false);
-		Play.animation.play('bump');
-		Play.updateHitbox();
-		add(Play); 
-
-		titleText = new FlxSprite(800, 600);
-		#if MODS_ALLOWED
-		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/title/Playbutton.png";
-		//trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "mods/images/title/Playbuttom.png";
-		}
-		//trace(path, FileSystem.exists(path));
-		if (!FileSystem.exists(path)){
-			path = SUtil.getPath() + "assets/images/title/Playbutton.png";
-		}
-		//trace(path, FileSystem.exists(path));
-		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),File.getContent(StringTools.replace(path,".png",".xml")));
-		#else
-		
-		titleText.frames = Paths.getSparrowAtlas('title/Playbutton');
-		#end
-		titleText.animation.addByPrefix('idle', "Button", 24);
-		titleText.antialiasing = ClientPrefs.globalAntialiasing;
-		titleText.animation.play('idle');
-		titleText.updateHitbox();
-		// titleText.screenCenter(X);
-		add(titleText);
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
@@ -484,13 +477,12 @@ class TitleState extends MusicBeatState
 			if(pressedEnter)
 			{
 
-				FlxG.camera.flash(FlxColor.WHITE, 1);
+				flash(FlxColor.WHITE, 1);
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 				transitioning = true;
-				// FlxG.sound.music.stop();
 
-				new FlxTimer().start(1, function(tmr:FlxTimer)
+				new FlxTimer().start(2, function(tmr:FlxTimer)
 				{
 					if (mustUpdate) {
 						MusicBeatState.switchState(new OutdatedState());
@@ -607,7 +599,10 @@ class TitleState extends MusicBeatState
 			logoBl.animation.play('bump', true);
 
 		if(BFdance != null) {
-				BFdance.animation.play('bop');
+				BFdance.animation.play('bop', true);
+		}
+		if (indieBG != null) {
+			indieBG.animation.play('bump', true);
 		}
 
 		if(!closedState) {
@@ -757,5 +752,9 @@ class TitleState extends MusicBeatState
 			}
 			skippedIntro = true;
 		}
+	}
+	function flash(color:FlxColor, duration:Float) {
+		FlxG.camera.stopFX();
+		FlxG.camera.flash(color, duration);
 	}
 }
