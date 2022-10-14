@@ -47,7 +47,7 @@
 	<define name="MODS_ALLOWED" unless="web" />
 	<define name="LUA_ALLOWED" unless="web" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="VIDEOS_ALLOWED" /> if="web || android || desktop" />
+	<define name="VIDEOS_ALLOWED" /> if="web || mobile || desktop" />
 	<define name="CRASH_HANDLER" unless="web" />
 	<define name="PSYCH_WATERMARKS" /> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<!-- <define name="TITLE_SCREEN_EASTER_EGG" /> DELETE THE if="officialBuild" for enabling this on an unofficial build --> <!-- Edit: i forgot the port is unofficial lmao -->
@@ -66,7 +66,8 @@
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 	<!--discord rpc shit-->
-	<define name="allow_discord_rpc" if="desktop"/>
+	<!--<define name="allow_discord_rpc"/> if="desktop"/> --> <!--disabled because discord libary is fucked up for me -->
+	
 	<library name="videos"        preload="true" />
 	<section if="PRELOAD_ALL">
 		<library name="songs"         preload="true" />
@@ -79,8 +80,8 @@
 	</section>
 	
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
-	<assets patch="assets/android"					if="android"/> <!-- to not have the android assets in another builds -saw -->
-	<assets pathh="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
+	<assets path="assets/android"					if="mobile"/> <!-- to not have the android assets in another builds -saw -->
+	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
@@ -112,7 +113,7 @@
 	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="allow_discord_rpc"/>
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
-	<haxelib name="extension-androidtools" if="android"/>
+	<haxelib name="extension-androidtools" if="mobile"/>
 
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
