@@ -146,7 +146,7 @@ class FunkinLua {
 		set('altAnim', false);
 		set('gfSection', false);
 		//font shit
-		set('gameFont', PlayState.defaultGameFont);
+		set('gameFont', PlayState.instance.defaultGameFont);
 
 		// Gameplay settings
 		set('healthGainMult', PlayState.instance.healthGain);
@@ -189,6 +189,8 @@ class FunkinLua {
 		set('healthBarAlpha', ClientPrefs.healthBarAlpha);
 		set('noResetButton', ClientPrefs.noReset);
 		set('lowQuality', ClientPrefs.lowQuality);
+		set('customeNotes', ClientPrefs.specialNotes);
+		set('shaders', ClientPrefs.Shaders);
 
 		#if windows
 		set('buildTarget', 'windows');
@@ -1610,9 +1612,9 @@ class FunkinLua {
 				}
 			}
 		});
-		Lua_helper.add_callback(lua, "setChrome", function(value:Int) {
+/*		Lua_helper.add_callback(lua, "setChrome", function(value:Int) {
 PlayState.instance.setChromaticValue(value);
-		});
+		});*/
 		Lua_helper.add_callback(lua, "getTextString", function(tag:String) {
 			var obj:FlxText = getTextObject(tag);
 			if(obj != null)
@@ -1821,12 +1823,12 @@ PlayState.instance.setChromaticValue(value);
 			luaTrace('musicFadeOut is deprecated! Use soundFadeOut instead.', false, true);
 		});
 		
-		//Shader stuff, some shaders not tested yet.
+		/*Shader stuff, some shaders not tested yet.
 		Lua_helper.add_callback(lua, "addChromaticAbberationShader", function(camera:String, chromeOffset:Float = 0.005) {
 			PlayState.instance.addChromaticAberrationToCamera(camera);
 
 		});
-/*				Lua_helper.add_callback(lua, "addScanlineShader", function(camera:String, lockAlpha:Bool=false) {
+			Lua_helper.add_callback(lua, "addScanlineShader", function(camera:String, lockAlpha:Bool=false) {
 
 			PlayState.instance.addShaderToCamera(camera, new ScanlineEffect(lockAlpha));
 
@@ -1872,11 +1874,11 @@ PlayState.instance.setChromaticValue(value);
 		Lua_helper.add_callback(lua, "addBloomShader", function(camera:String, intensity:Float = 0.35, blurSize:Float=1.0/512.0) {
 
 			PlayState.instance.addShaderToCamera(camera, new BloomEffect(blurSize, intensity));
-		});*/
+		});
 
 		Lua_helper.add_callback(lua, "removeShaders", function(camera:String) {
 			PlayState.instance.clearShaderFromCamera(camera);
-});
+});*/
 		call('onCreate', []);
 		#end
 	}
