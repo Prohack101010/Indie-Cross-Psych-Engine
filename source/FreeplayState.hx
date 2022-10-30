@@ -406,14 +406,14 @@ public static var SONG:SwagSong = null;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 				FlxG.sound.music.volume = 0;
 				trace('inst preview is now enabled');
-		  		new FlxTimer().start(0.25, function(tmr:FlxTimer) {
+		  		new FlxTimer().start(1, function(tmr:FlxTimer) {
 				allowInstPrev = true;
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				Conductor.changeBPM(SONG.bpm);
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0);
-				FlxG.sound.music.fadeIn(1.5, 0, 0.7);
+				FlxG.sound.music.fadeIn(0.5, 0, 0.7);
 			});
 
 		}
@@ -463,7 +463,10 @@ public static var SONG:SwagSong = null;
 			if (FlxG.keys.pressed.SHIFT #if android || virtualPad.buttonZ.pressed #end){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			}else{
-				LoadingState.loadAndSwitchState(new PlayState());
+				LoadingState.target = new PlayState();
+				LoadingState.stopMusic = true;
+				MusicBeatState.switchState(new LoadingState());
+				//LoadingState.loadAndSwitchState(new PlayState(), true);
 			}
 
 			FlxG.sound.music.volume = 0;
@@ -479,7 +482,7 @@ public static var SONG:SwagSong = null;
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 		super.update(elapsed);
-			Shaders.setChrome(chromVal);
+		Shaders.setChrome(chromVal);
 	}
 	override function beatHit()
 	{
@@ -534,14 +537,14 @@ public static var SONG:SwagSong = null;
 	{
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 			SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-			new FlxTimer().start(0.25, function(time:FlxTimer) {
+			new FlxTimer().start(1, function(time:FlxTimer) {
 	if (allowInstPrev) {
 				Conductor.changeBPM(SONG.bpm);
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-				FlxG.sound.music.fadeIn(1.5, 0, 0.7);
+				FlxG.sound.music.fadeIn(0.5, 0, 0.7);
 			}
 		});
 

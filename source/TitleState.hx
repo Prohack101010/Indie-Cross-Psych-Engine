@@ -196,8 +196,8 @@ class TitleState extends MusicBeatState
 		MusicBeatState.switchState(new ChartingState());
 		#else
 		if(FlxG.save.data.flashing == null && !FlashingState.leftState) {
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
+			//FlxTransitionableState.skipNextTransIn = true;
+			//FlxTransitionableState.skipNextTransOut = true;
 			//MusicBeatState.switchState(new FlashingState());
 		} else {
 			#if allow_discord_rpc
@@ -274,45 +274,29 @@ class TitleState extends MusicBeatState
 		add(indieBG);
 		cup = new FlxSprite(0, 0);
 		cup.frames = Paths.getSparrowAtlas('titel/CupCircle');
+		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
 		cup.antialiasing = ClientPrefs.globalAntialiasing;
+		cup.blend = ADD;
 		cup.animation.addByPrefix('wtf', 'c', 24, true);
 		cup.animation.play('wtf');
 		cup.updateHitbox();
-		cup.angle = 0;
-		FlxTween.tween(cup, { angle:360}, 8, {type: FlxTween.LOOPING});
-		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
-		cup.blend = ADD;
 		cup.screenCenter();
-		cup.x -= 300;
 		add(cup);
+		cup.x -= 300;
+		FlxTween.tween(cup, { angle:360}, 8, {type: FlxTweenType.LOOPING});
 
-		sans = new FlxSprite(0, 0);
+		sans = new FlxSprite();
 		sans.frames = Paths.getSparrowAtlas('titel/SansCircle');
+		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		sans.antialiasing = ClientPrefs.globalAntialiasing;
+		sans.blend = ADD;
+		sans.updateHitbox();
+		sans.screenCenter();
 		sans.animation.addByPrefix('bump', 'c', 24, false);
 		sans.animation.play('bump');
-		sans.updateHitbox();
-		sans.angle = 0;
-		FlxTween.tween(sans, { angle:-360 }, 8, {type: FlxTween.LOOPING}); 
-		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
-		sans.blend = ADD;
-		sans.screenCenter();
-		sans.y -= 170;
 		add(sans);
-
-		bendy = new FlxSprite(0, 0);
-		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
-		bendy.antialiasing = ClientPrefs.globalAntialiasing;
-		bendy.animation.addByPrefix('bump', 'c', 24, false);
-		bendy.animation.play('bump');
-		bendy.updateHitbox();
-		bendy.angle = 0;
-		FlxTween.tween(bendy, { angle:360 }, 8, {type: FlxTween.LOOPING});
-		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
-		bendy.blend = ADD;
-		sans.screenCenter();
-		bendy.x += 300;
-		add(bendy); 
+		FlxTween.tween(sans, { angle:-360 }, 8, {type: FlxTweenType.LOOPING}); 
+		sans.y -= 170;
 
 		logoBl = new FlxSprite();
 		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
@@ -321,8 +305,8 @@ class TitleState extends MusicBeatState
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
-		logoBl.blend = ADD;
 		logoBl.screenCenter();
+		logoBl.blend = ADD;
 		logoBl.x -= 285;
 		logoBl.y -= 25;
 
@@ -336,13 +320,26 @@ class TitleState extends MusicBeatState
 		titleText.blend = ADD;
 		add(titleText);
 
-		Play = new FlxSprite(titleText.x + 50, titleText.y + 10);
+		Play = new FlxSprite(titleText.x + 30, titleText.y + 5);
 		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
 		Play.antialiasing = ClientPrefs.globalAntialiasing;
 		Play.animation.addByPrefix('bump', 'c', 24, false);
 		Play.animation.play('bump');
 		Play.setGraphicSize(Std.int(Play.width / 1.1));
-		add(Play); 
+		add(Play);
+
+		bendy = new FlxSprite(0, 0);
+		bendy.frames = Paths.getSparrowAtlas('titel/BendyCircle');
+		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
+		bendy.antialiasing = ClientPrefs.globalAntialiasing;
+		bendy.blend = ADD;
+		bendy.updateHitbox();
+		bendy.animation.addByPrefix('bump', 'c', 24, false);
+		bendy.animation.play('bump');
+		add(bendy);
+		FlxTween.tween(bendy, { angle:360 }, 8, {type: FlxTweenType.LOOPING});
+		bendy.x += 595;
+		bendy.y += 50;
 
 		swagShader = new ColorSwap();
 		BFdance = new FlxSprite(690, 180);
@@ -441,6 +438,14 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (!ClientPrefs.noReset) {
+			if ((FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.R) #if android || FlxG.android.justReleased.BACK #end)
+				{
+					FlxG.resetGame();
+				}
+		}
+		
+
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
@@ -487,7 +492,7 @@ class TitleState extends MusicBeatState
 					if (mustUpdate) {
 						MusicBeatState.switchState(new OutdatedState());
 					} else {
-						MusicBeatState.switchState(new MainMenuState());
+						FlxG.switchState(new MainMenuState());
 					}
 					closedState = true;
 				});

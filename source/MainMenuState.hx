@@ -1,21 +1,30 @@
 package;
-
+import openfl.filters.ShaderFilter;
+import openfl.filters.BitmapFilter;
 #if desktop
 import Discord.DiscordClient;
 #end
-import flixel.FlxG;
+#if desktop
+import sys.io.File;
+import sys.FileSystem;
+#end
 import flixel.FlxObject;
+import openfl.utils.Object;
+import WhiteOverlayShader;
+import flixel.input.gamepad.FlxGamepad;
+import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.addons.transition.FlxTransitionableState;
-import flixel.effects.FlxFlicker;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.text.FlxText;
-import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 import lime.app.Application;
+import openfl.Lib;
+import flixel.system.debug.Window;
+import flixel.addons.transition.FlxTransitionableState;
 import Achievements;
 import editors.MasterEditorMenu;
 
@@ -23,28 +32,31 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-
+	public function new()
+		{
+			super();
+		}
 	public static var psychEngineVersion:String = 'INDIE CROSS V1';
 	public static var curSelected:Int = 0;
-
-	var optionShit:Array<String> = ['Story_mode', 'freeplay', 'options', 'credits', 'awards'];
-	var menuItems:FlxTypedGroup<FlxSprite>;
-	var Story_mode:FlxSprite;
-	var freeplay:FlxSprite;
-	var options:FlxSprite;
-	var credits:FlxSprite;
-	var awards:FlxSprite;
-	var Story_modeSplash:FlxSprite;
-	var freeplaySplash:FlxSprite;
-	var optionsSplash:FlxSprite;
-	var creditsSplash:FlxSprite;
-	var awardsSplash:FlxSprite;	
-
+	var buttonsFlash:FlxSprite = new FlxSprite();
+	var optionShit:Array<String> = ['storymode', 'freeplay', 'options', 'credits', 'achievements'];
+	var menuString:FlxTypedGroup<FlxSprite>;
+	var motherfucker:Array<FlxTween>;
 	var menuSketch:FlxSprite;
-	var bg:FlxSprite;	
+	var bg:FlxSprite;
+	static final pussy:Float = 50;
+	public static final fuckersScale:Float = 0.675;
+	static final fuckersTweenShitcifbidbfgis:TweenOptions = {ease: FlxEase.circOut};
+	static var imagesToCache:Array<String> = ['mainmenu/ButtonsFlash/'];
+
 
 	override function create()
 	{
+		for (image in optionShit)
+			{
+				trace("Caching image " + image);
+				FlxG.bitmap.add(Paths.image('mainmenu/ButtonsFlash/' + image));
+			}
 		#if allow_discord_rpc
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
@@ -59,99 +71,11 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		menuItems = new FlxTypedGroup<FlxSprite>();
-		add(menuItems);
-
-		Story_mode = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Story_mode'));
-		menuItems.add(Story_mode);
-		Story_mode.scrollFactor.set();
-		Story_mode.antialiasing = ClientPrefs.globalAntialiasing;
-		Story_mode.setGraphicSize(Std.int(Story_mode.width * 0.7));
-		Story_mode.y += 230;		
-		Story_mode.x -= 200;
-		Story_mode.alpha = 0.60;
-
-
-		freeplay = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Freeplay'));
-		menuItems.add(freeplay);
-		freeplay.scrollFactor.set();
-		freeplay.antialiasing = ClientPrefs.globalAntialiasing;
-		freeplay.setGraphicSize(Std.int(freeplay.width * 0.7));
-		freeplay.y += 230;		
-		freeplay.x -= 200;
-		freeplay.alpha = 0.60;
-
-		options = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Options'));
-		menuItems.add(options);
-		options.scrollFactor.set();
-		options.antialiasing = ClientPrefs.globalAntialiasing;
-		options.setGraphicSize(Std.int(options.width * 0.7));
-		options.y += 230;
-		options.x -= 200;
-		options.alpha = 0.60;
-
-		credits = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Credits'));
-		menuItems.add(credits);
-		credits.scrollFactor.set();
-		credits.antialiasing = ClientPrefs.globalAntialiasing;
-		credits.setGraphicSize(Std.int(credits.width * 0.7));
-		credits.y += 230;
-		credits.x -= 200;
-		credits.alpha = 0.60;
-
-		awards = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Achievements'));
-		menuItems.add(awards);
-		awards.scrollFactor.set();
-		awards.antialiasing = ClientPrefs.globalAntialiasing;
-		awards.setGraphicSize(Std.int(awards.width * 0.7));
-		awards.y += 230;
-		awards.x -= 200;
-		awards.alpha = 0.60;
-		
-		Story_modeSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Story_mode flash'));
-		Story_modeSplash.scrollFactor.set();
-		Story_modeSplash.antialiasing = ClientPrefs.globalAntialiasing;
-		Story_modeSplash.setGraphicSize(Std.int(Story_modeSplash.width * 0.7));
-		Story_modeSplash.x -= 200;
-		Story_modeSplash.y += 230;
-		Story_modeSplash.alpha = 0;
-		add(Story_modeSplash);
-
-		freeplaySplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Freeplay flash'));
-		freeplaySplash.scrollFactor.set();
-		freeplaySplash.antialiasing = ClientPrefs.globalAntialiasing;
-		freeplaySplash.setGraphicSize(Std.int(freeplaySplash.width * 0.7));
-		freeplaySplash.x -= 200;
-		freeplaySplash.y += 230;
-		freeplaySplash.alpha = 0;
-		add(freeplaySplash);
-		
-		optionsSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Options flash'));
-		optionsSplash.scrollFactor.set();
-		optionsSplash.antialiasing = ClientPrefs.globalAntialiasing;
-		optionsSplash.setGraphicSize(Std.int(optionsSplash.width * 0.7));
-		optionsSplash.y += 230;
-		optionsSplash.x -= 200;
-		optionsSplash.alpha = 0;
-		add(optionsSplash);	
-
-		creditsSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Credits flash'));
-		creditsSplash.scrollFactor.set();
-		creditsSplash.antialiasing = ClientPrefs.globalAntialiasing;
-		creditsSplash.setGraphicSize(Std.int(creditsSplash.width * 0.7));
-		creditsSplash.y += 230;
-		creditsSplash.x -= 200;
-		creditsSplash.alpha = 0;
-		add(creditsSplash);	
-
-		awardsSplash = new FlxSprite(-100, -435).loadGraphic(Paths.image('mainmenu/opened/Achievements flash'));
-		awardsSplash.scrollFactor.set();
-		awardsSplash.antialiasing = ClientPrefs.globalAntialiasing;
-		awardsSplash.setGraphicSize(Std.int(awardsSplash.width * 0.7));
-		awardsSplash.y += 230;
-		awardsSplash.x -= 200;
-		awardsSplash.alpha = 0;
-		add(awardsSplash);					
+		var IndieLogo:FlxSprite = new FlxSprite(-310, -170).loadGraphic(Paths.image('mainmenu/LOGO'));
+		IndieLogo.updateHitbox();
+		IndieLogo.setGraphicSize(Std.int(IndieLogo.width * 0.7));
+		IndieLogo.antialiasing = ClientPrefs.globalAntialiasing;
+		add(IndieLogo);
 
 		var sketch:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('mainmenu/sketch/sketch'));
 		sketch.frames = Paths.getSparrowAtlas('mainmenu/sketch/sketch');
@@ -161,6 +85,9 @@ class MainMenuState extends MusicBeatState
 		sketch.x -= 300;
 		sketch.y -= 200;
 		add(sketch);
+
+		menuString = new FlxTypedGroup<FlxSprite>();
+		add(menuString);
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
@@ -172,15 +99,9 @@ class MainMenuState extends MusicBeatState
 		versionShit.setFormat(Paths.font("Bronx.otf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		var IndieLogo:FlxSprite = new FlxSprite(-310, -170).loadGraphic(Paths.image('mainmenu/LOGO'));
-		IndieLogo.updateHitbox();
-		IndieLogo.setGraphicSize(Std.int(IndieLogo.width * 0.7));
-		IndieLogo.antialiasing = ClientPrefs.globalAntialiasing;
-		add(IndieLogo);
-
+		addBitches(270, 100);
+		changeItem(curSelected);
 		// NG.core.calls.event.logEvent('swag').send();
-
-		changeItem();
 
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
@@ -205,23 +126,25 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		var selectedButton:FlxSprite = menuString.members[curSelected];
+		if (optionShit[curSelected] != "achievements") {buttonsFlash.x = selectedButton.x -113; buttonsFlash.y = selectedButton.y -25;} else {buttonsFlash.x = selectedButton.x -143; buttonsFlash.y = selectedButton.y -15;}
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
-		if (!selectedSomethin)
+		if (!selectedSomethin && !selectedSomethin)
 		{
 			if (controls.UI_UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(-1);
+				changeItem(curSelected-1);
 			}
 
 			if (controls.UI_DOWN_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
-				changeItem(1);
+				changeItem(curSelected+1);
 			}
 
 			if (controls.BACK)
@@ -233,29 +156,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				selectedSomethin = true;
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-				
-				if (curSelected == 0)
-				{
-					FlxTween.tween(Story_modeSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(Story_modeSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
-				}
-				else if (curSelected == 1)
-				{
-					FlxTween.tween(freeplaySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(freeplaySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
-				} 
-				else if (curSelected == 2) 
-				{
-					FlxTween.tween(optionsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(optionsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
-				}
-				else if (curSelected == 3) 
-				{
-					FlxTween.tween(creditsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(creditsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
-				}
-				else 
-				{
-					FlxTween.tween(awardsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(awardsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
-				}									
+			enterBitches();								
 			}
 			else if (FlxG.keys.justPressed.SEVEN #if android || virtualPad.buttonE.justPressed #end)
 			{
@@ -268,69 +169,177 @@ class MainMenuState extends MusicBeatState
 
 	}
 
-	public function goToState()
+	public function changeItem(selection:Int = 0)
 	{
-		var daChoice:String = optionShit[curSelected];
-
-		switch (daChoice)
+		if (selection != curSelected)
+			{
+				FlxG.sound.play(Paths.sound('scrollMenu'));
+			}
+	
+			if (selection < 0)
+				selection = optionShit.length - 1;
+			if (selection >= optionShit.length)
+				selection = 0;
+	
+			for (i in 0...optionShit.length)
+			{
+				var str:String = optionShit[i];
+				var menuItem:FlxSprite = menuString.members[i];
+				if (i == selection)
+				{
+					menuItem.alpha = 1.0;
+					if (motherfucker[i] != null)
+					{
+						motherfucker[i].cancelChain();
+						motherfucker[i].destroy();
+						motherfucker[i] = null;
+					}
+					if (str == "achievements") {
+						motherfucker[i] = FlxTween.tween(menuItem, {x: 1280 - menuItem.width}, 0.2, fuckersTweenShitcifbidbfgis);
+					} else {
+						motherfucker[i] = FlxTween.tween(menuItem, {x: 0}, 0.2, fuckersTweenShitcifbidbfgis);
+					}
+				}
+				else
+				{
+					if (menuItem.alpha == 1.0)
+					{
+						if (motherfucker[i] != null)
+						{
+							motherfucker[i].cancelChain();
+							motherfucker[i].destroy();
+							motherfucker[i] = null;
+						}
+					}
+	
+					if (str == "achievements") {
+						motherfucker[i] = FlxTween.tween(menuItem, {x: 1280 - menuItem.width + pussy}, 0.35, fuckersTweenShitcifbidbfgis);
+					} else {
+						motherfucker[i] = FlxTween.tween(menuItem, {x: -pussy}, 0.35, fuckersTweenShitcifbidbfgis);
+				}
+					menuItem.alpha = 0.5;
+				}
+			}
+	
+			curSelected = selection;
+	}
+	function addBitches(yPos:Float, sep:Float)
 		{
-		    case 'Story_mode':
-		    MusicBeatState.switchState
-		    (new StoryMenuState());
-			case 'freeplay':
-				MusicBeatState.switchState(new FreeplaySelectState());
-			case 'options':
-				LoadingState.loadAndSwitchState(new options.OptionsState());
-						FlxG.sound.playMusic(Paths.music('settin'), 1, true);
-			case 'credits':
-				MusicBeatState.switchState(new CreditsState());	
-			case 'awards':
-				MusicBeatState.switchState(new AchievementsMenuState());				
+			if (menuString == null)
+				return;
+	
+			if (menuString.members != null && menuString.members.length > 0)
+				menuString.forEach(function(_:FlxSprite)
+				{
+					menuString.remove(_);
+					_.destroy();
+				});
+		
+	
+			motherfucker = new Array<FlxTween>();
+	
+			for (i in 0...optionShit.length)
+			{
+				motherfucker.push(null);
+	
+				var str:String = optionShit[i];
+	
+				var menuItem:FlxSprite = new FlxSprite();
+				if(str != null && str.length > 0)
+					{
+				trace('added the button ' + str);
+				menuItem.loadGraphic(Paths.image("mainmenu/Buttons/" + str));
+					}
+				menuItem.origin.set();
+				menuItem.scale.set(fuckersScale, fuckersScale);
+				menuItem.updateHitbox();
+				menuItem.alpha = 0.5;
+
+				//buttonsFlash.loadGraphic(Paths.image('mainmenu/ButtonsFlash/storymode'));
+				buttonsFlash.origin.set();
+				buttonsFlash.scale.set(fuckersScale, fuckersScale);
+				buttonsFlash.updateHitbox();
+				buttonsFlash.alpha = 0;
+
+				//menuItem.shader = new WhiteOverlayShader();
+	
+				if (str == "achievements")
+				{
+					menuItem.setPosition(1280 - menuItem.width + pussy, 630);
+				} else {
+					menuItem.setPosition(-pussy, yPos + (i * sep));
+				}
+	
+				menuString.add(menuItem);
+				add(buttonsFlash);
+			}
 		}
-	}
-
-	public function changeItem(huh:Int = 0)
-	{
-		curSelected += huh;
-
-		if (curSelected >= menuItems.length)
-			curSelected = 0;
-		if (curSelected < 0)
-			curSelected = menuItems.length - 1;	
-
-		switch (optionShit[curSelected])
-		{
-			case 'Story_mode':
-			        Story_mode.alpha = 1;
-				freeplay.alpha = 0.6; 
-				awards.alpha = 0.6;				
-				credits.alpha = 0.6;  
-				options.alpha = 0.6; 
-
-			case 'freeplay':
-				freeplay.alpha = 1; 
-				awards.alpha = 0.6;	
-				Story_mode.alpha = 0.6;
-				credits.alpha = 0.6;  
-				options.alpha = 0.6; 				
-			case 'options':
-				options.alpha = 1; 
-				freeplay.alpha = 0.6;
-				awards.alpha = 0.6;  
-				credits.alpha = 0.6;
-			        Story_mode.alpha = 0.6;
-			case 'credits':	
-				credits.alpha = 1; 
-				options.alpha = 0.6; 
-				freeplay.alpha = 0.6;
-				awards.alpha = 0.6;
-			Story_mode.alpha = 0.6;
-			case 'awards':
-				awards.alpha = 1;				
-				credits.alpha = 0.6; 
-				options.alpha = 0.6; 
-				freeplay.alpha = 0.6;
-			Story_mode.alpha = 0.6;
-		}						
-	}
+		function enterBitches()
+			{
+				selectedSomethin = true;
+		
+				var str:String = optionShit[curSelected];
+				var menuItem:FlxSprite = menuString.members[curSelected];
+		
+				if (motherfucker[curSelected] != null)
+					motherfucker[curSelected].cancel();
+				if (str == "achievements")
+				{
+					menuItem.x = 1280 - menuItem.width + pussy;
+					motherfucker[curSelected] = FlxTween.tween(menuItem, {x: 1280 - menuItem.width}, 0.4, fuckersTweenShitcifbidbfgis);
+				}
+				else
+				{
+					menuItem.x = -pussy;
+					motherfucker[curSelected] = FlxTween.tween(menuItem, {x: 0}, 0.4, fuckersTweenShitcifbidbfgis);
+				}
+		
+				//menuItem.shader.data.progress.value = [1.0];
+				buttonsFlash.loadGraphic(Paths.image("mainmenu/ButtonsFlash/" + str));
+				FlxTween.num(1.0, 0.0, 1.0, {ease: FlxEase.cubeOut}, function(num:Float)
+				{
+					buttonsFlash.alpha = num;
+					//menuItem.shader.data.progress.value = [num];
+				});
+		
+				for (i in 0...menuString.members.length)
+				{
+					if (i != curSelected)
+					{
+						FlxTween.tween(menuString.members[i], {alpha: 0}, 1, {ease: FlxEase.cubeOut});
+					}
+					if (i == curSelected) {
+						menuString.members[i].color = 0xffffff;
+						FlxTween.color(menuString.members[i], 1, FlxColor.WHITE, FlxColor.TRANSPARENT,{ease: FlxEase.cubeOut});	
+					}
+				}
+		
+				if (str == 'options')
+					{
+						if (FlxG.sound.music != null)
+						{
+							FlxG.sound.music.fadeOut(1, 0);
+						}
+					}
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+		
+				new FlxTimer().start(1, function(tmr:FlxTimer)
+				{
+					switch (str)
+					{
+						case "storymode":
+							MusicBeatState.switchState(new StoryMenuState());
+						case "freeplay":
+							MusicBeatState.switchState(new FreeplaySelectState());
+						case "options":
+							LoadingState.loadAndSwitchState(new options.OptionsState());
+							FlxG.sound.playMusic(Paths.music('settin'), 1, true);
+							FlxG.sound.music.fadeIn(2, 0, 1);
+						case "credits":
+							MusicBeatState.switchState(new CreditsState());
+						case "achievements":
+							MusicBeatState.switchState(new AchievementsMenuState());
+					}
+				});
+			}
 }

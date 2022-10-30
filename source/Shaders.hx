@@ -1,10 +1,10 @@
 package;
+import openfl.filters.BitmapFilter;
 import ChromaticAberration;
 import openfl.filters.ShaderFilter;
 class Shaders
 {
 	public static var chromaticAberration:ShaderFilter = new ShaderFilter(new ChromaticAberration());
-
 	public static function setChrome(chromeOffset:Float):Void
 	{
 		chromaticAberration.shader.data.rOffset.value = [chromeOffset];

@@ -70,9 +70,9 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	public static var defaultGameFont:String = "bronx.otf";
+	public var defaultGameFont:String = "bronx.otf";
 	public static var krBar:FlxBar;
-  public static var chromVal:Float = 0;
+	public static var chromVal:Float = 0;
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 	public static var ratingStuff:Array<Dynamic> = [
@@ -286,7 +286,7 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		Paths.clearStoredMemory();
-PauseSubState.isInPlayState = true;
+		PauseSubState.isInPlayState = true;
 		// for lua
 		instance = this;
 
@@ -927,8 +927,8 @@ PauseSubState.isInPlayState = true;
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
-		timeBar.createFilledBar(0xFF000000, 0xFFFFFFFF);
-		timeBar.numDivisions = 800; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
+		timeBar.createFilledBar(0xFF666666, 0xFF00FF37);
+		timeBar.numDivisions = 1500; //How much lag this causes?? Should i tone it down to idk, 400 or 200?
 		timeBar.alpha = 0;
 		timeBar.visible = showTime;
 		add(timeBar);
@@ -1035,6 +1035,7 @@ PauseSubState.isInPlayState = true;
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'shownHealth', 0, 2);
+		healthBar.numDivisions = 2000;
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
@@ -1332,18 +1333,18 @@ public function addKarmaBar()
 			
 		healthBar.updateBar();
 	}
-public function addChromaticAberrationToCamera(cam:String){
+/*public function addChromaticAberrationToCamera(cam:String){
 if (ClientPrefs.Shaders) {
         switch(cam.toLowerCase()) {
             case 'camhud' | 'hud':
-		FlxG.camera.setFilters([Shaders.chromaticAberration]);
-		camHUD.setFilters([Shaders.chromaticAberration]);
+		FlxG.camera.setFilters([ChromaticShader.chromaticAberration]);
+		camHUD.setFilters([ChromaticShader.chromaticAberration]);
             case 'camother' | 'other':
-		FlxG.camera.setFilters([Shaders.chromaticAberration]);
-		camOther.setFilters([Shaders.chromaticAberration]);
+		FlxG.camera.setFilters([ChromaticShader.chromaticAberration]);
+		camOther.setFilters([ChromaticShader.chromaticAberration]);
             case 'camgame' | 'game':
-		FlxG.camera.setFilters([Shaders.chromaticAberration]);
-		camGame.setFilters([Shaders.chromaticAberration]);
+		FlxG.camera.setFilters([ChromaticShader.chromaticAberration]);
+		camGame.setFilters([ChromaticShader.chromaticAberration]);
         }
 }
   }
@@ -1361,7 +1362,7 @@ if (ClientPrefs.Shaders) {
                 camGame.setFilters(newCamEffects);
         }
 
-  }
+  }*/
 
 	public function addCharacterToList(newCharacter:String, type:Int) {
 		switch(type) {
@@ -4483,9 +4484,9 @@ PauseSubState.isInPlayState = false;
 		#end
 		return returnVal;
 	}
-public function setChromaticValue(value:Float) {
-    Shaders.setChrome(value);
-}
+/*public function setChromaticValue(value:Float) {
+    ChromaticShader.setChrome(value);
+}*/
 	public function setOnLuas(variable:String, arg:Dynamic) {
 		#if LUA_ALLOWED
 		for (i in 0...luaArray.length) {
