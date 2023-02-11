@@ -539,7 +539,7 @@ public static var SONG:SwagSong = null;
 			SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 			new FlxTimer().start(1, function(time:FlxTimer) {
 	if (allowInstPrev) {
-				Conductor.changeBPM(SONG.bpm);
+				Conductor.changeBPM(PlayState.SONG.bpm);
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
