@@ -36,6 +36,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import ClientPrefs;
 
 using StringTools;
 typedef TitleData =
@@ -84,6 +85,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		trace("Loaded TitleState");
 		#if mobile
 		FlxG.android.preventDefaultKeys = [BACK];
 		#end
@@ -150,6 +152,7 @@ class TitleState extends MusicBeatState
 		swagShader = new ColorSwap();
 		super.create();
 		FlxG.save.bind('funkin', 'ninjamuffin99');
+		ClientPrefs.saveSettings();
 		
 		ClientPrefs.loadPrefs();
 		
