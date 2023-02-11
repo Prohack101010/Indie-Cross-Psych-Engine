@@ -60,7 +60,7 @@ import DialogueBoxPsych;
 import sys.FileSystem;
 #end
 #if VIDEOS_ALLOWED
-import VideoHandler;
+import hxcodec.VideoHandler;
 #end
 import Shaders;
 import openfl.filters.ShaderFilter;
