@@ -27,7 +27,7 @@ class Main extends Sprite
 	};
 
 	public static var fpsVar:FPS;
-    public static var toastManager:ToastHandler; 
+    	public static var toastManager:ToastHandler; 
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -38,7 +38,7 @@ class Main extends Sprite
 
 	public function new()
 	{
-        SUtil.gameCrashCheck();
+        	SUtil.uncaughtErrorHandler();
 		super();
 
 		if (stage != null)
@@ -75,7 +75,7 @@ class Main extends Sprite
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
         #if android
-		SUtil.doTheCheck();
+		SUtil.checkPermissions();
         #end
 	
 		ClientPrefs.loadDefaultKeys();
