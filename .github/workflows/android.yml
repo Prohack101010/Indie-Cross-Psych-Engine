@@ -81,7 +81,7 @@ jobs:
         run: |
          haxelib run lime build android -D no-compilation -D luajit_static -D macro-times -D analyzer-optimize -armv7 --app-version="4.0.0-${{ github.run_id}}"
          cd export/release/android/bin/app/build/outputs/apk/debug
-         mv TrollgeFiles-debug.apk TrollgeFiles-armv7.apk
+         mv Indiecross-debug.apk Indiecross-armv7.apk
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
@@ -153,7 +153,7 @@ jobs:
         run: |
          haxelib run lime build android -D no-compilation -D luajit_static -D macro-times -D analyzer-optimize -arm64 --app-version="4.0.0-${{ github.run_id}}"
          cd export/release/android/bin/app/build/outputs/apk/debug
-         mv TrollgeFiles-debug.apk TrollgeFiles-arm64.apk
+         mv Indiecross-debug.apk Indiecross-arm64.apk
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
