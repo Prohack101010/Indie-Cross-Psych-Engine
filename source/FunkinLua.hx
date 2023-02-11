@@ -46,7 +46,7 @@ import Discord;
 #end
 
 #if android
-import android.Tools
+import android.Tools;
 #end
 
 using StringTools;
