@@ -22,12 +22,12 @@ class Main extends Sprite
 		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
-		skipSplash: true, // if the default flixel splash screen should be skipped
+		skipSplash: false, // if the default flixel splash screen should be skipped
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
 	public static var fpsVar:FPS;
-    	public static var toastManager:ToastHandler; 
+    public static var toastManager:ToastHandler; 
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -38,7 +38,7 @@ class Main extends Sprite
 
 	public function new()
 	{
-        	SUtil.uncaughtErrorHandler();
+        SUtil.uncaughtErrorHandler();
 		super();
 
 		if (stage != null)
@@ -74,12 +74,11 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-        #if android
-		SUtil.checkPermissions();
-        #end
+    		SUtil.checkFiles();
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		trace("Loaded Main And Added FlxGame");
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
