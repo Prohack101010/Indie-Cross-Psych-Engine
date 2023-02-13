@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import haxe.Timer;
 #if desktop
 import Discord.DiscordClient;
@@ -28,12 +29,12 @@ import sys.FileSystem;
 import openfl.filters.ShaderFilter;
 import Shaders;
 import openfl.filters.BitmapFilter;
-import flixel.util.FlxTimer;
 import Conductor;
 import Song;
 using StringTools;
 
 class FreeplayState extends MusicBeatState {
+	var canPress:Bool = true;
 	var cupTea:FlxSprite;
   var defaultZoom:Float = 1;
 	var camZoom:FlxTween;
@@ -44,7 +45,7 @@ class FreeplayState extends MusicBeatState {
 public static var SONG:SwagSong = null;
 	var selector:FlxText;
 	private static var curSelected:Int = 0;
-	var curDifficulty:Int = -1;
+	var curDifficulty:Int = 0;
 	private static var lastDifficultyName:String = '';
 	public var camHud:FlxCamera;
 	public var camGame:FlxCamera;
@@ -64,6 +65,7 @@ public static var SONG:SwagSong = null;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 	var filters:Array<BitmapFilter> = [];
+	var selectedSongBpm:Int;
 
 	override function create()
 	{
@@ -200,10 +202,10 @@ public static var SONG:SwagSong = null;
 		{
 			lastDifficultyName = CoolUtil.defaultDifficulty;
 		}
-		curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
-		
+		//curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(lastDifficultyName)));
+		changeDiff(false);
 		changeSelection();
-		changeDiff();
+		
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
@@ -302,6 +304,8 @@ public static var SONG:SwagSong = null;
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
+		diffText.text = '< ' + CoolUtil.difficultyString() + ' >';
+		curDifficulty = 0;
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -358,25 +362,23 @@ public static var SONG:SwagSong = null;
 				if(holdTime > 0.5 && checkNewHold - checkLastHold > 0)
 				{
 					changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
-					changeDiff();
+					changeDiff(false);
 				}
 			}
 
-			#if !android
 			if(FlxG.mouse.wheel != 0)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
 				changeSelection(-shiftMult * FlxG.mouse.wheel, false);
-				changeDiff();
+				changeDiff(false);
 			}
-			#end
 		}
 
 		if (controls.UI_LEFT_P)
-			changeDiff(-1);
+			changeDiff();
 		else if (controls.UI_RIGHT_P)
-			changeDiff(1);
-		else if (upP || downP) changeDiff();
+			changeDiff();
+		else if (upP || downP) changeDiff(false);
 
 		if (controls.BACK)
 		{
@@ -389,6 +391,7 @@ public static var SONG:SwagSong = null;
 		if (allowInstPrev) {
 		FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 		FlxG.sound.music.fadeIn(4, 0, 0.7);
+		allowInstPrev = false;
 			}
 		}
 
@@ -400,36 +403,34 @@ public static var SONG:SwagSong = null;
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
 		}
-		else if(q)
+		if(q && canPress)
 		{
-		if (allowInstPrev == false) { 
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-				FlxG.sound.music.volume = 0;
-				trace('inst preview is now enabled');
-		  		new FlxTimer().start(1, function(tmr:FlxTimer) {
-				allowInstPrev = true;
-				Paths.currentModDirectory = songs[curSelected].folder;
-				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				Conductor.changeBPM(SONG.bpm);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0);
-				FlxG.sound.music.fadeIn(0.5, 0, 0.7);
+		canPress = false;
+		new FlxTimer().start(2, function(tmr:FlxTimer) {
+			canPress = true;
 			});
-
+		if (!allowInstPrev) { 
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxG.sound.music.fadeOut(1, 0);
+				allowInstPrev = true;
+				trace('inst preview is now enabled');
+				var enabling:FlxTimer;
+				enabling = new FlxTimer();
+				enabling.start(1.5, enableInstPrev);
+				return;
 		}
-		if (allowInstPrev == true) {
+		else if (allowInstPrev) {
 		  FlxG.sound.play(Paths.sound('cancelMenu'));
-		  FlxG.sound.music.volume = 0;
-		  new FlxTimer().start(0.25, function(tmr:FlxTimer) {
+		  FlxG.sound.music.fadeOut(0.5, 0);
 		  allowInstPrev = false;
-		  });
+		var disabling:FlxTimer;
+		disabling = new FlxTimer();
+		disabling.start(0.5, disablingInstPrev);
 		  trace('inst preview is now disabled');
-		  FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-		  FlxG.sound.music.fadeIn(3.75, 0, 0.7);
 		}
 		}
 
-		else if (accepted)
+		if (accepted)
 		{
 					if (songs[curSelected].songName == 'devils-gambit' || songs[curSelected].songName == 'satanic-funkin' || songs[curSelected].songName == 'snake-eyes' || songs[curSelected].songName == 'technicolor-tussle' || songs[curSelected].songName == 'knockout') {
 		cupTea.alpha = 1;
@@ -437,7 +438,7 @@ public static var SONG:SwagSong = null;
 		FlxG.sound.play(Paths.sound('boing'));
 		FlxTransitionableState.skipNextTransIn = true;
 					}
-			persistentUpdate = false;
+			//persistentUpdate = false;
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
@@ -483,23 +484,61 @@ public static var SONG:SwagSong = null;
 		}
 		super.update(elapsed);
 		Shaders.setChrome(chromVal);
+		switch(songs[curSelected].songName.toLowerCase()) {
+			case 'snake eyes':
+			selectedSongBpm = 221;
+			case 'tehcnicolor tussle':
+			selectedSongBpm = 140;
+			case 'knockout':
+			selectedSongBpm = 136;
+			case 'whoopee':
+			selectedSongBpm = 120;
+			case 'sansational':
+			selectedSongBpm = 130;
+			case 'burning in hell':
+			selectedSongBpm = 170;
+			case 'final stretch':
+			selectedSongBpm = 175;
+			case 'imminent demise':
+			selectedSongBpm = 100;
+			case 'terrible sin':
+			selectedSongBpm = 220;
+			case 'last reel':
+			selectedSongBpm = 180;
+			case 'nightmare-run':
+			selectedSongBpm = 167;
+			case 'satanic funkin':
+			selectedSongBpm = 180;
+			case 'bad to the bone':
+			selectedSongBpm = 118;
+			case 'bonedoggle':
+			selectedSongBpm = 150;
+			case 'ritual':
+			selectedSongBpm = 160;
+			case 'freaky machine':
+			selectedSongBpm = 130;
+			case 'devils-gambit':
+			selectedSongBpm = 175;
+			case 'bad-time':
+			selectedSongBpm = 330;
+			case 'despair':
+			selectedSongBpm = 375;
+		}
 	}
 	override function beatHit()
 	{
 		super.beatHit();
-		trace('is that a beat hit??');
 		if (allowInstPrev == true) {
-			trace('ITS A FUCKING BEAT HIT');
 				FlxG.camera.zoom += 0.015;
 				camZoom = FlxTween.tween(FlxG.camera, {zoom: defaultZoom}, 0.1);
-				if (songs[curSelected].songName == 'bad-time'
-					&& curBeat % 2 == 0)
-				{
-					FlxG.camera.shake(0.015, 0.1);
-				}
 	
-				if (FreeplaySelectState.curSelectedNightmare == true && ClientPrefs.Shaders)
+				if (FreeplaySelectState.curSelectedNightmare == true && allowInstPrev == true)
 				{
+					if (songs[curSelected].songName == 'bad-time'
+						&& curBeat % 2 == 0)
+					{
+						FlxG.camera.shake(0.015, 0.1);
+					}
 					if (chromVal == 0)
 					{
 						chromVal = FlxG.random.float(0.03, 0.10);
@@ -512,15 +551,19 @@ public static var SONG:SwagSong = null;
 				}
 			}
 	}
-	function changeDiff(change:Int = 0)
+	function changeDiff(allowShake:Bool = true)
 	{
-		curDifficulty += change;
+		if (allowShake) {
+		FlxG.camera.shake(0.015, 0.4);
+		FlxG.sound.play(Paths.sound('cancelMenu'));
+		}
+		/*curDifficulty += change;
 
 		if (curDifficulty < 0)
 			curDifficulty = CoolUtil.difficulties.length-1;
 		if (curDifficulty >= CoolUtil.difficulties.length)
-			curDifficulty = 0;
-
+			curDifficulty = 0;*/
+		
 		lastDifficultyName = CoolUtil.difficulties[curDifficulty];
 
 		#if !switch
@@ -535,18 +578,15 @@ public static var SONG:SwagSong = null;
 
 	public function changeSelection(change:Int = 0, playSound:Bool = true)
 	{
-			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-			SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-			new FlxTimer().start(1, function(time:FlxTimer) {
-	if (allowInstPrev) {
-				Conductor.changeBPM(PlayState.SONG.bpm);
-				Paths.currentModDirectory = songs[curSelected].folder;
-				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
-				FlxG.sound.music.fadeIn(0.5, 0, 0.7);
-			}
-		});
+		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+		SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+
+			if (allowInstPrev == true) {
+				FlxG.sound.music.fadeOut(0.2, 0);
+				var switching:FlxTimer;
+				switching = new FlxTimer();
+				switching.start(0.7, switched);
+	}
 
 		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
@@ -628,7 +668,7 @@ public static var SONG:SwagSong = null;
 			}
 		}
 		
-		if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
+		/*if(CoolUtil.difficulties.contains(CoolUtil.defaultDifficulty))
 		{
 			curDifficulty = Math.round(Math.max(0, CoolUtil.defaultDifficulties.indexOf(CoolUtil.defaultDifficulty)));
 		}
@@ -642,7 +682,10 @@ public static var SONG:SwagSong = null;
 		if(newPos > -1)
 		{
 			curDifficulty = newPos;
-		}
+		}*/
+		/*var fuck:FlxTimer;
+		fuck = new FlxTimer();
+		fuck.start(0.5, mf);*/
 	}
 
 	private function positionHighscore() {
@@ -653,6 +696,40 @@ public static var SONG:SwagSong = null;
 		diffText.x = Std.int(scoreBG.x + (scoreBG.width / 2));
 		diffText.x -= diffText.width / 2;
 	}
+	private function enableInstPrev(enabling:FlxTimer):Void
+		{
+			Paths.currentModDirectory = songs[curSelected].folder;
+			Conductor.changeBPM(selectedSongBpm);
+			Paths.currentModDirectory = songs[curSelected].folder;
+			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0);
+			trace('Current Song Path: ' + Paths.inst(PlayState.SONG.song)
+			+", Current Song BPM:" + selectedSongBpm
+			+", Current Difficulty Number:" + curDifficulty
+			);
+			FlxG.sound.music.fadeIn(0.5, 0, 0.7);
+		}
+		private function disablingInstPrev(disabling:FlxTimer):Void {
+		FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		FlxG.sound.music.fadeIn(1.5, 0, 0.7);
+			
+		}
+		private function switched(switched:FlxTimer):Void {
+			Conductor.changeBPM(selectedSongBpm);
+			Paths.currentModDirectory = songs[curSelected].folder;
+			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0);
+			trace('Current Song Path: ' + Paths.inst(PlayState.SONG.song)
+			+", Current Song BPM:" + selectedSongBpm
+			+", Current Difficulty Number:" + curDifficulty
+			);
+			FlxG.sound.music.fadeIn(0.5, 0, 0.7);
+		}
+		private function mf(fuck:FlxTimer):Void {
+			
+		}
 }
 
 class SongMetadata
@@ -662,6 +739,7 @@ class SongMetadata
 	public var songCharacter:String = "";
 	public var color:Int = -7179779;
 	public var folder:String = "";
+	public var songFolder:String = "";
 
 	public function new(song:String, week:Int, songCharacter:String, color:Int)
 	{
@@ -671,5 +749,6 @@ class SongMetadata
 		this.color = color;
 		this.folder = Paths.currentModDirectory;
 		if(this.folder == null) this.folder = '';
+		this.songFolder = Paths.currentModDirectory + '/songs/' + song;
 	}
 }

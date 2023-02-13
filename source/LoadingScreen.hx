@@ -25,41 +25,7 @@ class LoadingScreen extends FlxTypedGroup<FlxSprite>
 
 		if (PlayState.SONG != null)
 		{
-			if (PlayState.SONG.song.toLowerCase() == "devils-gambit"
-				|| PlayState.SONG.song.toLowerCase() == "bad-time"
-				|| PlayState.SONG.song.toLowerCase() == "despair")
-			{
-				if (!FlxG.save.data.secretChars[5])
-				{
-					if (!FlxG.save.data.secretChars[6])
-					{
-						if (!FlxG.save.data.secretChars[7])
-						{
-							loadingImage.loadGraphic(Paths.image('nm/3', 'preload'));
-						}
-						else
-						{
-							loadingImage.loadGraphic(Paths.image('nm/2', 'preload'));
-						}
-					}
-					else
-					{
-						loadingImage.loadGraphic(Paths.image('nm/1', 'preload'));
-					}
-				}
-				else
-				{
-					loadingImage.loadGraphic(Paths.image('nm/0', 'preload'));
-				}
-			}
-			else
-			{
 				loadingImage.loadGraphic(Paths.image('Loading_screen', 'preload'));
-			}
-		}
-		else
-		{
-			loadingImage.loadGraphic(Paths.image('Loading_screen', 'preload'));
 		}
 		loadingImage.updateHitbox();
 		loadingImage.screenCenter();
