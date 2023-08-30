@@ -1,10 +1,10 @@
-package ;
+package;
  
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import sys.net.Address;
 import openfl.text.TextFormat;
-import Paths;
+import backend.Paths;
 import openfl.text.TextField;
 import openfl.text.Font;
 import flixel.system.FlxBasePreloader;
@@ -26,7 +26,7 @@ class Preloader extends FlxBasePreloader
    //public var progress:Int = 0;
 	public static var max:Float = 10;
 
-    public function new(MinDisplayTime:Float=11) 
+    public function new(MinDisplayTime:Float=4) 
     {
         new FlxTimer().start(9.5, function(time:FlxTimer) {
             FlxG.camera.fade(FlxColor.BLACK, 1, false);

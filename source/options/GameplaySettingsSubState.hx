@@ -1,34 +1,6 @@
 package options;
 
-#if desktop
-import Discord.DiscordClient;
-#end
-import flash.text.TextField;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.addons.display.FlxGridOverlay;
-import flixel.group.FlxGroup.FlxTypedGroup;
-import flixel.math.FlxMath;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
-import lime.utils.Assets;
-import flixel.FlxSubState;
-import flash.text.TextField;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.util.FlxSave;
-import haxe.Json;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
-import flixel.input.keyboard.FlxKey;
-import flixel.graphics.FlxGraphic;
-import Controls;
-#if android
-import android.Tools;
-#end
-
-using StringTools;
+import lime.ui.Haptic;
 
 class GameplaySettingsSubState extends BaseOptionsMenu
 {
@@ -37,59 +9,67 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		title = 'Gameplay Settings';
 		rpcTitle = 'Gameplay Settings Menu'; //for Discord Rich Presence
 
-		var option:Option = new Option('Controller Mode',
-			'Check this if you want to play with\na controller instead of using your Keyboard.',
-			'controllerMode',
-			'bool',
-			#if android true #else false #end);
-		addOption(option);
-
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Downscroll', //Name
 			'If checked, notes go Down instead of Up, simple enough.', //Description
 			'downScroll', //Save data variable name
-			'bool', //Variable type
-			false); //Default value
+			'bool'); //Variable type
 		addOption(option);
 
 		var option:Option = new Option('Middlescroll',
 			'If checked, your notes get centered.',
 			'middleScroll',
-			'bool',
-			false);
+			'bool');
 		addOption(option);
 
-		var option:Option = new Option('specialNotes',
-			'If unchecked, remove every specialNote from the song.',
-			'specialNotes',
-			'bool',
-			true);
+		var option:Option = new Option('Opponent Notes',
+			'If unchecked, opponent notes get hidden.',
+			'opponentStrums',
+			'bool');
 		addOption(option);
 
 		var option:Option = new Option('Ghost Tapping',
 			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
-			'bool',
-			true);
+			'bool');
 		addOption(option);
+		
+		var option:Option = new Option('Auto Pause',
+			"If checked, the game automatically pauses if the screen isn't on focus.",
+			'autoPause',
+			'bool');
+		addOption(option);
+		option.onChange = onChangeAutoPause;
+
+		var option:Option = new Option('Disable Reset Button',
+			"If checked, pressing Reset won't do anything.",
+			'noReset',
+			'bool');
+		addOption(option);
+
+		var option:Option = new Option('Game Over Vibration',
+			"If checked, your device will vibrate at game over.",
+			'gameOverVibration',
+			'bool');
+		addOption(option);
+		option.onChange = onChangeVibration;
 
 		var option:Option = new Option('Hitsound Volume',
 			'Funny notes does \"Tick!\" when you hit them."',
 			'hitsoundVolume',
-			'percent',
-			0);
+			'percent');
 		addOption(option);
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;
 		option.maxValue = 1;
 		option.changeValue = 0.1;
 		option.decimals = 1;
+		option.onChange = onChangeHitsoundVolume;
 
 		var option:Option = new Option('Rating Offset',
 			'Changes how late/early you have to hit for a "Sick!"\nHigher values mean you have to hit later.',
 			'ratingOffset',
-			'int',
-			0);
+			'int');
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 20;
 		option.minValue = -30;
@@ -99,8 +79,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Sick! Hit Window',
 			'Changes the amount of time you have\nfor hitting a "Sick!" in milliseconds.',
 			'sickWindow',
-			'int',
-			45);
+			'int');
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 15;
 		option.minValue = 15;
@@ -110,8 +89,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Good Hit Window',
 			'Changes the amount of time you have\nfor hitting a "Good" in milliseconds.',
 			'goodWindow',
-			'int',
-			90);
+			'int');
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 30;
 		option.minValue = 15;
@@ -121,8 +99,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Bad Hit Window',
 			'Changes the amount of time you have\nfor hitting a "Bad" in milliseconds.',
 			'badWindow',
-			'int',
-			135);
+			'int');
 		option.displayFormat = '%vms';
 		option.scrollSpeed = 60;
 		option.minValue = 15;
@@ -132,50 +109,31 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Safe Frames',
 			'Changes how many frames you have for\nhitting a note earlier or late.',
 			'safeFrames',
-			'float',
-			10);
+			'float');
 		option.scrollSpeed = 5;
 		option.minValue = 2;
-		option.maxValue = 16;
+		option.maxValue = 10;
 		option.changeValue = 0.1;
 		addOption(option);
-
-		var option:Option = new Option('Lane Opacity', 'How Opaque should the lane underlay be.', 'laneOpacity', 'percent', 1);
-		option.scrollSpeed = 1.6;
-		option.minValue = 0.0;
-		option.maxValue = 1;
-		option.changeValue = 0.1;
-		option.decimals = 1;
-		addOption(option);
-
-		var option:Option = new Option('Enemy Lane Opacity', 'How Opaque should the opponent lane be.', 'opponentLaneOpacity', 'percent', 0);
-		option.scrollSpeed = 1.6;
-		option.minValue = 0.0;
-		option.maxValue = 1;
-		option.changeValue = 0.1;
-		option.decimals = 1;
-		addOption(option);
-
-		#if android
-		var option:Option = new Option('GameOver Vibration',
-			'If unchecked, will make the game to vibrate when you die.',
-			'vibration',
-			'bool',
-			false);
-		addOption(option);
-		option.onChange = onChangeGameOverVibration;
-		#end
 
 		super();
 	}
 
-	#if android
-	function onChangeGameOverVibration()
+	function onChangeHitsoundVolume()
 	{
-		if(ClientPrefs.vibration)
+		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.data.hitsoundVolume);
+	}
+
+	function onChangeAutoPause()
+	{
+		FlxG.autoPause = ClientPrefs.data.autoPause;
+	}
+
+	function onChangeVibration()
+	{
+		if(ClientPrefs.data.gameOverVibration)
 		{
-			Tools.vibrate(500);
+			Haptic.vibrate(0, 500);
 		}
 	}
-	#end
 }
