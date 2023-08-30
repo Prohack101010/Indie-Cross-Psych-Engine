@@ -137,9 +137,4 @@ class DiamondTransSubState extends MusicBeatSubstate
 		}
 		super.destroy();
 	}
-
-	override function update(elapsed:Float) {
-		super.update(elapsed);
-		trace(rect.shader.data.progress.value);
-	}
 }

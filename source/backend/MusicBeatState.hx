@@ -167,7 +167,7 @@ class MusicBeatState extends FlxUIState
 		super.create();
 
 		if(!skip) {
-			FlxG.state.openSubState(new DiamondTransSubState(0.7, true));
+			FlxG.state.openSubState(new DiamondTransSubState(0.5, true));
 		}
 		FlxTransitionableState.skipNextTransOut = false;
 		timePassedOnState = 0;
@@ -257,7 +257,7 @@ class MusicBeatState extends FlxUIState
 	public static function switchState(nextState:FlxState = null) {
 		// Custom made Trans in
 		if(!FlxTransitionableState.skipNextTransIn) {
-			FlxG.state.openSubState(new DiamondTransSubState(0.7, false));
+			FlxG.state.openSubState(new DiamondTransSubState(0.5, false));
 			if(nextState == FlxG.state) {
 				DiamondTransSubState.finishCallback = function() {
 					FlxG.resetState();

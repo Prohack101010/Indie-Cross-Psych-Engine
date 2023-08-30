@@ -288,10 +288,6 @@ class MainMenuState extends MusicBeatState
 					{
 						FlxTween.tween(menuString.members[i], {alpha: 0}, 1, {ease: FlxEase.cubeOut});
 					}
-					if (i == curSelected) {
-						menuString.members[i].color = 0xffffff;
-						FlxTween.color(menuString.members[i], 1, FlxColor.WHITE, FlxColor.TRANSPARENT,{ease: FlxEase.cubeOut});	
-					}
 				}
 		
 				if (str == 'options')

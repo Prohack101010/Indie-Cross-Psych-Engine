@@ -150,7 +150,7 @@ class Main extends Sprite
 		DiscordClient.start();
 		#end
 
-		/* shader coords fix
+		//shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
 		     if (FlxG.cameras != null) {
 			   for (cam in FlxG.cameras.list) {
@@ -162,7 +162,7 @@ class Main extends Sprite
 
 		     if (FlxG.game != null)
 			 resetSpriteCache(FlxG.game);
-		});*/
+		});
 	}
 
 	static function resetSpriteCache(sprite:Sprite):Void {

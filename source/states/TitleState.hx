@@ -35,6 +35,7 @@ import lime.app.Application;
 import openfl.Assets;
 import backend.ClientPrefs;
 import shaders.ColorSwap;
+import videos.VideoSprite; // because OG hxcodec uses space for skip which is annoying so i made custom video class
 
 using StringTools;
 class TitleState extends MusicBeatState
@@ -42,30 +43,16 @@ class TitleState extends MusicBeatState
 	public static var muteKeys:Array<FlxKey> = [FlxKey.ZERO];
 	public static var volumeDownKeys:Array<FlxKey> = [FlxKey.NUMPADMINUS, FlxKey.MINUS];
 	public static var volumeUpKeys:Array<FlxKey> = [FlxKey.NUMPADPLUS, FlxKey.PLUS];
-
 	public static var initialized:Bool = false;
-
 	var blackScreen:FlxSprite;
-	var credGroup:FlxGroup;
-	var credTextShit:Alphabet;
-	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
 	var resizeConstant:Float = 1.196;
-	var curWacky:Array<String> = [];
-
 	var wackyImage:FlxSprite;
-
-	#if TITLE_SCREEN_EASTER_EGG
-	var easterEggKeys:Array<String> = [
-		'SHADOW', 'RIVER', 'SHUBS', 'BBPANZU'
-	];
-	var allowedKeys:String = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	var easterEggKeysBuffer:String = '';
-	#end
-
 	var mustUpdate:Bool = false;
-	
 	public static var updateVersion:String = '';
+	private var video:VideoSprite;
+	public static var watched:Bool = false;
+	var skipText:FlxText;
+	
 
 	override public function create():Void
 	{
@@ -85,9 +72,6 @@ class TitleState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		FlxG.game.focusLostFramerate = 30;
 		FlxG.keys.preventDefaultKeys = [TAB];
-
-		curWacky = FlxG.random.getObject(getIntroTextShit());
-
 		// DEBUG BULLSHIT
 
 		swagShader = new ColorSwap();
@@ -102,14 +86,18 @@ class TitleState extends MusicBeatState
 
 		if(!initialized)
 			{
-				if(FlxG.save.data != null && FlxG.save.data.fullscreen)
+				if(FlxG.save.data != null){
+					if(FlxG.save.data.fullscreen)
 				{
 					FlxG.fullscreen = FlxG.save.data.fullscreen;
 					//trace('LOADED FULLSCREEN SETTING!!');
 				}
-				persistentUpdate = true;
-				persistentDraw = true;
+				if(FlxG.save.data.canSkip == null)
+					FlxG.save.data.canSkip = false; FlxG.save.flush();
 			}
+			}
+			persistentUpdate = true;
+				persistentDraw = true;
 
 		if (FlxG.save.data.weekCompleted != null)
 			{
@@ -127,15 +115,26 @@ class TitleState extends MusicBeatState
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			MusicBeatState.switchState(new FlashingState());
-		} else {
-			if (initialized)
-				startIntro();
-			else
-			{
-				new FlxTimer().start(1, function(tmr:FlxTimer)
-				{
-					startIntro();
-				});
+		} else{
+			startIntro();
+			if(!watched){
+			video = new VideoSprite();
+			video.playVideo(Paths.video('intro'));
+			add(video);
+			video.bitmap.canSkip = FlxG.save.data.canSkip;
+			video.finishCallback = videoCallBack;
+
+			skipText = new FlxText(0, FlxG.height - 26, 0, #if desktop "Press Escape To Skip" #elseif android "Press Back On Your Phone To Skip" #end, 18);
+			skipText.alpha = 0;
+			skipText.setFormat(Paths.font('Bronx.otf'), 18, FlxColor.WHITE, RIGHT);
+			skipText.scrollFactor.set();
+			skipText.screenCenter(X);
+			add(skipText);
+			if(FlxG.save.data.canSkip){
+			FlxTween.tween(skipText, {alpha: 1}, 1, {ease: FlxEase.quadIn});
+			FlxTween.tween(skipText, {alpha: 0}, 1, {ease: FlxEase.quadIn, startDelay: 4});
+			}
+
 			}
 		}
 		#end
@@ -159,9 +158,8 @@ class TitleState extends MusicBeatState
 		{
 
 			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-
-				FlxG.sound.music.fadeIn(4, 0, 0.7);
+				//FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				//FlxG.sound.music.fadeIn(4, 0, 0.7);
 			}
 		}
 
@@ -254,51 +252,11 @@ class TitleState extends MusicBeatState
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
 
-		credGroup = new FlxGroup();
-		add(credGroup);
-		textGroup = new FlxGroup();
-
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-		credGroup.add(blackScreen);
-
-		credTextShit = new Alphabet(0, 0, "", true);
-		credTextShit.screenCenter();
-
-		// credTextShit.alignment = CENTER;
-
-		credTextShit.visible = false;
-
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('brightFyre'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = ClientPrefs.data.antialiasing;
-
-		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
-
-		if (initialized)
+		add(blackScreen);
+		if(watched) blackScreen.alpha = 0;
 			skipIntro();
-		else
-			initialized = true;
 
-		// credGroup.add(credTextShit);
-	}
-
-	function getIntroTextShit():Array<Array<String>>
-	{
-		var fullText:String = Assets.getText(Paths.txt('introText'));
-
-		var firstArray:Array<String> = fullText.split('\n');
-		var swagGoodArray:Array<Array<String>> = [];
-
-		for (i in firstArray)
-		{
-			swagGoodArray.push(i.split('--'));
-		}
-
-		return swagGoodArray;
 	}
 
 	var transitioning:Bool = false;
@@ -343,11 +301,9 @@ class TitleState extends MusicBeatState
 			#end
 		}
 
-		// EASTER EGG
-
 		if (initialized && !transitioning && skippedIntro)
 		{
-			if(pressedEnter)
+			if(pressedEnter && watched)
 			{
 
 				flash(FlxColor.WHITE, 1);
@@ -366,52 +322,6 @@ class TitleState extends MusicBeatState
 				});
 				// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			}
-			#if TITLE_SCREEN_EASTER_EGG
-			else if (FlxG.keys.firstJustPressed() != FlxKey.NONE)
-			{
-				var keyPressed:FlxKey = FlxG.keys.firstJustPressed();
-				var keyName:String = Std.string(keyPressed);
-				if(allowedKeys.contains(keyName)) {
-					easterEggKeysBuffer += keyName;
-					if(easterEggKeysBuffer.length >= 32) easterEggKeysBuffer = easterEggKeysBuffer.substring(1);
-					//trace('Test! Allowed Key pressed!!! Buffer: ' + easterEggKeysBuffer);
-
-					for (wordRaw in easterEggKeys)
-					{
-						var word:String = wordRaw.toUpperCase(); //just for being sure you're doing it right
-						if (easterEggKeysBuffer.contains(word))
-						{
-							//trace('YOOO! ' + word);
-							if (FlxG.save.data.psychDevsEasterEgg == word)
-								FlxG.save.data.psychDevsEasterEgg = '';
-							else
-								FlxG.save.data.psychDevsEasterEgg = word;
-							FlxG.save.flush();
-
-							FlxG.sound.play(Paths.sound('ToggleJingle'));
-
-							var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
-							black.alpha = 0;
-							add(black);
-
-							FlxTween.tween(black, {alpha: 1}, 1, {onComplete:
-								function(twn:FlxTween) {
-									FlxTransitionableState.skipNextTransIn = true;
-									FlxTransitionableState.skipNextTransOut = true;
-									MusicBeatState.switchState(new TitleState());
-								}
-							});
-							FlxG.sound.music.fadeOut();
-							closedState = true;
-							transitioning = true;
-							playJingle = true;
-							easterEggKeysBuffer = '';
-							break;
-						}
-					}
-				}
-			}
-			#end
 		}
 
 		if (initialized && pressedEnter && !skippedIntro)
@@ -428,206 +338,54 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>, ?offset:Float = 0)
-	{
-		for (i in 0...textArray.length)
-		{
-			var money:Alphabet = new Alphabet(0, 0, textArray[i], true);
-			money.screenCenter(X);
-			money.y += (i * 60) + 200 + offset;
-			if(credGroup != null && textGroup != null) {
-				credGroup.add(money);
-				textGroup.add(money);
-			}
-		}
-	}
-
-	function addMoreText(text:String, ?offset:Float = 0)
-	{
-		if(textGroup != null && credGroup != null) {
-			var coolText:Alphabet = new Alphabet(0, 0, text, true);
-			coolText.screenCenter(X);
-			coolText.y += (textGroup.length * 60) + 200 + offset;
-			credGroup.add(coolText);
-			textGroup.add(coolText);
-		}
-	}
-
-	function deleteCoolText()
-	{
-		while (textGroup.members.length > 0)
-		{
-			credGroup.remove(textGroup.members[0], true);
-			textGroup.remove(textGroup.members[0], true);
-		}
-	}
 
 	private var sickBeats:Int = 0; //Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	public static var closedState:Bool = false;
 	override function beatHit()
-	{
-		super.beatHit();
-
-		if(logoBl != null) 
-			logoBl.animation.play('bump', true);
-
-		if(bfDance != null) {
-				bfDance.animation.play('bop', true);
-		}
-		if (indieBG != null) {
-			indieBG.animation.play('bump', true);
-		}
-
-		if(!closedState) {
-			sickBeats++;
-			switch (sickBeats)
-			{
-				case 1:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Psych Engine by'], 15);
-					#else
-					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
-					#end
-				// credTextShit.visible = true;
-				case 3:
-					#if PSYCH_WATERMARKS
-					addMoreText('Shadow Mario', 15);
-					addMoreText('RiverOaken', 15);
-					addMoreText('shubs', 15);
-					#else
-					addMoreText('present');
-					#end
-				// credTextShit.text += '\npresent...';
-				// credTextShit.addText();
-				case 4:
-					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = 'In association \nwith';
-				// credTextShit.screenCenter();
-				case 5:
-					#if PSYCH_WATERMARKS
-					createCoolText(['Not associated', 'with'], -40);
-					#else
-					createCoolText(['In association', 'with'], -40);
-					#end
-				case 7:
-					addMoreText('newgrounds', -40);
-					ngSpr.visible = true;
-				// credTextShit.text += '\nNewgrounds';
-				case 8:
-					deleteCoolText();
-					ngSpr.visible = false;
-				// credTextShit.visible = false;
-
-				// credTextShit.text = 'Shoutouts Tom Fulp';
-				// credTextShit.screenCenter();
-				case 9:
-					createCoolText([curWacky[0]]);
-				// credTextShit.visible = true;
-				case 11:
-					addMoreText(curWacky[1]);
-				// credTextShit.text += '\nlmao';
-				case 12:
-					deleteCoolText();
-				// credTextShit.visible = false;
-				// credTextShit.text = "Friday";
-				// credTextShit.screenCenter();
-				case 13:
-					addMoreText('Friday');
-				// credTextShit.visible = true;
-				case 14:
-					addMoreText('Night');
-				// credTextShit.text += '\nNight';
-				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
-				case 16:
-					skipIntro();
+		{
+			super.beatHit();
+	
+			if(logoBl != null) 
+				logoBl.animation.play('bump', true);
+	
+			if(bfDance != null) {
+					bfDance.animation.play('bop', true);
+			}
+			if (indieBG != null) {
+				indieBG.animation.play('bump', true);
+			}
+	
+			if(!closedState) {
+				sickBeats++;
+				switch (sickBeats)
+				{
+					case 1:
+						skipIntro(); //idfk im so dumb i think thats the only way to get rid of intro textyy
+				}
 			}
 		}
-	}
 
 	var skippedIntro:Bool = false;
 	var increaseVolume:Bool = false;
 	function skipIntro():Void
 	{
-		if (!skippedIntro)
-		{
-			if (playJingle) //Ignore deez
-			{
-				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
-				if (easteregg == null) easteregg = '';
-				easteregg = easteregg.toUpperCase();
-
-				var sound:FlxSound = null;
-				switch(easteregg)
-				{
-					case 'RIVER':
-						sound = FlxG.sound.play(Paths.sound('JingleRiver'));
-					case 'SHUBS':
-						sound = FlxG.sound.play(Paths.sound('JingleShubs'));
-					case 'SHADOW':
-						FlxG.sound.play(Paths.sound('JingleShadow'));
-					case 'BBPANZU':
-						sound = FlxG.sound.play(Paths.sound('JingleBB'));
-					
-					default: //Go back to normal ugly ass boring GF
-						remove(ngSpr);
-						remove(credGroup);
-						FlxG.camera.flash(FlxColor.WHITE, 2);
-						skippedIntro = true;
-						playJingle = false;
-						
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-						FlxG.sound.music.fadeIn(4, 0, 0.7);
-						return;
-				}
-
-				transitioning = true;
-				if(easteregg == 'SHADOW')
-				{
-					new FlxTimer().start(3.2, function(tmr:FlxTimer)
-					{
-						remove(ngSpr);
-						remove(credGroup);
-						FlxG.camera.flash(FlxColor.WHITE, 0.6);
-						transitioning = false;
-					});
-				}
-				else
-				{
-					remove(ngSpr);
-					remove(credGroup);
-					FlxG.camera.flash(FlxColor.WHITE, 3);
-					sound.onComplete = function() {
-						FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-						FlxG.sound.music.fadeIn(4, 0, 0.7);
-						transitioning = false;
-					};
-				}
-				playJingle = false;
-			}
-			else //Default! Edit this one!!
-			{
-				remove(ngSpr);
-				remove(credGroup);
-				FlxG.camera.flash(FlxColor.WHITE, 4);
-
-				var easteregg:String = FlxG.save.data.psychDevsEasterEgg;
-				if (easteregg == null) easteregg = '';
-				easteregg = easteregg.toUpperCase();
-				#if TITLE_SCREEN_EASTER_EGG
-				if(easteregg == 'SHADOW')
-				{
-					FlxG.sound.music.fadeOut();
-				}
-				#end
-			}
 			skippedIntro = true;
 		}
-	}
 	function flash(color:FlxColor, duration:Float) {
 		FlxG.camera.stopFX();
 		FlxG.camera.flash(color, duration);
+	}
+	private function videoCallBack(){
+		if(FlxG.save.data.canSkip == false) FlxG.save.data.canSkip = true;
+			FlxG.save.flush();
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			FlxG.sound.music.fadeIn(4, 0, 1);
+			FlxTween.tween(blackScreen, {alpha: 0}, 0.4, {ease: FlxEase.quadInOut});
+			initialized = true;
+			skippedIntro = true;
+			transitioning = false;
+			watched = true;
+			skipText.alpha = 0;
+			trace('video ended');
 	}
 }
