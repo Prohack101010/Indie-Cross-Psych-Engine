@@ -227,7 +227,6 @@ class MainMenuState extends MusicBeatState
 				var menuItem:FlxSprite = new FlxSprite();
 				if(str != null && str.length > 0)
 					{
-				trace('added the button ' + str);
 				menuItem.loadGraphic(Paths.image("mainmenu/Buttons/" + str));
 					}
 				menuItem.origin.set();
@@ -235,11 +234,6 @@ class MainMenuState extends MusicBeatState
 				menuItem.updateHitbox();
 				menuItem.alpha = 0.5;
 				menuItem.antialiasing = ClientPrefs.data.antialiasing;
-				/*buttonsFlash.loadGraphic(Paths.image('mainmenu/ButtonsFlash/storymode'));
-				buttonsFlash.origin.set();
-				buttonsFlash.scale.set(fuckersScale, fuckersScale);
-				buttonsFlash.updateHitbox();
-				buttonsFlash.alpha = 0;*/
 
 				menuItem.shader = new WhiteOverlayShader();
 	
@@ -251,7 +245,6 @@ class MainMenuState extends MusicBeatState
 				}
 	
 				menuString.add(menuItem);
-				//add(buttonsFlash);
 			}
 		}
 		function enterBitches()
@@ -275,10 +268,8 @@ class MainMenuState extends MusicBeatState
 				}
 		
 				menuItem.shader.data.progress.value = [1.0];
-				//buttonsFlash.loadGraphic(Paths.image("mainmenu/ButtonsFlash/" + str));
 				FlxTween.num(1.0, 0.0, 1.0, {ease: FlxEase.cubeOut}, function(num:Float)
 				{
-					//buttonsFlash.alpha = num;
 					menuItem.shader.data.progress.value = [num];
 				});
 		
@@ -306,7 +297,7 @@ class MainMenuState extends MusicBeatState
 						case "storymode":
 							MusicBeatState.switchState(new states.StoryMenuState());
 						case "freeplay":
-							MusicBeatState.switchState(new states.FreeplayState());
+							MusicBeatState.switchState(new states.FreeplaySelectState());
 						case "options":
 							LoadingState.loadAndSwitchState(new options.OptionsState());
 							options.OptionsState.onPlayState = false;

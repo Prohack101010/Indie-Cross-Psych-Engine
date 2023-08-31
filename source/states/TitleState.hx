@@ -263,14 +263,7 @@ class TitleState extends MusicBeatState
 	private static var playJingle:Bool = false;
 
 	override function update(elapsed:Float)
-	{
-		if (!ClientPrefs.data.noReset) {
-			if ((FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.R) #if android || FlxG.android.justReleased.BACK #end)
-				{
-					FlxG.resetGame();
-				}
-		}
-		
+	{	
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;

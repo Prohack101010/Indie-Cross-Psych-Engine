@@ -53,7 +53,6 @@ class DiamondTransSubState extends MusicBeatSubstate
 			ease: FlxEase.linear,
 			onComplete: function(_)
 			{
-				trace("finished");
                 close();
 			}
 		}, function(num:Float)
@@ -61,7 +60,6 @@ class DiamondTransSubState extends MusicBeatSubstate
 			rect.shader.data.progress.value = [num];
 		});
          }else{
-            trace("fade initiated");
 
 		rect.alpha = 1;
 		rect.shader.data.progress.value = [0.0];
@@ -71,7 +69,6 @@ class DiamondTransSubState extends MusicBeatSubstate
 			ease: FlxEase.linear,
 			onComplete: function(_)
 			{
-				trace("finished");
 				if (finishCallback != null)
 				{
 					finishCallback();

@@ -1,5 +1,6 @@
 package backend;
 
+import states.FreeplaySelectState;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
@@ -26,6 +27,9 @@ typedef WeekFile =
 	var hideStoryMode:Bool;
 	var hideFreeplay:Bool;
 	var difficulties:String;
+
+	var hideBonus:Bool;
+	var hideNightmare:Bool;
 }
 
 class WeekData
@@ -49,6 +53,9 @@ class WeekData
 	public var hideFreeplay:Bool;
 	public var difficulties:String;
 
+	public var hideBonus:Bool;
+	public var hideNightmare:Bool;
+
 	public var fileName:String;
 
 	public static function createWeekFile():WeekFile
@@ -69,7 +76,10 @@ class WeekData
 			hiddenUntilUnlocked: false,
 			hideStoryMode: false,
 			hideFreeplay: false,
-			difficulties: ''
+			difficulties: '',
+
+			hideBonus: true,
+			hideNightmare: true
 		};
 		return weekFile;
 	}
@@ -88,6 +98,9 @@ class WeekData
 		hideStoryMode = weekFile.hideStoryMode;
 		hideFreeplay = weekFile.hideFreeplay;
 		difficulties = weekFile.difficulties;
+
+		hideBonus = weekFile.hideBonus;
+		hideNightmare = weekFile.hideNightmare;
 
 		this.fileName = fileName;
 	}
@@ -122,7 +135,7 @@ class WeekData
 							}
 							#end
 	
-							if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay))) {
+							if(weekFile != null && (isStoryMode == null || (isStoryMode && !weekFile.hideStoryMode) || (!isStoryMode && !weekFile.hideFreeplay && FreeplaySelectState.curSelected == 0) || (!isStoryMode && !weekFile.hideBonus && FreeplaySelectState.curSelected == 1) || (!isStoryMode && !weekFile.hideNightmare && FreeplaySelectState.curSelected == 2))) {
 								weeksLoaded.set(sexList[i], weekFile);
 								weeksList.push(sexList[i]);
 							}
@@ -172,7 +185,7 @@ class WeekData
 					weekFile.folder = directory.substring(Paths.mods().length, directory.length - 1);
 					#end
 				}
-				if ((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay))
+				if ((PlayState.isStoryMode && !weekFile.hideStoryMode) || (!PlayState.isStoryMode && !weekFile.hideFreeplay && FreeplaySelectState.curSelected == 0) || (!PlayState.isStoryMode && !weekFile.hideBonus && FreeplaySelectState.curSelected == 1) || (!PlayState.isStoryMode && !weekFile.hideNightmare && FreeplaySelectState.curSelected == 2))
 				{
 					weeksLoaded.set(weekToCheck, weekFile);
 					weeksList.push(weekToCheck);
