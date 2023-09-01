@@ -99,10 +99,10 @@ class TitleState extends MusicBeatState
 			persistentUpdate = true;
 				persistentDraw = true;
 
-		if (FlxG.save.data.weekCompleted != null)
+		/*if (FlxG.save.data.weekCompleted != null)
 			{
 				StoryMenuState.weekCompleted = FlxG.save.data.weekCompleted;
-			}
+			}*/
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
@@ -309,7 +309,7 @@ class TitleState extends MusicBeatState
 					if (mustUpdate) {
 						MusicBeatState.switchState(new OutdatedState());
 					} else {
-						FlxG.switchState(new MainMenuState());
+						MusicBeatState.switchState(new MainMenuState());
 					}
 					closedState = true;
 				});
