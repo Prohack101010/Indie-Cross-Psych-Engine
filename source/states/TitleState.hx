@@ -7,7 +7,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.input.keyboard.FlxKey;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
+import flixel.addons.transition.FlxTransitionSprite.GraphicTranstitleDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
 import haxe.Json;
@@ -166,14 +166,14 @@ class TitleState extends MusicBeatState
 		Conductor.bpm = 117;
 		persistentUpdate = true;
 		indieBG = new FlxSprite();
-		indieBG.frames = Paths.getSparrowAtlas('titel/Bg');
+		indieBG.frames = Paths.getSparrowAtlas('title/Bg');
 		indieBG.antialiasing = ClientPrefs.data.antialiasing;
 		indieBG.animation.addByPrefix('bump', 'ddddd', 24, false);
 		indieBG.animation.play('bump', true);
 		indieBG.updateHitbox();
 		indieBG.screenCenter();
 		add(indieBG);
-		cup = new FlxSprite().loadGraphic(Paths.image('titel/CupCircle'));
+		cup = new FlxSprite().loadGraphic(Paths.image('title/CupCircle'));
 		cup.setGraphicSize(Std.int(cup.width / resizeConstant));
 		cup.antialiasing = ClientPrefs.data.antialiasing;
 		cup.blend = ADD;
@@ -183,7 +183,7 @@ class TitleState extends MusicBeatState
 		cup.x -= 300;
 		FlxTween.tween(cup, { angle:360}, 8, {type: FlxTweenType.LOOPING});
 
-		sans = new FlxSprite().loadGraphic(Paths.image('titel/SansCircle'));
+		sans = new FlxSprite().loadGraphic(Paths.image('title/SansCircle'));
 		sans.setGraphicSize(Std.int(sans.width / resizeConstant));
 		sans.antialiasing = ClientPrefs.data.antialiasing;
 		sans.blend = ADD;
@@ -194,7 +194,7 @@ class TitleState extends MusicBeatState
 		sans.y -= 170;
 
 		logoBl = new FlxSprite();
-		logoBl.frames = Paths.getSparrowAtlas('titel/Logo');
+		logoBl.frames = Paths.getSparrowAtlas('title/Logo');
 		logoBl.setGraphicSize(Std.int(logoBl.width / resizeConstant));
 		logoBl.antialiasing = ClientPrefs.data.antialiasing;
 		logoBl.animation.addByPrefix('bump', 'Tween 11', 24, false);
@@ -206,7 +206,7 @@ class TitleState extends MusicBeatState
 		logoBl.y -= 25;
 
 		titleText = new FlxSprite(660, 570);
-		titleText.frames = Paths.getSparrowAtlas('titel/Playbutton');
+		titleText.frames = Paths.getSparrowAtlas('title/Playbutton');
 		titleText.animation.addByPrefix('idle', "Button", 24, true);
 		titleText.antialiasing = ClientPrefs.data.antialiasing;
 		titleText.animation.play('idle', true);
@@ -216,14 +216,14 @@ class TitleState extends MusicBeatState
 		add(titleText);
 
 		Play = new FlxSprite(titleText.x + 30, titleText.y + 5);
-		Play.frames = Paths.getSparrowAtlas('titel/PlayText');
+		Play.frames = Paths.getSparrowAtlas('title/PlayText');
 		Play.antialiasing = ClientPrefs.data.antialiasing;
 		Play.animation.addByPrefix('bump', 'c', 24, false);
 		Play.animation.play('bump');
 		Play.setGraphicSize(Std.int(Play.width / 1.1));
 		add(Play);
 
-		bendy = new FlxSprite().loadGraphic(Paths.image('titel/BendyCircle'));
+		bendy = new FlxSprite().loadGraphic(Paths.image('title/BendyCircle'));
 		bendy.setGraphicSize(Std.int(bendy.width / resizeConstant));
 		bendy.antialiasing = ClientPrefs.data.antialiasing;
 		bendy.blend = ADD;
@@ -235,7 +235,7 @@ class TitleState extends MusicBeatState
 
 		swagShader = new ColorSwap();
 		bfDance = new FlxSprite(690, 180);
-		bfDance.frames = Paths.getSparrowAtlas('titel/BF');
+		bfDance.frames = Paths.getSparrowAtlas('title/BF');
 		bfDance.animation.addByPrefix('bop', 'BF idle dance', 24, false);
 		bfDance.antialiasing = ClientPrefs.data.antialiasing;
 		bfDance.blend = ADD;

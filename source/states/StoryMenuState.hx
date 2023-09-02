@@ -14,7 +14,7 @@ using StringTools;
 
 class StoryMenuState extends MusicBeatState
 {
-	var diffic:String;
+	static var diffic:String;
 	private static var lastDifficultyName:String = Difficulty.getDefault();
 	public static var weekData:Array<Dynamic> = [
 		['Snake-Eyes', 'Technicolor-Tussle', 'Knockout'],
