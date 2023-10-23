@@ -1,0 +1,25 @@
+{
+    "animations": [
+        {
+        "name": "normal",
+        "prefix": "normal",
+        "fps": 24,
+        "indices": [],
+        "offsets": [25, 57, -10, 15],
+        "islossAnim": false,
+        "loop": true
+        },
+        {
+        "name": "loss",
+        "prefix": "loss",
+        "fps": 24,
+        "indices": [],
+        "offsetX": 70,
+        "offsetY": 60,
+        "offsets": [-95, -3, 70, 60],
+        "islossAnim": true,
+        "loop": true
+        
+            }
+        ]
+    }

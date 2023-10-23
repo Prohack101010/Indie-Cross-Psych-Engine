@@ -335,12 +335,20 @@ class Controls
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 						for (key in keys)
 						{
+							if(key != dodge || key != attack){
 							if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsPressed(key) == true)
 							{
 								controllerMode = true;
 								return true;
 							}
+						} else {
+							if (MusicBeatState.instance.mobileControls.virtualPadExtra.mobileControlsPressed(key) == true)
+								{
+									controllerMode = true;
+									return true;
+								}
 						}
+					}
 					case 4: // HITBOX
 						for (key in keys)
 						{
@@ -398,12 +406,20 @@ class Controls
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 						for (key in keys)
 						{
+							if(key != dodge || key != attack){
 							if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustPressed(key) == true)
 							{
 								controllerMode = true;
 								return true;
 							}
+						} else {
+							if (MusicBeatState.instance.mobileControls.virtualPadExtra.mobileControlsJustPressed(key) == true)
+								{
+									controllerMode = true;
+									return true;
+								}
 						}
+					}
 					case 4: // HITBOX
 						for (key in keys)
 						{
@@ -461,12 +477,20 @@ class Controls
 					case 0 | 1 | 2 | 3: // RIGHT_FULL, LEFT_FULL, CUSTOM and BOTH
 						for (key in keys)
 						{
+							if(key != dodge || key != attack){
 							if (MusicBeatState.instance.mobileControls.virtualPad.mobileControlsJustReleased(key) == true)
 							{
 								controllerMode = true;
 								return true;
 							}
+						} else {
+							if (MusicBeatState.instance.mobileControls.virtualPadExtra.mobileControlsJustReleased(key) == true)
+								{
+									controllerMode = true;
+									return true;
+								}	
 						}
+					}
 					case 4: // HITBOX
 						for (key in keys)
 						{

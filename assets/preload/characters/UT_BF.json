@@ -1,0 +1,145 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				39,
+				2
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "0EEE",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-14,
+				-19
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "0Ouu",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-4,
+				83
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "0UP",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-23,
+				-6
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "0EER",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-6,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "0Idle",
+			"indices": []
+		},
+		{
+			"offsets": [
+				26,
+				158
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "blue soul",
+			"indices": [],
+			"name": "Pee instance"
+		},
+		{
+			"offsets": [
+				16,
+				75
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "Ouch instance"
+		},
+		{
+			"offsets": [
+				1024,
+				260
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "what the-",
+			"indices": [],
+			"name": "Roses got me like instance"
+		},
+		{
+			"offsets": [
+				17,
+				78
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "Ouch instance"
+		},
+		{
+			"offsets": [
+				16,
+				78
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "Ouch instance"
+		},
+		{
+			"offsets": [
+				16,
+				78
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "Ouch instance"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/UT BF",
+	"position": [
+		-400,
+		1405
+	],
+	"animatedHealthIcon": false,
+	"healthicon": "bf",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		0
+	],
+	"camera_position": [
+		-250,
+		-40
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

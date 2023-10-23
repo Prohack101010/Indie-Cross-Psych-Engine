@@ -93,12 +93,20 @@ class ClientPrefs {
 	public static var defaultData:SaveVariables = null;
 
 	//Every key has two binds, add your key bind down here and then add your control on options/ControlsSubState.hx and Controls.hx
+	
 	public static var keyBinds:Map<String, Array<FlxKey>> = [
 		//Key Bind, Name for ControlsSubState
-		'note_up'		=> [W, UP],
+		#if WASD
+		'note_up'		=>	[W, UP],
 		'note_left'		=> [A, LEFT],
 		'note_down'		=> [S, DOWN],
-		'note_right'	        => [D, RIGHT],
+		'note_right'	=> [D, RIGHT],
+		#else
+		'note_up'		=> [J, UP],
+		'note_left'		=> [D, LEFT],
+		'note_down'		=> [F, DOWN],
+		'note_right'    => [K, RIGHT],
+		#end
 		
 		'ui_up'			=> [W, UP],
 		'ui_left'		=> [A, LEFT],
@@ -115,7 +123,10 @@ class ClientPrefs {
 		'volume_down'	=> [NUMPADMINUS, MINUS],
 		
 		'debug_1'		=> [SEVEN],
-		'debug_2'		=> [EIGHT]
+		'debug_2'		=> [EIGHT],
+
+		'attack'			=> [SHIFT],
+		'dodge'			=> [SPACE]
 	];
 	public static var gamepadBinds:Map<String, Array<FlxGamepadInputID>> = [
 		'note_up'		=> [DPAD_UP, Y],
@@ -131,7 +142,10 @@ class ClientPrefs {
 		'accept'		=> [A, START],
 		'back'			=> [B],
 		'pause'			=> [START],
-		'reset'			=> [BACK]
+		'reset'			=> [BACK],
+
+		'attack'			=> [LEFT_ANALOG_STICK],
+		'dodge'			=> [RIGHT_ANALOG_STICK]
 	];
 	#if mobileC
 	public static var mobileBinds:Map<String, Array<FlxMobileControlsID>> = [
@@ -148,7 +162,10 @@ class ClientPrefs {
 		'accept'		=> [A],
 		'back'			=> [B],
 		'pause'			=> [NONE],
-		'reset'			=> [NONE]
+		'reset'			=> [NONE],
+
+		'attack'			=> [attack],
+		'dodge'			=> [dodge]
 	];
 	public static var defaultPads:Map<String, Array<FlxMobileControlsID>> = null;
 	#end

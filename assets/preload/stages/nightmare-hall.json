@@ -1,0 +1,14 @@
+{
+	"directory": "",
+	"defaultZoom": 0.9,
+	"isPixelStage": false,
+	"timeBarColor": "0x66ffff",
+
+	"boyfriend": [625, 25],
+	"girlfriend": [250, 32],
+	"opponent": [-315, 40],
+
+	"camera_boyfriend": [-225, -70],
+	"camera_opponent": [-20, 170],
+	"camera_speed": 0.8
+}

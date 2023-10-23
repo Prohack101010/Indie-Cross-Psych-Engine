@@ -2,4 +2,7 @@ Diamond
 Electric
 Sparkles
 Vanilla
+BBone
+OBone
+Parry
 none

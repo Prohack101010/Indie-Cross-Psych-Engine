@@ -1,4 +1,5 @@
 package shaders;
+import shaders.FlxShader;
 class WhiteOverlayShader extends FlxShader
 {
 	@:glFragmentSource("

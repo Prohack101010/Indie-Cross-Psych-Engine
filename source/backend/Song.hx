@@ -49,7 +49,7 @@ class Song
 	public var gameOverSound:String;
 	public var gameOverLoop:String;
 	public var gameOverEnd:String;
-	public var disableNoteRGB:Bool = false;
+	public var disableNoteRGB:Bool = true;
 	public var speed:Float = 1;
 	public var stage:String;
 	public var player1:String = 'bf';
@@ -63,7 +63,7 @@ class Song
 			songJson.gfVersion = songJson.player3;
 			songJson.player3 = null;
 		}
-
+		songJson.disableNoteRGB = true;
 		if(songJson.events == null)
 		{
 			songJson.events = [];

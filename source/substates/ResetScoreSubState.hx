@@ -1,10 +1,12 @@
 package substates;
 
+import states.StoryMenuState;
 import backend.WeekData;
 import backend.Highscore;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxSubState;
 import objects.HealthIcon;
+import states.FreeplayState;
 
 class ResetScoreSubState extends MusicBeatSubstate
 {
@@ -18,13 +20,28 @@ class ResetScoreSubState extends MusicBeatSubstate
 	var song:String;
 	var difficulty:Int;
 	var week:Int;
+	var isAnimated:Bool;
+	var character:String;
 
+	override function beatHit(){
+	if(week == -1){
+		super.beatHit();
+		if(FlxG.save.data.instPrev)
+			FreeplayState.instance.bopOnBeat();
+	}
+}
 	// Week -1 = Freeplay
 	public function new(song:String, difficulty:Int, character:String, week:Int = -1)
-	{
-		#if mobileC
-		
-		#end
+	{		
+		this.character = character;	
+		if(character == 'sansn')
+			isAnimated = true;
+		else 
+			isAnimated = false;
+		FlxG.mouse.visible = true;
+		if(week == -1)
+			cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
 		this.song = song;
 		this.difficulty = difficulty;
 		this.week = week;
@@ -56,11 +73,14 @@ class ResetScoreSubState extends MusicBeatSubstate
 		text.alpha = 0;
 		add(text);
 		if(week == -1) {
-			icon = new HealthIcon(character);
+			icon = new HealthIcon(character, false, isAnimated);
+			/*if(character == 'sansn')
+				icon.animationOffset = [70, 60, 90, 80];*/
 			icon.setGraphicSize(Std.int(icon.width * tooLong));
 			icon.updateHitbox();
 			icon.setPosition(text.x - icon.width + (10 * tooLong), text.y - 30);
 			icon.alpha = 0;
+			icon.playNormalAnim(true);
 			add(icon);
 		}
 
@@ -74,7 +94,7 @@ class ResetScoreSubState extends MusicBeatSubstate
 		add(noText);
 
 		#if mobileC
-		addVirtualPad(LEFT_RIGHT, A_B);
+		addVirtualPad(LEFT_RIGHT, A);
 		addPadCamera(false);
 		#end
 
@@ -83,6 +103,8 @@ class ResetScoreSubState extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
+		
+		Conductor.songPosition = FlxG.sound.music.time;
 		bg.alpha += elapsed * 1.5;
 		if(bg.alpha > 0.6) bg.alpha = 0.6;
 
@@ -92,38 +114,56 @@ class ResetScoreSubState extends MusicBeatSubstate
 		}
 		if(week == -1) icon.alpha += elapsed * 2.5;
 
-		if(controls.UI_LEFT_P || controls.UI_RIGHT_P) {
+		/*if(controls.UI_LEFT_P || controls.UI_RIGHT_P) {
 			FlxG.sound.play(Paths.sound('scrollMenu'), 1);
 			onYes = !onYes;
-			updateOptions();
-		}
-		if(controls.BACK) {
-			#if mobileC
-			
-			#end
+			updateOptions();*/
+
+			if (#if desktop FlxG.mouse.justMoved #else FlxG.mouse.justReleased #end)
+				{
+					if (!onYes && FlxG.mouse.overlaps(yesText)){
+						onYes = true;
+						updateOptions();
+						FlxG.sound.play(Paths.sound('scrollMenu'), 1);
+						}
+					
+					if (onYes && FlxG.mouse.overlaps(noText)){
+						onYes = false;
+						updateOptions();
+						FlxG.sound.play(Paths.sound('scrollMenu'), 1);
+						}
+
+				}
+		if(controls.BACK #if android || FlxG.android.justReleased.ANY #end) {
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
-			#if mobileC
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
 			close();
+			FreeplayState.instance.selectedSong = false;
+			#if mobileC
+			MusicBeatState.instance.virtualPad.visible = true;
 			#end
-		} else if(controls.ACCEPT) {
-			if(onYes) {
+			FlxG.game.filtersEnabled = ClientPrefs.data.shaders;
+			FreeplayState.instance.camGame.filtersEnabled = false;
+			FreeplayState.instance.scoreCam.filtersEnabled = false;
+		
+		}
+		if (FlxG.mouse.justPressed) {
+			if(onYes && FlxG.mouse.overlaps(yesText)) {
 				if(week == -1) {
 					Highscore.resetSong(song, difficulty);
 				} else {
 					Highscore.resetWeek(WeekData.weeksList[week], difficulty);
 				}
 			}
+			FlxG.mouse.visible = false;
 			FlxG.sound.play(Paths.sound('cancelMenu'), 1);
-			#if mobileC
-			
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
 			close();
+			FreeplayState.instance.selectedSong = false;
+			#if mobileC
+			MusicBeatState.instance.virtualPad.visible = true;
 			#end
+			FlxG.game.filtersEnabled = ClientPrefs.data.shaders;
+			FreeplayState.instance.camGame.filtersEnabled = false;
+			FreeplayState.instance.scoreCam.filtersEnabled = false;
 		}
 		#if mobileC
 		if (MusicBeatSubstate.virtualPad == null){ //sometimes it dosent add the vpad, hopefully this fixes it
@@ -144,6 +184,12 @@ class ResetScoreSubState extends MusicBeatSubstate
 		yesText.scale.set(scales[confirmInt], scales[confirmInt]);
 		noText.alpha = alphas[1 - confirmInt];
 		noText.scale.set(scales[1 - confirmInt], scales[1 - confirmInt]);
-		if(week == -1) icon.animation.curAnim.curFrame = confirmInt;
+		if(week == -1)
+		{
+			if(confirmInt == 0)
+				icon.playNormalAnim();
+			else
+				icon.playlossAnim();
+		}
 	}
 }

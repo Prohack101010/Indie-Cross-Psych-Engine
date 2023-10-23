@@ -11,11 +11,21 @@ class FreeplaySelectState extends MusicBeatState
 {
 	public static var curSelected:Int = 0;
 	public static var optionShit:Array<String> = ['story', 'bonus', 'nightmare'];
+
 	var menuItems:FlxTypedGroup<FlxSprite>;
-	var bg:FlxSprite;	
+	var bg:FlxSprite;
+
+	public function new(?playMusic=false){
+		if(playMusic){
+		FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+		FlxG.sound.music.fadeIn(4, 0, 1);
+		}
+		super();
+	}
 
 	override function create()
 	{
+		FlxG.mouse.visible = true;
 		#if desktop
 		DiscordClient.changePresence("Selecting FreePlay", null);
 		#end
@@ -39,7 +49,7 @@ class FreeplaySelectState extends MusicBeatState
 
 		super.create();
 	}
-	
+
 	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
@@ -59,20 +69,29 @@ class FreeplaySelectState extends MusicBeatState
 				changeItem(1);
 			}
 
-			if (controls.BACK)
+			if (controls.BACK || FlxG.mouse.justReleasedRight)
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());
 			}
-			for (i in 0...optionShit.length){
+			for (i in 0...optionShit.length)
+			{
 				if (i == curSelected)
 					menuItems.members[i].alpha = 1;
 				else
 					menuItems.members[i].alpha = 0.5;
-
 			}
-			if (controls.ACCEPT)
+			if (#if desktop FlxG.mouse.justMoved #else FlxG.mouse.justReleased #end)
+			{
+				for (i in 0...menuItems.length)
+				{
+					if (i != curSelected && FlxG.mouse.overlaps(menuItems.members[i]))
+						curSelected = i;
+					changeItem(0);
+				}
+			}
+			if (controls.ACCEPT || (FlxG.mouse.justPressed && FlxG.mouse.overlaps(menuItems.members[curSelected])))
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
@@ -82,40 +101,47 @@ class FreeplaySelectState extends MusicBeatState
 				{
 					selectedButton.shader.data.progress.value = [num];
 				});
+				if(FlxG.save.data.instPrev)
+					FlxG.sound.music.fadeOut(0.7, 0);
 				new FlxTimer().start(1, function(tmr:FlxTimer)
-					{
-						MusicBeatState.switchState(new states.FreeplayState());
-					});
-				}
+				{
+					MusicBeatState.switchState(new states.FreeplayState());
+				});
 			}
+		}
 
 		super.update(elapsed);
 	}
-//i just cant fucking get the X and Y so i copy the way the sprites are added from original source
+
+	// i just cant fucking get the X and Y so i copy the way the sprites are added from original source
 	function generateButtons(sep:Float)
+	{
+		if (menuItems == null)
+			return;
+
+		if (menuItems.members != null && menuItems.members.length > 0)
+			menuItems.forEach(function(_:FlxSprite)
+			{
+				menuItems.remove(_);
+				_.destroy();
+			});
+
+		for (i in 0...optionShit.length)
 		{
-			if (menuItems == null)
-				return;
-	
-			if (menuItems.members != null && menuItems.members.length > 0)
-				menuItems.forEach(function(_:FlxSprite) {menuItems.remove(_); _.destroy(); } );
-			
-			for (i in 0...optionShit.length)
-			{	
-				var str:String = optionShit[i];
-	
-				var freeplayItem:FlxSprite = new FlxSprite();
-				freeplayItem.loadGraphic(Paths.image('freeplayselect/' + str));
-				freeplayItem.origin.set();
-				freeplayItem.scale.set(MainMenuState.fuckersScale, MainMenuState.fuckersScale);
-				freeplayItem.updateHitbox();
-				freeplayItem.alpha = 0.5;
-				freeplayItem.setPosition(120 + (i * sep), 20);
-				
-				menuItems.add(freeplayItem);
-			}
+			var str:String = optionShit[i];
+
+			var freeplayItem:FlxSprite = new FlxSprite();
+			freeplayItem.loadGraphic(Paths.image('freeplayselect/' + str));
+			freeplayItem.origin.set();
+			freeplayItem.scale.set(MainMenuState.fuckersScale, MainMenuState.fuckersScale);
+			freeplayItem.updateHitbox();
+			freeplayItem.alpha = 0.5;
+			freeplayItem.setPosition(120 + (i * sep), 20);
+
+			menuItems.add(freeplayItem);
 		}
-	
+	}
+
 	public function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
@@ -123,6 +149,12 @@ class FreeplaySelectState extends MusicBeatState
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
 		if (curSelected < 0)
-			curSelected = menuItems.length - 1;	
+			curSelected = menuItems.length - 1;
+	}
+
+	override function destroy()
+	{
+		FlxG.mouse.visible = false;
+		super.destroy();
 	}
 }

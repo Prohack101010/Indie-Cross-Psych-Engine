@@ -1,0 +1,40 @@
+{
+	"songs": [
+		[
+			"Snake Eyes",
+			"cup",
+			[
+				171,
+				22,
+				74
+			]
+		],
+		[
+		  "Technicolor Tussle",
+		  "cup",[
+				171,
+				22,
+				74
+		  ]
+		],
+		[
+		"Knockout",
+		"cup",[
+				171,
+				22,
+				74
+		 ]
+		]
+	],
+	"freeplayColor": [
+				171,
+				22,
+				74
+	],
+	"weekName": "cuphead",
+	"weekBefore": "tutorial",
+	"hideFreeplay": false,
+	"startUnlocked": true,
+	"hideBonus": true,
+	"hideNightmare": true
+}

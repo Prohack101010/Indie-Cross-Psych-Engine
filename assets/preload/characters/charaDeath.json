@@ -1,0 +1,61 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				37,
+				16
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "firstDeath",
+			"indices": [],
+			"name": "gdgdg"
+		},
+		{
+			"offsets": [
+				36,
+				17
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "deathLoop",
+			"indices": [
+				11
+			],
+			"name": "gdgdg"
+		},
+		{
+			"offsets": [
+				36,
+				17
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "deathConfirm",
+			"indices": [
+				10,
+				11
+			],
+			"name": "gdgdg"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/charaDeath",
+	"position": [
+		190,
+		350
+	],
+	"healthicon": "none",
+	"flip_x": true,
+	"healthbar_colors": [
+		225,
+		255,
+		0
+	],
+	"camera_position": [
+		650,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

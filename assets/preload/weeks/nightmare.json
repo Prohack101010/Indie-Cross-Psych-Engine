@@ -1,0 +1,47 @@
+{
+	"songs": [
+		[
+			"Devils-Gambit",
+			"cupn",
+			[
+				255,
+				0,
+				102
+			]
+		],
+		[
+			"Bad-Time",
+			"sansn",
+			[
+				102,
+				255,
+				255
+			]
+		],
+		[
+			"Despair",
+			"bendyn",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": true,
+	"weekBackground": "stage",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"sans",
+		"fun",
+		""
+	],
+	"storyName": "",
+	"weekName": "nightmare",
+	"hideStoryMode": true,
+	"weekBefore": "bonus",
+	"hideBonus": true,
+	"hideNightmare": false,
+	"startUnlocked": true
+}

@@ -1,0 +1,59 @@
+{
+	"song": {
+		"speed": 2.8,
+		"stage": "field-rain",
+		"player1": "bf-rain",
+		"player2": "cuphead-pissed",
+		"player3": null,
+		"events": [
+			[
+				13897.0588235294,
+				[
+					[
+						"DodgeEvent2",
+						"",
+						""
+					]
+				]
+			],
+			[
+				42132.3529411765,
+				[
+					[
+						"DodgeEvent2",
+						"",
+						""
+					]
+				]
+			],
+			[
+				98602.9411764706,
+				[
+					[
+						"DodgeEvent2",
+						"",
+						""
+					]
+				]
+			],
+			[
+				127500,
+				[
+					[
+						"DodgeEvent2",
+						"",
+						""
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"validScore": false,
+		"gfVersion": "gf",
+		"bpm": 136,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "Knockout"
+	}
+}

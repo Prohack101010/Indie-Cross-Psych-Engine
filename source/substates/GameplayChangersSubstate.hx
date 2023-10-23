@@ -1,5 +1,6 @@
 package substates;
 
+import states.FreeplayState;
 import objects.AttachedText;
 import objects.CheckboxThingie;
 import flixel.addons.transition.FlxTransitionableState;
@@ -13,6 +14,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
+
+	override function beatHit(){
+		super.beatHit();
+		if(FlxG.save.data.instPrev)
+			FreeplayState.instance.bopOnBeat();
+	}
 
 	function getOptions()
 	{
@@ -86,6 +93,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 	public function new()
 	{
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 		super();
 
 		#if mobileC
@@ -139,7 +147,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		}
 
 		#if mobileC
-		addVirtualPad(LEFT_FULL, A_B_C);
+		addVirtualPad(LEFT_FULL, A_C);
 		addPadCamera(false);
 		#end
 
@@ -152,6 +160,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	var holdValue:Float = 0;
 	override function update(elapsed:Float)
 	{
+		Conductor.songPosition = FlxG.sound.music.time;
 		if (controls.UI_UP_P)
 		{
 			changeSelection(-1);
@@ -161,14 +170,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			changeSelection(1);
 		}
 
-		if (controls.BACK) {
-			#if mobileC
-			
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.resetState();
-			#else
+		if (controls.BACK #if android || FlxG.android.justReleased.ANY #end) {
 			close();
+			FreeplayState.instance.selectedSong = false;
+			#if mobileC
+			MusicBeatState.instance.virtualPad.visible = true;
 			#end
+			FlxG.game.filtersEnabled = ClientPrefs.data.shaders;
+			FreeplayState.instance.camGame.filtersEnabled = false;
+			FreeplayState.instance.scoreCam.filtersEnabled = false;
 			ClientPrefs.saveSettings();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}

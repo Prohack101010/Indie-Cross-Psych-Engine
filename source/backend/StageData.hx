@@ -15,7 +15,13 @@ typedef StageFile = {
 	var defaultZoom:Float;
 	var isPixelStage:Bool;
 	var stageUI:String;
-	var healthBarSkin:String;
+	var healthBarOverlay:String;
+	var healthBarBg:String;
+	var healthBarBgX:Float;
+	var healthBarBgY:Float;
+	var healthBarOverlayX:Float;
+	var healthBarOverlayY:Float;
+	var timeBarColor:String;
 
 	var boyfriend:Array<Dynamic>;
 	var girlfriend:Array<Dynamic>;
@@ -36,12 +42,18 @@ class StageData {
 			defaultZoom: 0.9,
 			isPixelStage: false,
 			stageUI: "normal",
-			healthBarSkin: "healthBar",
+			healthBarOverlay: "",
+			healthBarBg: "healthBar",
+			healthBarBgX: 0,
+			healthBarBgY: 0,
+			healthBarOverlayX: 0,
+			healthBarOverlayY: 0,
+			timeBarColor: "0xFFFFFFFF",
 
 			boyfriend: [770, 100],
 			girlfriend: [400, 130],
 			opponent: [100, 100],
-			hide_girlfriend: false,
+			hide_girlfriend: true,
 
 			camera_boyfriend: [0, 0],
 			camera_opponent: [0, 0],
@@ -62,6 +74,8 @@ class StageData {
 					stage = 'stage';
 				case 'whoopee' | 'sansational' | 'final-stretch' | 'burning-in-hell':
 					stage = 'hall';
+				case 'snake-eyes' | 'technicolor-tussle' | 'knockout':
+					stage = 'field';
 				default:
 					stage = 'stage';
 			}

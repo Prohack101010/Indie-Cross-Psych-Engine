@@ -184,6 +184,10 @@ class FlxHitbox extends FlxSpriteGroup
 					return buttonRight.pressed;
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.pressed;
+				case FlxMobileControlsID.attack:
+					return buttonExtra.pressed;
+				case FlxMobileControlsID.dodge:
+					return buttonExtra1.pressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -200,13 +204,16 @@ class FlxHitbox extends FlxSpriteGroup
 				{
 				case FlxMobileControlsID.hitboxLEFT:
 					return buttonLeft.justPressed;
-					trace("left was justpressed on the hitbox!");
 				case FlxMobileControlsID.hitboxUP:
 					return buttonUp.justPressed;
 				case FlxMobileControlsID.hitboxRIGHT:
 					return buttonRight.justPressed;
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.justPressed;
+				case FlxMobileControlsID.attack:
+					return buttonExtra.justPressed;
+				case FlxMobileControlsID.dodge:
+					return buttonExtra1.justPressed;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:
@@ -229,6 +236,10 @@ class FlxHitbox extends FlxSpriteGroup
 					return buttonRight.justReleased;
 				case FlxMobileControlsID.hitboxDOWN:
 					return buttonDown.justReleased;
+				case FlxMobileControlsID.attack:
+					return buttonExtra.justReleased;
+				case FlxMobileControlsID.dodge:
+					return buttonExtra1.justReleased;
 				case FlxMobileControlsID.NONE:
 					return false;
 				default:

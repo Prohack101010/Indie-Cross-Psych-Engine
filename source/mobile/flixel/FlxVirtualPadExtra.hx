@@ -70,7 +70,45 @@ class FlxVirtualPadExtra extends FlxSpriteGroup
 		button.ignoreDrawDebug = true;
 		#end
 		return button;
-	}	
+	}
+	public function mobileControlsPressed(buttonID:FlxMobileControlsID):Bool
+		{
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.attack:
+					return buttonExtra.pressed;
+				case FlxMobileControlsID.dodge:
+					return buttonExtra1.pressed;
+				default:
+					return false;
+			}
+		}
+
+	public function mobileControlsJustPressed(buttonID:FlxMobileControlsID):Bool
+		{
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.attack:
+					return buttonExtra.justPressed;
+				case FlxMobileControlsID.dodge:
+					return buttonExtra1.justPressed;
+				default:
+					return false;
+			}
+		}
+
+	public function mobileControlsJustReleased(buttonID:FlxMobileControlsID):Bool
+		{
+			switch (buttonID)
+			{
+				case FlxMobileControlsID.attack:
+					return buttonExtra.justReleased;
+				case FlxMobileControlsID.dodge:
+					return buttonExtra1.justReleased;
+				default:
+					return false;
+			}
+		}
 }
 
 enum FlxExtraActions

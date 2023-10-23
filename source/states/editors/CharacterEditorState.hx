@@ -106,7 +106,7 @@ class CharacterEditorState extends MusicBeatState
 		
 		if(ClientPrefs.data.cacheOnGPU) Paths.clearUnusedMemory();
 
-		leHealthIcon = new HealthIcon(char.healthIcon, false, false);
+		leHealthIcon = new HealthIcon(char.healthIcon, false, char.animatedHealthIcon, false);
 		leHealthIcon.y = FlxG.height - 150;
 		add(leHealthIcon);
 		leHealthIcon.cameras = [camHUD];
@@ -467,6 +467,7 @@ class CharacterEditorState extends MusicBeatState
 				character.noAntialiasing = parsedJson.no_antialiasing;
 				character.originalFlipX = parsedJson.flip_x;
 				character.healthIcon = parsedJson.healthicon;
+				character.animatedHealthIcon = parsedJson.animatedHealthIcon;
 				character.healthColorArray = parsedJson.healthbar_colors;
 				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
 			}
@@ -1272,6 +1273,7 @@ class CharacterEditorState extends MusicBeatState
 			"scale": char.jsonScale,
 			"sing_duration": char.singDuration,
 			"healthicon": char.healthIcon,
+			"animatedHealthIcon": char.animatedHealthIcon,
 
 			"position":	char.positionArray,
 			"camera_position": char.cameraPosition,

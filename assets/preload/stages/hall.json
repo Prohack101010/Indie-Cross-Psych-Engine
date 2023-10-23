@@ -2,14 +2,13 @@
 	"directory": "",
 	"defaultZoom": 0.9,
 	"isPixelStage": false,
+	"timeBarColor": "0x254b78",
 
 	"boyfriend": [612, 32],
-	"girlfriend": [400, 175],
+	"girlfriend": [250, 32],
 	"opponent": [-315, 32],
-	"hide_girlfriend": true,
-
 	"camera_boyfriend": [-220, -50],
 	"camera_opponent": [75, -10],
-	"camera_start": [0, -50],
+	"camera_start": [125, -175],
 	"camera_speed": 0.65
 }

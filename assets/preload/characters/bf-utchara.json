@@ -1,0 +1,144 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				89,
+				-6
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "0EEE"
+		},
+		{
+			"offsets": [
+				32,
+				-26
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "0Ouu"
+		},
+		{
+			"offsets": [
+				1,
+				77
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "0UP"
+		},
+		{
+			"offsets": [
+				-13,
+				-11
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "0EER"
+		},
+		{
+			"offsets": [
+				-5,
+				0
+			],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "0Idle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				26,
+				158
+			],
+			"anim": "blue soul",
+			"fps": 24,
+			"name": "Pee instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-2,
+				-24
+			],
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "Ouch instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-5,
+				-25
+			],
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "Ouch instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-5,
+				-24
+			],
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "Ouch instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-3,
+				-23
+			],
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "Ouch instance",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "dodge",
+			"loop": false,
+			"name": "boyfriend dodge"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/CharaUT",
+	"position": [
+		-400,
+		1405
+	],
+	"healthicon": "bf",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		0
+	],
+	"camera_position": [
+		-250,
+		-40
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

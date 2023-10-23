@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="Nightmare Bendy.png"><SubTexture name="AnimBendy0000" x="151" y="0" width="117" height="114" frameX="-26" frameY="-6" frameWidth="153" frameHeight="144" />
+<SubTexture name="AnimBendy0001" x="0" y="142" width="117" height="113" frameX="-26" frameY="-7" frameWidth="153" frameHeight="144" />
+<SubTexture name="AnimBendy0002" x="0" y="0" width="151" height="142" frameX="-1" frameY="-1" frameWidth="153" frameHeight="144" />
+<SubTexture name="AnimBendy0003" x="117" y="142" width="117" height="113" frameX="-27" frameY="-7" frameWidth="153" frameHeight="144" />
+</TextureAtlas>

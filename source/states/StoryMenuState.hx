@@ -391,6 +391,7 @@ class StoryMenuState extends MusicBeatState
 				trace('current difficulty suffix is ' + diffic);
 				PlayState.storyDifficulty = curDifficulty;
 				PlayState.isStoryMode = true;
+				PlayState.seenCutscene = false;
 				PlayState.SONG = backend.Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
 				PlayState.campaignScore = 0;
 				PlayState.campaignMisses = 0;

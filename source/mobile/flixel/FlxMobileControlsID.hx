@@ -31,6 +31,8 @@ abstract FlxMobileControlsID(Int) from Int to Int
     var hitboxDOWN = 17;
     var hitboxLEFT = 18;
     var hitboxRIGHT = 19;
+    var attack = 20;
+    var dodge = 21;
 
     var NONE = -1;
 

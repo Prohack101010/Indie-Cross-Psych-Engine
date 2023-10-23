@@ -1,0 +1,42 @@
+{
+	"songs": [
+		[
+			"Whoopee",
+			"sans",
+			[
+				255,
+				255,
+				255
+			]
+		],
+		[
+			"Sansational",
+			"sans",
+			[
+				255,
+				255,
+				255
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"sans",
+		"fun",
+		""
+	],
+	"storyName": "",
+	"weekName": "sans",
+	"freeplayColor": [
+				255,
+				255,
+				255
+	],
+	"hideStoryMode": false,
+	"weekBefore": "cupheadWeek",
+	"startUnlocked": true,
+	"hideBonus": true,
+	"hideNightmare": true
+}

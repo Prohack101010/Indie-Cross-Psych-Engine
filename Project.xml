@@ -68,12 +68,14 @@
 		<library name="songs"         preload="true" />
 		<library name="shared"        preload="true" />
 		<library name="sans"			preload="true"/>
+		<library name="cup"			preload="true"/>
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
 		<library name="songs"         preload="false" />
 		<library name="shared"        preload="false" />
 		<library name="sans"			preload="false"/>
+		<library name="scup"			preload="false"/>
 	</section>
 	
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
@@ -82,6 +84,7 @@
 	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>
 	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
 	<assets path="assets/sans" library="sans"/>
+	<assets path="assets/cup" library="cup"/>
 	
 	<section if="MODS_ALLOWED">
 		<assets path='example_mods' rename="mods"/>
@@ -105,7 +108,6 @@
     <haxelib name="extension-orientation" if="mobile" />
 	<!-- Enables a terminal log prompt on debug builds -->
 	<haxelib name="hxcpp-debug-server" if="debug"/>
-	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
 	
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

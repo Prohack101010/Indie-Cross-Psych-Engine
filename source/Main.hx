@@ -1,17 +1,17 @@
 package;
 
 import backend.SUtil;
-import flixel.graphics.FlxGraphic;
 import flixel.FlxGame;
 import flixel.FlxState;
+import flixel.graphics.FlxGraphic;
+import lime.app.Application;
 import openfl.Assets;
-import openfl.system.System;
 import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
-import openfl.events.Event;
 import openfl.display.StageScaleMode;
-import lime.app.Application;
+import openfl.events.Event;
+import openfl.system.System;
 import states.TitleState;
 #if linux
 import lime.graphics.Image;
@@ -23,7 +23,6 @@ import lime.graphics.Image;
 	#define GAMEMODE_AUTO
 ')
 #end
-
 class Main extends Sprite
 {
 	var game = {
@@ -32,13 +31,13 @@ class Main extends Sprite
 		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
-		skipSplash: true, // if the default flixel splash screen should be skipped
+		skipSplash: false, // if the default flixel splash screen should be skipped
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
 
 	public static var fpsVar:FPS;
 
-	public static var allowedToClear:Bool = true; //this is used for proper memory cleaning and preventing your game from loading everything over and over for no reason
+	public static var allowedToClear:Bool = true; // this is used for proper memory cleaning and preventing your game from loading everything over and over for no reason
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -55,13 +54,13 @@ class Main extends Sprite
 	{
 		super();
 
-                SUtil.uncaughtErrorHandler();
+		SUtil.uncaughtErrorHandler();
 
-		#if cpp
-		untyped __global__.__hxcpp_set_critical_error_handler(SUtil.onCriticalError);
-		#elseif hl
-		Api.setErrorHandler(SUtil.onCriticalError);
-		#end
+		/*#if cpp
+			untyped __global__.__hxcpp_set_critical_error_handler(SUtil.onCriticalError);
+			#elseif hl
+			Api.setErrorHandler(SUtil.onCriticalError);
+			#end */
 
 		// https://github.com/MAJigsaw77/UTF/blob/main/source/Main.hx
 		FlxG.signals.preStateCreate.add(function(state:FlxState)
@@ -117,22 +116,27 @@ class Main extends Sprite
 		#if MODS_ALLOWED
 		SUtil.checkFiles();
 		#end
-	
+
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
 		#if (openfl >= "9.2.0")
-		addChild(new FlxGame(1280, 720, TitleState, #if (flixel < "5.0.0") -1, #end 60, 60, true, false));
+		addChild(new FlxGame(1280, 720, TitleState, #if (flixel < "5.0.0") -1, #end 60, 60, false, false));
 		#else
-		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate,
+			game.skipSplash, game.startFullscreen));
 		#end
+		FlxG.save.bind('indie-cross-psych', CoolUtil.getSavePath());
+		ClientPrefs.saveSettings();
+		ClientPrefs.loadPrefs();
 		Achievements.load();
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
-		if(fpsVar != null) {
+		if (fpsVar != null)
+		{
 			fpsVar.visible = ClientPrefs.data.showFPS;
 		}
 
@@ -150,24 +154,28 @@ class Main extends Sprite
 		DiscordClient.start();
 		#end
 
-		//shader coords fix
-		FlxG.signals.gameResized.add(function (w, h) {
-		     if (FlxG.cameras != null) {
-			   for (cam in FlxG.cameras.list) {
-				@:privateAccess
-				if (cam != null && cam._filters != null)
-					resetSpriteCache(cam.flashSprite);
-			   }
-		     }
+		// shader coords fix
+		FlxG.signals.gameResized.add(function(w, h)
+		{
+			if (FlxG.cameras != null)
+			{
+				for (cam in FlxG.cameras.list)
+				{
+					@:privateAccess
+					if (cam != null && cam._filters != null)
+						resetSpriteCache(cam.flashSprite);
+				}
+			}
 
-		     if (FlxG.game != null)
-			 resetSpriteCache(FlxG.game);
+			if (FlxG.game != null)
+				resetSpriteCache(FlxG.game);
 		});
 	}
 
-	static function resetSpriteCache(sprite:Sprite):Void {
+	static function resetSpriteCache(sprite:Sprite):Void
+	{
 		@:privateAccess {
-		        sprite.__cacheBitmap = null;
+			sprite.__cacheBitmap = null;
 			sprite.__cacheBitmapData = null;
 		}
 	}

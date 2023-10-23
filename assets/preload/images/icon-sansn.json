@@ -1,0 +1,23 @@
+{
+"animations": [
+    {
+    "name": "normal",
+    "prefix": "normal",
+    "fps": 24,
+    "indices": [],
+    "offsetX": 70,
+    "offsetY": 60,
+    "islossAnim": false
+    },
+    {
+    "name": "loss",
+    "prefix": "loss",
+    "fps": 24,
+    "indices": [],
+    "offsetX": 0,
+    "offsetY": 0,
+    "islossAnim": true
+        }
+    ],
+	"noAntialiasing": false
+}

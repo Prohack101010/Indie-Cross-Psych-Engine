@@ -1,0 +1,19 @@
+{
+	"directory": "",
+	"defaultZoom": 0.63,
+	"isPixelStage": false,
+	"healthBarOverlay": "MobileHaters-healthbar",
+	"healthBarBg": "cup-bar-bg",
+	"healthBarBgX": 10,
+	"healthBarOverlayY": -8,
+	"timeBarColor": "0xC60040",
+
+	"boyfriend": [892, 90],
+	"girlfriend": [0,0],
+	"opponent": [0, 115],
+	
+	"camera_boyfriend": [-25, 16],
+	"camera_opponent": [-95, 16],
+	"camera_girlfriend": [0, 0],
+	"camera_speed": 0.3
+}

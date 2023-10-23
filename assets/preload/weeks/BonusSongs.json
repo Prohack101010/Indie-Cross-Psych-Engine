@@ -1,0 +1,65 @@
+{
+	"songs": [
+		[
+			"satanic-funkin",
+			"devil",
+			[
+				35,
+				50,
+				78
+			]
+		],
+		[
+			"bad-to-the-bone",
+			"papyrus",
+			[
+				255,
+				95,
+				125
+			]
+		],
+		[
+			"bonedoggle",
+			"sans&papyrus",
+			[
+				255,
+				255,
+				255
+			]
+		],
+		[
+			"freaky-machine",
+			"bendy2",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"ritual",
+			"sammy",
+			[
+				98,
+				51,
+				18
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": true,
+	"weekBackground": "stage",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"storyName": "",
+	"weekName": "bonus",
+	"hideStoryMode": true,
+	"weekBefore": "bendy",
+	"startUnlocked": true,
+	"hideBonus": false,
+	"hideNightmare": true
+}

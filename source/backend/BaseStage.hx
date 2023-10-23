@@ -19,7 +19,7 @@ enum Countdown
 
 class BaseStage extends FlxBasic
 {
-	private var game(default, set):Dynamic = PlayState.instance;
+	private var game(get, set):PlayState;
 	public var onPlayState:Bool = false;
 
 	// some variables for convenience
@@ -47,23 +47,24 @@ class BaseStage extends FlxBasic
 
 	public function new()
 	{
-		this.game = MusicBeatState.getState();
+		/*this.game = PlayState;
 		if(this.game == null)
 		{
 			FlxG.log.warn('Invalid state for the stage added!');
 			destroy();
 		}
 		else 
-		{
+		{*/
 			this.game.stages.push(this);
 			super();
 			create();
-		}
+		//}
 	}
 
 	//main callbacks
 	public function create() {}
 	public function createPost() {}
+	public function opponentNoteHit() {}
 	//public function update(elapsed:Float) {}
 	public function countdownTick(count:Countdown, num:Int) {}
 
@@ -159,12 +160,17 @@ class BaseStage extends FlxBasic
 		return value;
 	}
 	inline private function get_members() return game.members;
-	inline private function set_game(value:MusicBeatState)
+	inline private function set_game(value:PlayState)
 	{
 		onPlayState = (Std.isOfType(value, states.PlayState));
-		game = value;
+		//game = value;
 		return value;
 	}
+
+	inline private function get_game():PlayState
+		{
+			return PlayState.instance;
+		}
 
 	inline private function get_boyfriend():Character return game.boyfriend;
 	inline private function get_dad():Character return game.dad;

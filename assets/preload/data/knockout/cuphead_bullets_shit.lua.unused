@@ -1,0 +1,207 @@
+function onStepHit()
+if curStep == 144 then
+canBeat = true
+elseif curStep == 272 then
+GBullet = true
+elseif curStep == 309 then
+GBullet = false; BBullet = true;
+elseif curStep == 470 then
+BBullet = true ;
+elseif curStep == 656 then
+GBullet = true
+elseif curStep == 724 then
+BBullet = true
+elseif curStep == 820 then
+BBullet = true
+elseif curStep == 977 then
+BBullet = true
+elseif curStep == 1072 then
+GBullet = false
+end
+end
+function onCreate()
+precacheSound('chaser2')
+precacheSound('chaser1')
+precacheSound('chaser3')
+precacheSound('chaser4')
+precacheSound('pea0')
+precacheImage('cup/GreenShit')
+precacheImage('cup/bullet-shit')
+--green bullets sprite
+makeAnimatedLuaSprite('green', 'cup/GreenShit', 328, 369);
+addLuaSprite('green', true);
+addAnimationByPrefix('green', 'none', 'none', 24, false);
+addAnimationByPrefix('green', 'GreenShit', 'GreenShit01', 24, true);
+
+
+--blue bullets sprite
+makeAnimatedLuaSprite('blue', 'cup/Cupheadshoot', 431, 243);
+addLuaSprite('blue', true);
+addAnimationByPrefix('blue', 'none', 'none', 24, false);
+addAnimationByPrefix('blue', 'bullet-shit', 'bullet-shit', 40, true);
+
+
+--card sprite
+	makeAnimatedLuaSprite('card', 'cup/Cardcrap', 135, 545);
+	addAnimationByPrefix('card', 'none', 'none', 24, false);
+	addAnimationByPrefix('card', 'Card Normal Pop out', 'Card Normal Pop out', 24, false);
+	addLuaSprite('card', false);
+	setObjectCamera('card', 'other');
+	objectPlayAnimation('card', 'Card', false);
+	makeLuaSprite('cardf', 'cup/cardfull', 141, 722)
+	setObjectCamera('cardf', 'other')
+	addLuaSprite('cardf', true)
+
+
+--variabels
+canBeat = false;
+CanAdd = true;
+autoAttack = false;
+BBullet = false;
+GBullet = false;
+canAttack = false;
+--chaser vars
+requestedBullet = '';
+requestedSound= '';
+end
+function onUpdate()
+--card stuff
+if getProperty('cardf.y') <= 584 then
+canAttack = true;
+CanAdd = false
+objectPlayAnimation('card', 'Card Normal Pop out', false);
+doTweenY('shit','card', 564, 0.4, 'linear')
+setProperty('card.alpha', 1)
+setProperty('cardf.alpha', 0)
+end
+if getProperty('cardf.y') == 722 then
+setProperty('Card.y', 545)
+objectPlayAnimation('Card', 'none', false);
+setProperty('card.alpha', 0)
+setProperty('cardf.alpha', 1)
+end
+
+
+-- attacking stuff
+if canAttack == true and (getMouseX('camHUD') > 1000 and getMouseX('camHUD') < 1130) and (getMouseY('camHUD') > 582.5 and getMouseY('camHUD') < 720 and mousePressed('left')) or canAttack == true and getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SHIFT') or canAttack == true and autoAttack == true and BBullet == true then
+CanAdd = true
+canAttack = false;
+BBullet = false;
+	setProperty('cardf.y', 722);
+	triggerEvent('Play Animation','attack','BF');
+	triggerEvent('Play Animation','hit','Dad');
+	setProperty('health', 2);
+end
+
+
+--blue stuff
+if BBullet == true then
+objectPlayAnimation('blue', 'bullet-shit', false)
+playSound('pea0',0.5)
+if getProperty('dad.animation.curAnim.name') == 'idle' then
+	triggerEvent('Play Animation','shooting','Dad');
+	end
+	setProperty('health', getProperty('health')- 0.011);
+	elseif BBullet == false then
+objectPlayAnimation('blue', 'none', false)
+end
+end
+
+
+--more card shit
+function goodNoteHit(id, noteData, noteType, isSustainNote)
+if CanAdd == true then
+setProperty('cardf.y', getProperty('cardf.y') - 2.5)
+end
+
+
+-- parry note stuff
+if noteType == 'ParryNote' then
+setProperty('cardf.y', 584);
+end
+end
+
+
+--more shit for the card
+function onCreatePost()
+removeLuaSprite('green', false)
+--setProperty('card.alpha', 0)
+if botplay then
+autoAttack = true;
+end
+end
+
+
+--green bullets stuff(called only when cuphead press a note)
+function opponentNoteHit(id, noteData, noteType, isSustainNote)
+BBullet = false
+
+if GBullet == true and not isSustainNote and noteData == 0 then
+playSound('chaser2')
+setProperty('health', getProperty('health')- 0.006);
+makeAnimatedLuaSprite('green2', 'cup/GreenShit', 328, 369);
+addLuaSprite('green2', true);
+addAnimationByPrefix('green2', 'GreenShit02', 'GreenShit02', 24, false);
+end
+
+
+if GBullet == true and not isSustainNote and noteData == 1 then
+playSound('chaser1')
+setProperty('health', getProperty('health')- 0.006);
+makeAnimatedLuaSprite('green', 'cup/GreenShit', 328, 369);
+addLuaSprite('green', true);
+addAnimationByPrefix('green', 'GreenShit01', 'GreenShit01', 24, false);
+end
+
+
+if GBullet == true and not isSustainNote and noteData == 2 then
+playSound('chaser3', 0.1, 1)
+setProperty('health', getProperty('health')- 0.006);
+makeAnimatedLuaSprite('green3', 'cup/GreenShit', 328, 369);
+addLuaSprite('green3', true);
+addAnimationByPrefix('green3', 'Greenshit03', 'Greenshit03', 24, false);
+end
+
+
+if GBullet == true and not isSustainNote and noteData == 3 then
+playSound('chaser4')
+setProperty('health', getProperty('health')- 0.006);
+makeAnimatedLuaSprite('green4', 'cup/GreenShit', 328, 369);
+addLuaSprite('green4', true);
+addAnimationByPrefix('green4', 'GreenShit02', 'GreenShit02', 24, false);
+end
+end
+
+
+function onBeatHit()
+if canBeat == true then
+triggerEvent('Add Camera Zoom', '', '')
+end
+end
+
+
+function onUpdatePost()
+if getProperty('green.animation.curAnim.name') == 'GreenShit01' and getProperty('green.animation.curAnim.finished') or GBullet == false then
+removeLuaSprite('green', false)
+stopSound('chaser1')
+end
+
+
+if getProperty('green2.animation.curAnim.name') == 'GreenShit02' and getProperty('green2.animation.curAnim.finished') or GBullet == false then
+removeLuaSprite('green2', false)
+stopSound('chaser2')
+end
+
+
+if getProperty('green3.animation.curAnim.name') == 'Greenshit03' and getProperty('green3.animation.curAnim.finished') or GBullet == false then
+removeLuaSprite('green3', false)
+stopSound('chaser3')
+end
+
+
+if getProperty('green4.animation.curAnim.name') == 'GreenShit02' and getProperty('green4.animation.curAnim.finished') or GBullet == false then
+removeLuaSprite('green4', false)
+stopSound('chaser4')
+end
+end
+tostring

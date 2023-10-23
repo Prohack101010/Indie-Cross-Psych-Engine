@@ -1,0 +1,60 @@
+{
+	"songs": [
+	  [
+	    "imminent-demise",
+	    "bendy",
+	    [
+	      2,
+	      3,
+	      9
+	    ]
+	  ],
+	  [
+	    "terrible-sin",
+	    "bendy",
+	    [
+	      2,
+	      3,
+	      9
+	    ]
+	 ],
+	 [
+	    "last-reel",
+	    "bendy",
+	    [
+	      2,
+	      3,
+	      9
+	    ]
+	  ],
+	  [
+	    "nightmare-run",
+	    "bendy",
+	    [
+	      2,
+	      3,
+	      9
+	    ]
+	  ]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"gaming",
+		"fun2",
+		""
+	],
+	"storyName": "",
+	"weekName": "bendy",
+	"freeplayColor": [
+	      2,
+	      3,
+	      9
+	],
+	"hideStoryMode": false,
+	"weekBefore": "sans",
+	"startUnlocked": true,
+	"hideBonus": true,
+	"hideNightmare": true
+}

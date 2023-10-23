@@ -8,6 +8,7 @@ class Bar extends FlxSpriteGroup
 	public var leftBar:FlxSprite;
 	public var rightBar:FlxSprite;
 	public var bg:FlxSprite;
+	public var overlay:FlxSprite;
 	public var valueFunction:Void->Float = function() return 0;
 	public var percent(default, set):Float = 0;
 	public var bounds:Dynamic = {min: 0, max: 1};
@@ -19,17 +20,20 @@ class Bar extends FlxSpriteGroup
 	public var barHeight(default, set):Int = 1;
 	public var barOffset:FlxPoint = FlxPoint.get(3, 3);
 
-	public function new(x:Float, y:Float, image:String = 'healthBar', valueFunction:Void->Float = null, boundX:Float = 0, boundY:Float = 1)
+	public function new(x:Float, y:Float, image:String = '', backroundImage:String = 'healthBar',valueFunction:Void->Float = null, boundX:Float = 0, boundY:Float = 1)
 	{
 		super(x, y);
 		
 		if(valueFunction != null) this.valueFunction = valueFunction;
 		setBounds(boundX, boundY);
-		
-		bg = new FlxSprite().loadGraphic(Paths.image(image));
+		bg = new FlxSprite().loadGraphic(Paths.image(backroundImage));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		barWidth = Std.int(bg.width - 6);
 		barHeight = Std.int(bg.height - 6);
+		if(image != '' || image != null){
+		overlay = new FlxSprite().loadGraphic(Paths.image(image));
+		overlay.antialiasing = ClientPrefs.data.antialiasing;
+		}
 
 		leftBar = new FlxSprite().makeGraphic(Std.int(bg.width), Std.int(bg.height), FlxColor.WHITE);
 		//leftBar.color = FlxColor.WHITE;
@@ -42,6 +46,7 @@ class Bar extends FlxSpriteGroup
 		add(leftBar);
 		add(rightBar);
 		add(bg);
+		if(image != '' || image != null) add(overlay);
 		regenerateClips();
 
 		moves = false;

@@ -1452,7 +1452,7 @@ class FunkinLua {
 		});
 
 		#if desktop DiscordClient.addLuaCallbacks(lua); #end
-		#if (SScript >= "3.0.0") HScript.implement(this); #end
+		#if HSCRIPT_ALLOWED HScript.implement(this); #end
 		ReflectionFunctions.implement(this);
 		TextFunctions.implement(this);
 		ExtraFunctions.implement(this);
@@ -1626,15 +1626,14 @@ class FunkinLua {
 		}
 		Lua.close(lua);
 		lua = null;
-		#if HSCRIPT_ALLOWED
 		if(hscript != null)
 		{
-			hscript.destroy();
+			hscript.kill();
 			hscript = null;
 		}
 		#end
-		#end
 	}
+
 
 	//clone functions
 	public static function getBuildTarget():String

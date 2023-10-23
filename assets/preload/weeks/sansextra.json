@@ -1,0 +1,43 @@
+{
+	"songs": [
+		[
+		  "final-stretch",
+		  "sans",
+		  [
+		    255,
+		    255,
+		    255
+		  ]
+	  ],
+		[
+			"burning-in-hell",
+			"sans",
+			[
+				255,
+				255,
+				255
+			]
+		]
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "hard",
+	"weekCharacters": [
+		"sans",
+		"fun",
+		""
+	],
+	"storyName": "",
+	"weekName": "sans2",
+	"freeplayColor": [
+				255,
+				255,
+				255
+	],
+	"hideStoryMode": true,
+	"weekBefore": "sans",
+	"startUnlocked": true,
+	"hideBonus": true,
+	"hideNightmare": true
+}

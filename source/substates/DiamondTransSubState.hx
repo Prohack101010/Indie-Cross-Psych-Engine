@@ -9,7 +9,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import shaders.DiamondTransShader;
 
-class DiamondTransSubState extends MusicBeatSubstate
+class DiamondTransSubState extends FlxSubState
 {
 	var diamondTrans:DiamondTransShader;
 	var rect:FlxSprite;
