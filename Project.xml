@@ -101,7 +101,6 @@
 	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="discord_rpc" if="desktop"/>
-	<haxelib name="hxjsonast" if="desktop"/>
 	<haxedef name="openflPos" />
 	<haxedef name="hscriptPos" />
 	<haxelib name="extension-androidtools" if="android" />
