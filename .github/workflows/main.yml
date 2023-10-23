@@ -45,6 +45,7 @@ jobs:
           haxelib install openfl 9.2.2 --quiet
           haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
+          haxelib install hxCodec 3.0.2 --quiet
 
       - name: Setup git hxcpp
         run: |
@@ -148,6 +149,7 @@ jobs:
           haxelib install openfl 9.2.2 --quiet
           haxelib install tjson 1.4.0 --quiet
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git
+          haxelib install hxCodec 3.0.2 --quiet
 
       - name: Setup git hxcpp
         run: |
@@ -240,6 +242,7 @@ jobs:
           haxelib install openfl 9.2.2 --quiet
           haxelib install tjson 1.4.0 --quiet
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git
+          haxelib install hxCodec 3.0.2 --quiet
 
       - name: Setup git hxcpp
         run: |
@@ -335,6 +338,7 @@ jobs:
           haxelib install openfl 9.2.2 --quiet
           haxelib install tjson 1.4.0 --quiet
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git
+          haxelib install hxCodec 3.0.2 --quiet
 
       - name: Setup git hxcpp
         run: |
