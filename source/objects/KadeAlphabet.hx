@@ -417,7 +417,7 @@ class KadeAlphaCharacter extends FlxSprite
 		setGraphicSize(Std.int(width * textSize));
 		updateHitbox();
 		this.textSize = textSize;
-		antialiasing = FlxG.save.data.highquality;
+		antialiasing = ClientPrefs.data.antialiasing;
 	}
 
 	public function createBoldLetter(letter:String)

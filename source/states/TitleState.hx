@@ -49,10 +49,12 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		#if !(debug) // debug skips the splash for some reason
+		if(FlxSplash.icBG != null){
 		FlxTween.tween(FlxSplash.icBG, {alpha: 0}, 0.6, {ease: FlxEase.quadOut, onComplete: function(Tween:FlxTween){
 				FlxG.stage.removeChild(FlxSplash.icBG);
 			}
 		});
+	}
 		#end
 		#if mobile
 		FlxG.android.preventDefaultKeys = [BACK];
@@ -126,7 +128,7 @@ class TitleState extends MusicBeatState
 				});
 				#end
 
-				skipText = new FlxText(0, FlxG.height - 26, 0, #if desktop "Press Escape To Skip" #elseif android "Press Back On Your Phone To Skip" #end, 18);
+				skipText = new FlxText(0, FlxG.height - 26, 0, #if (desktop && !hl) "Press Escape To Skip" #elseif android "Press Back On Your Phone To Skip" #end, 18);
 				skipText.alpha = 0;
 				skipText.setFormat(Paths.font('Bronx.otf'), 18, FlxColor.WHITE, RIGHT);
 				skipText.scrollFactor.set();
@@ -139,7 +141,7 @@ class TitleState extends MusicBeatState
 				}
 			}
 			#else
-			videoCallback();
+			videoCallBack();
 			#end
 		}
 		#end
@@ -371,7 +373,7 @@ class TitleState extends MusicBeatState
 		FlxG.camera.flash(color, duration);
 	}
 
-	private function videoCallBack()
+	public function videoCallBack()
 	{
 		#if VIDEOS_ALLOWED
 		video.destroy();

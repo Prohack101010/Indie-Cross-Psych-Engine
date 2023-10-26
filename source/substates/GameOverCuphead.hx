@@ -4,17 +4,13 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup;
-import flixel.input.gamepad.FlxGamepad;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import lime.app.Application;
 import lime.media.openal.AL;
-import openfl.system.System;
-import states.FreeplaySelectState;
 
 /**
  * @author BrightFyre
@@ -127,7 +123,7 @@ class GameOverCuphead extends MusicBeatSubstate
 		death.updateHitbox();
 		death.screenCenter();
 		death.scrollFactor.set();
-		death.antialiasing = FlxG.save.data.highquality;
+		death.antialiasing = ClientPrefs.data.antialiasing;
 		// death.cameras = [PlayState.instance.camHUD];
 		add(death);
 
@@ -139,7 +135,7 @@ class GameOverCuphead extends MusicBeatSubstate
 		bgImage.setGraphicSize(Std.int(bgImage.width * 1.2));
 		bgImage.updateHitbox();
 		bgImage.screenCenter();
-		bgImage.antialiasing = FlxG.save.data.highquality;
+		bgImage.antialiasing = ClientPrefs.data.antialiasing;
 		bgImage.scrollFactor.set();
 		bgImage.angle = -55;
 		bgImage.alpha = 0;
@@ -154,7 +150,7 @@ class GameOverCuphead extends MusicBeatSubstate
 		bfRunning.updateHitbox();
 		bfRunning.x = runPos[0][0];
 		bfRunning.y = runPos[0][1];
-		bfRunning.antialiasing = FlxG.save.data.highquality;
+		bfRunning.antialiasing = ClientPrefs.data.antialiasing;
 		bfRunning.scrollFactor.set();
 		bfRunning.angle = -10;
 		bfRunning.alpha = 0;
@@ -175,7 +171,7 @@ class GameOverCuphead extends MusicBeatSubstate
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle', true);
 			menuItem.scrollFactor.set();
-			menuItem.antialiasing = FlxG.save.data.highquality;
+			menuItem.antialiasing = ClientPrefs.data.antialiasing;
 			menuItem.screenCenter();
 			menuItem.x = itmPos[i][0];
 			menuItem.y = itmPos[i][1];
@@ -225,6 +221,11 @@ class GameOverCuphead extends MusicBeatSubstate
 				});
 			});
 		});
+
+		#if mobileC
+		addVirtualPad(UP_DOWN, A);
+		addPadCamera(false);
+		#end
 	}
 
 	var songSpeed:Float = 1;
@@ -235,10 +236,12 @@ class GameOverCuphead extends MusicBeatSubstate
 	{
 		super.update(elapsed);
 
+		#if (desktop || android)
 		@:privateAccess
 		{
 			AL.sourcef(deadMusic._channel.__source.__backend.handle, AL.PITCH, songSpeed);
 		}
+		#end
 
 		if (!isEnding)
 		{
@@ -247,55 +250,19 @@ class GameOverCuphead extends MusicBeatSubstate
 				endBullshit(curSelected);
 			}
 
-			if ((FlxG.mouse.justPressed))
-			{
-				if (FlxG.mouse.overlaps(menuItems.members[curSelected]))
-				{
-					endBullshit(curSelected);
-				}
-			}
-
-			if (FlxG.keys.justPressed.UP)
+			if (controls.UI_UP_P)
 			{
 				changeItem(curSelected - 1);
 			}
 
-			if (FlxG.keys.justPressed.DOWN)
+			if (controls.UI_DOWN_P)
 			{
 				changeItem(curSelected + 1);
-			}
-
-			if (FlxG.mouse.justMoved)
-			{
-				for (i in 0...menuItems.members.length)
-				{
-					if (i != curSelected)
-					{
-						if (FlxG.mouse.overlaps(menuItems.members[i]))
-						{
-							changeItem(i);
-						}
-					}
-				}
-			}
-
-			var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
-
-			if (gamepad != null)
-			{
-				if (gamepad.justPressed.DPAD_UP)
-				{
-					changeItem(curSelected - 1);
-				}
-				if (gamepad.justPressed.DPAD_DOWN)
-				{
-					changeItem(curSelected + 1);
-				}
 			}
 		}
 
 		// this was the code used to get the options offsets, might be cool to leave it as an easter egg
-		var spr = menuArray[curSelected];
+		/*var spr = menuArray[curSelected];
 		if (FlxG.keys.pressed.FIVE)
 		{
 			spr.x = FlxG.mouse.x;
@@ -304,7 +271,7 @@ class GameOverCuphead extends MusicBeatSubstate
 		if (FlxG.keys.justPressed.FOUR)
 		{
 			trace(spr.x + ',' + spr.y);
-		}
+		}*/
 	}
 
 	var isEnding:Bool = false;
@@ -337,7 +304,7 @@ class GameOverCuphead extends MusicBeatSubstate
 
 						FlxG.camera.fade(FlxColor.BLACK, 0.3, false, function()
 						{
-							#if desktop DiscordClient.resetClientID(); #end
+							#if (desktop && !hl) DiscordClient.resetClientID(); #end
 							FlxG.sound.music.stop();
 							PlayState.deathCounter = 0;
 							PlayState.seenCutscene = false;

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sinNotesDark.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="blue0000" x="1535" y="234" width="292" height="546" frameX="30" frameY="50" frameWidth="1" frameHeight="1"/>
+	<!-- <SubTexture name="blue0001" x="1837" y="234" width="292" height="546"/>
+	<SubTexture name="blue0002" x="2105" y="234" width="292" height="546"/>
+	<SubTexture name="blue0003" x="2356" y="234" width="292" height="546"/> -->
+
+	<SubTexture name="green0000" x="63" y="234" width="292" height="546" frameX="30" frameY="50" frameWidth="1" frameHeight="1"/>
+	<!-- <SubTexture name="green0001" x="357" y="234" width="292" height="546"/>
+	<SubTexture name="green0002" x="619" y="234" width="292" height="564"/>
+	<SubTexture name="green0003" x="872" y="234" width="292" height="564"/> -->
+
+	<SubTexture name="purple0000" x="104" y="951" width="289" height="510" frameX="30" frameY="50" frameWidth="1" frameHeight="1"/>
+	<!-- <SubTexture name="purple0001" x="394" y="951" width="289" height="510"/>
+	<SubTexture name="purple0002" x="644" y="951" width="289" height="510"/>
+	<SubTexture name="purple0003" x="897" y="951" width="289" height="510"/> -->
+
+
+	<SubTexture name="red0000" x="1519" y="949" width="289" height="510" frameX="30" frameY="50" frameWidth="1" frameHeight="1"/>
+	<!-- <SubTexture name="red0001" x="1823" y="949" width="289" height="510"/>
+	<SubTexture name="red0002" x="2071" y="949" width="289" height="510"/>
+	<SubTexture name="red0003" x="2333" y="949" width="289" height="510"/> -->
+</TextureAtlas>

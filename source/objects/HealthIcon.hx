@@ -1,5 +1,6 @@
 package objects;
 import haxe.Json;
+import openfl.Assets;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
@@ -66,10 +67,15 @@ class HealthIcon extends FlxSprite
 				var jsonPath = #if MODS_ALLOWED SUtil.getPath() + #end Paths.getPath('images/' + name + '.json', TEXT, 'shared');
 				var formatted:Array<String> = jsonPath.split(':'); // prevent "shared:", "preload:" and other library names on file path
 				jsonPath = formatted[formatted.length - 1];
+				var rawJson;
 				#if MODS_ALLOWED
-				var rawJson = File.getContent(jsonPath);
+				try {
+					rawJson = File.getContent(SUtil.getPath() + jsonPath);
+				} catch(nvm:String){
+					rawJson = Assets.getText(jsonPath);
+				}
 				#else
-				var rawJson = Assets.getText(formatted);
+				rawJson = Assets.getText(jsonPath);
 				#end
 				json = cast Json.parse(rawJson);
 				trace('icon json was found!!\n' + jsonPath);

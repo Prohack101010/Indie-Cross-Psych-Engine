@@ -70,7 +70,7 @@ class StoryMenuState extends MusicBeatState
 		PlayState.isStoryMode = true;
 		persistentUpdate = true;
 
-		#if desktop
+		#if (desktop && !hl)
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Story Mode Menu", null);
 		#end

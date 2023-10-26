@@ -14,6 +14,7 @@ import flixel.util.FlxDestroyUtil;
 import mobile.MobileControls;
 import mobile.flixel.FlxVirtualPad;
 #end
+import flixel.addons.plugin.screengrab.FlxScreenGrab;
 
 class MusicBeatState extends FlxUIState
 {
@@ -156,6 +157,7 @@ class MusicBeatState extends FlxUIState
 	{
 		// Paths.clearStoredMemory();
 		// Paths.clearUnusedMemory();
+		FlxG.game.setFilters(null);
 		FlxG.game.filtersEnabled = false;
 		super.destroy();
 
@@ -205,6 +207,9 @@ class MusicBeatState extends FlxUIState
 
 		if(FlxG.keys.justPressed.F11)
 			FlxG.fullscreen = !FlxG.fullscreen;
+
+		if(FlxG.keys.justPressed.F5)
+			FlxScreenGrab.grab(FlxScreenGrab.region, true, false);
 
 		updateCurStep();
 		updateBeat();

@@ -155,8 +155,12 @@ class Hall extends BaseStage
 	{
 		if (PlayState.isStoryMode && !PlayState.seenCutscene)
 		{
+			#if VIDEOS_ALLOWED
 			game.noCountdownVideo(videoName);
 			PlayState.instance.video.onEndReached.add(game.sanesIntroShit, true); // IDFK WHY PLAYSTATE.INSTANCE HAXE JUST DON'T WANT ME TO USE GAME. OR GONNA SHUT ME UP WITH NULL OBJECT REFRENCE
+			#else
+			game.sanesIntroShit();
+			#end
 		}
 		else
 			PlayState.instance.startCountdown();

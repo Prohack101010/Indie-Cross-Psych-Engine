@@ -126,7 +126,7 @@ class Field extends BaseStage
 		knockoutSpr.animation.addByPrefix('start', "A KNOCKOUT!", 24, false);
 		knockoutSpr.updateHitbox();
 		knockoutSpr.screenCenter();
-		knockoutSpr.antialiasing = FlxG.save.data.highquality;
+		knockoutSpr.antialiasing = ClientPrefs.data.antialiasing;
 		knockoutSpr.scrollFactor.set();
 		knockoutSpr.alpha = 0.0001;
 		knockoutSpr.cameras = [camHUD];

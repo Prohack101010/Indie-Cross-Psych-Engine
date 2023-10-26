@@ -134,7 +134,7 @@ class FlxSplash extends FlxState
 		if (_curPart == 5)
 		{
 			// Make the logo a tad bit longer, so our users fully appreciate our hard work :D
-			FlxTween.tween(icBG, {alpha: 1}, 2.9, {ease: FlxEase.quadOut});
+			FlxTween.tween(icBG, {alpha: 1}, 2.99, {ease: FlxEase.quadOut});
 			FlxTween.tween(_sprite, {alpha: 0}, 3.0, {ease: FlxEase.quadOut, onComplete: onComplete});
 			FlxTween.tween(_text, {alpha: 0}, 3.0, {ease: FlxEase.quadOut});
 		}

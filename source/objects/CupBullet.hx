@@ -118,7 +118,7 @@ class CupBullet extends FlxSprite
 				scale.x = 1.65;
 		}
 
-		antialiasing = FlxG.save.data.highquality;
+		antialiasing = ClientPrefs.data.antialiasing;
 
 		alpha = 0.0001; // making this very low instead of 0 will remove the lag when cuphead shoots it
 

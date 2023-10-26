@@ -30,10 +30,7 @@ import flixel.util.FlxStringUtil;
 import haxe.Json;
 import lime.utils.Assets;
 import objects.*;
-import objects.CupBullet;
-import objects.HudIcon;
 import objects.Note.EventNote;
-import objects.Soul;
 import openfl.events.KeyboardEvent;
 import openfl.utils.Assets as OpenFlAssets;
 import shaders.BlendModeEffect;
@@ -42,6 +39,7 @@ import states.StoryMenuState;
 import states.editors.CharacterEditorState;
 import states.editors.ChartingState;
 import states.stages.objects.*;
+import states.stages.*;
 import substates.GameOverSubstate;
 import substates.PauseSubState;
 // import tjson.TJSON as Json;
@@ -262,7 +260,7 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
-	#if desktop
+	#if (desktop && !hl)
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
 	var detailsText:String = "";
@@ -431,7 +429,7 @@ class PlayState extends MusicBeatState
 		Conductor.mapBPMChanges(SONG);
 		Conductor.bpm = SONG.bpm;
 
-		#if desktop
+		#if (desktop && !hl)
 		storyDifficultyText = Difficulty.getString();
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
@@ -507,13 +505,13 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'stage':
-				new states.stages.StageWeek1(); // Week 1
+				new StageWeek1(); // Week 1
 			case 'hall':
-				new states.stages.Hall(); // sans
+				new Hall(); // sans
 			case 'nightmare-hall':
-				new states.stages.Hall(); // sans
+				new Hall(); // sans
 			case 'field':
-				new states.stages.Field(); // cuphead
+				new Field(); // cuphead
 		}
 
 		if (isPixelStage)
@@ -593,7 +591,7 @@ class PlayState extends MusicBeatState
 			b = new FlxSprite().loadGraphic(Paths.image('Gaster_blasterss', 'sans'));
 			b.alpha = 0.0001;
 			add(b);	
-			soul = new Soul(states.stages.Hall.battleBG.x + 940, states.stages.Hall.battleBG.y + 1560);
+			soul = new Soul(Hall.battleBG.x + 940, Hall.battleBG.y + 1560);
 			soul.alpha = 0.0001;
 			add(soul);
 		}
@@ -1291,7 +1289,9 @@ class PlayState extends MusicBeatState
 	{
 		var theDialogue:Array<String> = [];
 		inCutscene = true;
+		#if VIDEOS_ALLOWED
 		finishedVideo = true;
+		#end
 
 		switch (SONG.song.toLowerCase())
 		{
@@ -1431,7 +1431,7 @@ class PlayState extends MusicBeatState
 					startedCountdown = true;
 					startSong();
 					setSongTime(0);
-					states.stages.Field.cupIntro();
+					Field.cupIntro();
 					return true;
 				}
 				else
@@ -1728,7 +1728,7 @@ class PlayState extends MusicBeatState
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
-		#if desktop
+		#if (desktop && !hl)
 		// Updating Discord Rich Presence (with Time Left)
 		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
 		#end
@@ -2023,7 +2023,7 @@ class PlayState extends MusicBeatState
 		]);
 	}
 
-	#if !flash
+	#if (!flash && LUA_ALLOWED)
 	public function addShaderToCamera(cam:String, effect:Dynamic)
 	{ // STOLE FROM ANDROMEDA
 
@@ -2274,7 +2274,7 @@ class PlayState extends MusicBeatState
 	override public function onFocusLost():Void
 	{
 		callOnScripts('onFocusLost');
-		#if desktop
+		#if (desktop && !hl)
 		if (health > 0 && !paused)
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
@@ -2286,7 +2286,7 @@ class PlayState extends MusicBeatState
 	// Updating Discord Rich Presence.
 	function resetRPC(?cond:Bool = false)
 	{
-		#if desktop
+		#if (desktop && !hl)
 		if (cond)
 			DiscordClient.changePresence(detailsText, SONG.song
 				+ " ("
@@ -2746,7 +2746,7 @@ class PlayState extends MusicBeatState
 		openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		// }
 
-		#if desktop
+		#if (desktop && !hl)
 		DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 		#end
 	}
@@ -2759,7 +2759,7 @@ class PlayState extends MusicBeatState
 		cancelMusicFadeTween();
 		chartingMode = true;
 
-		#if desktop
+		#if (desktop && !hl)
 		DiscordClient.changePresence("Chart Editor", null, null, true);
 		DiscordClient.resetClientID();
 		#end
@@ -2772,7 +2772,7 @@ class PlayState extends MusicBeatState
 		persistentUpdate = false;
 		paused = true;
 		cancelMusicFadeTween();
-		#if desktop DiscordClient.resetClientID(); #end
+		#if (desktop && !hl) DiscordClient.resetClientID(); #end
 		switchState(new CharacterEditorState(SONG.player2));
 	}
 
@@ -2809,10 +2809,10 @@ class PlayState extends MusicBeatState
 				{
 					persistentDraw = true;
 
-					if (states.stages.Field.wallop != null)
+					if (Field.wallop != null)
 					{
-						states.stages.Field.wallop.destroy();
-						remove(states.stages.Field.wallop);
+						Field.wallop.destroy();
+						remove(Field.wallop);
 					}
 
 					FlxTween.tween(camHUD, {alpha: 0}, 1);
@@ -2820,12 +2820,12 @@ class PlayState extends MusicBeatState
 
 					if (SONG.song.toLowerCase() == 'knockout')
 					{
-						FlxTween.tween(states.stages.Field.fgRain, {alpha: 0}, 1);
-						FlxTween.tween(states.stages.Field.fgRain2, {alpha: 0}, 1);
+						FlxTween.tween(Field.fgRain, {alpha: 0}, 1);
+						FlxTween.tween(Field.fgRain2, {alpha: 0}, 1);
 					}
 
-					FlxTween.tween(states.stages.Field.fgStatic, {alpha: 0}, 1);
-					FlxTween.tween(states.stages.Field.fgGrain, {alpha: 0}, 1);
+					FlxTween.tween(Field.fgStatic, {alpha: 0}, 1);
+					FlxTween.tween(Field.fgGrain, {alpha: 0}, 1);
 
 					openSubState(new substates.GameOverCuphead(Conductor.songPosition, FlxG.sound.music.length));
 				}
@@ -2837,7 +2837,7 @@ class PlayState extends MusicBeatState
 
 				// switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
-				#if desktop
+				#if (desktop && !hl)
 				// Game Over doesn't get his own variable because it's only used here
 				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 				#end
@@ -3341,7 +3341,7 @@ class PlayState extends MusicBeatState
 					Mods.loadTopMod();
 					if(FlxG.save.data.instPrev == false)
 						FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					#if desktop DiscordClient.resetClientID(); #end
+					#if (desktop && !hl) DiscordClient.resetClientID(); #end
 
 					cancelMusicFadeTween();
 					switchState(new StoryMenuState());
@@ -3377,7 +3377,7 @@ class PlayState extends MusicBeatState
 			{
 				trace('WENT BACK TO FREEPLAY??');
 				Mods.loadTopMod();
-				#if desktop DiscordClient.resetClientID(); #end
+				#if (desktop && !hl) DiscordClient.resetClientID(); #end
 
 				cancelMusicFadeTween();
 				switchState(new FreeplayState());
@@ -4861,7 +4861,7 @@ class PlayState extends MusicBeatState
 
 	public function brightSetup()
 	{
-		if (curStage == 'factory' && (!FlxG.save.data.photosensitive && FlxG.save.data.highquality))
+		if (curStage == 'factory' && (!FlxG.save.data.photosensitive && ClientPrefs.data.antialiasing))
 		{
 			defaultBrightVal = -0.05;
 			brightSpeed = 0.2;
@@ -5196,7 +5196,7 @@ class PlayState extends MusicBeatState
 				if (ups)
 				{
 					soul.y -= 650 * elapsed;
-					if (!soul.isInside(states.stages.Hall.battleBoundaries))
+					if (!soul.isInside(Hall.battleBoundaries))
 					{
 						trace('cantgo');
 						soul.y += 650 * elapsed;
@@ -5205,7 +5205,7 @@ class PlayState extends MusicBeatState
 				if (downs)
 				{
 					soul.y += 650 * elapsed;
-					if (!soul.isInside(states.stages.Hall.battleBoundaries))
+					if (!soul.isInside(Hall.battleBoundaries))
 					{
 						trace('cantgo');
 						soul.y -= 650 * elapsed;
@@ -5214,7 +5214,7 @@ class PlayState extends MusicBeatState
 				if (lefts)
 				{
 					soul.x -= 650 * elapsed;
-					if (!soul.isInside(states.stages.Hall.battleBoundaries))
+					if (!soul.isInside(Hall.battleBoundaries))
 					{
 						trace('cantgo');
 						soul.x += 650 * elapsed;
@@ -5223,7 +5223,7 @@ class PlayState extends MusicBeatState
 				if (rights)
 				{
 					soul.x += 650 * elapsed;
-					if (!soul.isInside(states.stages.Hall.battleBoundaries))
+					if (!soul.isInside(Hall.battleBoundaries))
 					{
 						trace('cantgo');
 						soul.x -= 650 * elapsed;
@@ -5277,11 +5277,11 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.play(Paths.sound('readygas', 'sans'));
 
-		var gay:FlxSprite = new FlxSprite(states.stages.Hall.battleBG.x - 2450, soul.y - 150);
+		var gay:FlxSprite = new FlxSprite(Hall.battleBG.x - 2450, soul.y - 150);
 		gay.frames = Paths.getSparrowAtlas("Gaster_blasterss", "sans");
 		gay.animation.addByPrefix('boom', 'fefe instance', 27, false);
 		gay.animation.play('boom');
-		gay.antialiasing = FlxG.save.data.highquality;
+		gay.antialiasing = ClientPrefs.data.antialiasing;
 		gay.flipX = FlxG.random.bool();
 		blaster.add(gay);
 		gay.alpha = 0.999999;
@@ -5588,7 +5588,7 @@ class PlayState extends MusicBeatState
 
 	public static function switchState(nextState:flixel.FlxState = null){
 		if(curStage == 'field'){
-			states.stages.Field.cupteaBackout();
+			Field.cupteaBackout();
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
 			var killme = new FlxTimer().start(0.7, function(tmr:FlxTimer)

@@ -1,5 +1,6 @@
 package openfl.display;
 
+import flixel.system.FlxAssets;
 import haxe.Timer;
 import openfl.Lib;
 import openfl.events.Event;
@@ -45,7 +46,7 @@ class FPS extends TextField
 		#if mobile
 		defaultTextFormat = new TextFormat('_sans', Std.int(14 * Math.min(Lib.current.stage.stageWidth / FlxG.width, Lib.current.stage.stageHeight / FlxG.height)), color);
 		#else
-		defaultTextFormat = new TextFormat('_sans', 14, color);
+		defaultTextFormat = new TextFormat(FlxAssets.FONT_DEFAULT, 14, color);
 		#end
 		autoSize = LEFT;
 		multiline = true;
@@ -97,9 +98,6 @@ class FPS extends TextField
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
-			#end
-			#if lime
-			text += "\nOS: " + '${lime.system.System.platformLabel}';
 			#end
 
 			textColor = 0xFFFFFFFF;

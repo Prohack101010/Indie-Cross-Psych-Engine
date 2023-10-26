@@ -8,7 +8,6 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import openfl.utils.Assets as OpenFlAssets;
 import objects.KadeAlphabet as Alphabet;
 
 using StringTools;
@@ -97,8 +96,13 @@ class SansDialogueBox extends FlxSpriteGroup
 				startDialogue();
 				dialogueStarted = true;
 			}
-
-			if (controls.justPressed('accept') && PlayState.instance.finishedVideo)
+			#if mobileC
+			var justTouched:Bool = false;
+			for (touch in FlxG.touches.list)
+				if (touch.justPressed)
+					justTouched = true;
+			#end
+			if ((controls.justPressed('accept') #if mobileC || justTouched #end) #if VIDEOS_ALLOWED && PlayState.instance.finishedVideo #end)
 			{
 				accept();
 			}

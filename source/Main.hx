@@ -1,5 +1,7 @@
 package;
 
+import flixel.addons.plugin.screengrab.FlxScreenGrab;
+import states.FreeplayState;
 import backend.SUtil;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -30,7 +32,11 @@ class Main extends Sprite
 		height: 720, // WINDOW height
 		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
+		#if desktop
+		framerate: 120, // default framerate
+		#else
 		framerate: 60, // default framerate
+		#end
 		skipSplash: false, // if the default flixel splash screen should be skipped
 		startFullscreen: false // if the game should start at fullscreen mode
 	};
@@ -120,18 +126,25 @@ class Main extends Sprite
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
 		ClientPrefs.loadDefaultKeys();
-		#if (openfl >= "9.2.0")
-		addChild(new FlxGame(1280, 720, TitleState, #if (flixel < "5.0.0") -1, #end 60, 60, false, false));
-		#else
 		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate,
 			game.skipSplash, game.startFullscreen));
-		#end
 		FlxG.save.bind('indie-cross-psych', CoolUtil.getSavePath());
 		ClientPrefs.saveSettings();
 		ClientPrefs.loadPrefs();
 		Achievements.load();
 
-		fpsVar = new FPS(10, 3, 0xFFFFFF);
+		#if debug
+		FlxG.console.registerClass(PlayState);
+		FlxG.console.registerClass(FreeplayState);
+		FlxG.console.registerClass(TitleState);
+		FlxG.console.registerClass(CoolUtil);
+		FlxG.console.registerClass(MusicBeatState);
+		FlxG.console.registerClass(MusicBeatSubstate);
+		#end
+
+
+
+		fpsVar = new FPS(10, 5, 0xFFFFFF);
 		addChild(fpsVar);
 		Lib.current.stage.align = "tl";
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -150,9 +163,12 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 
-		#if desktop
+		#if (desktop && !hl)
 		DiscordClient.start();
 		#end
+
+		// screenshot?
+		FlxScreenGrab.defineCaptureRegion(0, 0, FlxG.width, FlxG.height);
 
 		// shader coords fix
 		FlxG.signals.gameResized.add(function(w, h)
@@ -169,6 +185,10 @@ class Main extends Sprite
 
 			if (FlxG.game != null)
 				resetSpriteCache(FlxG.game);
+			// fixes image width and height on resize
+			FlxScreenGrab.clearCaptureRegion();
+			FlxScreenGrab.defineCaptureRegion(0, 0, w, h);
+
 		});
 	}
 

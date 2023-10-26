@@ -467,8 +467,8 @@ class Paths
 
 	public static function returnSoundString(path:String, key:String, ?library:String)
 		{
-			#if MODS_ALLOWED
 			var folder:String = '';
+			#if MODS_ALLOWED
 			var file:String = modsSounds(path, key);
 			if (FileSystem.exists(file))
 			{
