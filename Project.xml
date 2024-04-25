@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Indie Cross-PsychEngine" file="Indie-Cross" packageName="com.idniesus.karimakra" package="com.idniesus.karimakra" main="Main" version="1.5.0" company="KarimAkra(UTFan)" />
+	<app title="Indie Psych" file="Indie Cross" packageName="com.indiecross.psychengine" package="com.indiecross.psychengine" main="Main" version="1.5.0" company="KarimAkra(UTFan)" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
