@@ -47,7 +47,7 @@ jobs:
           haxelib install SScript 7.0.0 --quiet
           haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp.git
           haxelib install lime 7.9.0 --quiet
-          haxelib git linc_luajit https://github.com/mcagabe19-stuff/linc_luajit.git
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git
           haxelib install openfl 9.2.1 --quiet
           haxelib install tjson 1.4.0 --quiet
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation.git
@@ -67,7 +67,7 @@ jobs:
           haxelib run lime config ANDROID_SETUP true
 
       - name: Compile
-        run: haxelib run lime build android -arm64 -final
+        run: haxelib run lime build android -armv7 -final
         env:
           cert_pass: nullfunni
           cert_alias_pass: nullfunni
